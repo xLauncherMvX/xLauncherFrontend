@@ -36,8 +36,10 @@ import {
 import { getAccountNFTS, getAccountTokens } from "utils/api";
 
 export function Navbar(props) {
-  let address = props.address;
-
+  //let address = props.address;
+  let timeToConnectVal = props.timeToConnect;
+  let setTimeToConnectVal = props.setTimeToConnect;
+  console.log("timeToConnectVal: " + timeToConnectVal);
   //Used to detect mobile screen
   const { toggleSidebar, broken } = useProSidebar();
 
@@ -45,13 +47,13 @@ export function Navbar(props) {
   const config = customConfig[networkId];
   const tokens = allTokens[networkId];
 
-  function setFakeAddress(){
+  function setFakeAddress() {
     console.log("setFakeAddress");
   }
 
   //Get the user address
   //const debugAccountInfo = useGetAccountInfo();
-  //const {address} = useGetAccountInfo()
+  const {address} = useGetAccountInfo()
   let account = {
     address: "",
     balance: "...",
@@ -62,6 +64,7 @@ export function Navbar(props) {
   };
 
   const isLoggedIn = Boolean(address);
+  console.log("isLoggedIn: " + isLoggedIn);
 
   //Tokens + NFTS APIs
   const tokensAPI = config.apiLink + address + "/tokens?size=2000";
@@ -107,7 +110,7 @@ export function Navbar(props) {
 
   //Show the connect area if user is not logged in
   const [timeToConnect, setTimeToConnect] = React.useState(false);
-  let connectSection = timeToConnect ? (
+  let connectSection = timeToConnectVal ? (
     <Container>
       <Row className="justify-content-start">
         <Col
@@ -124,7 +127,10 @@ export function Navbar(props) {
                   size="sm"
                   className="btn btn-light float-end"
                   style={{ width: "30px" }}
-                  onClick={() => setTimeToConnect(false)}
+                  onClick={() => {
+                    setTimeToConnectVal(false);
+                    setTimeToConnect(false);
+                  }}
                 >
                   <FontAwesomeIcon icon="fa-xmark" />
                 </Button>
@@ -486,7 +492,10 @@ export function Navbar(props) {
               variant="outline-light"
               size="sm"
               className="btn btn-block"
-              onClick={() => setTimeToConnect((prevCheck) => !prevCheck)}
+              onClick={() => {
+                setTimeToConnectVal(true);
+                //setTimeToConnect((prevCheck) => !prevCheck);
+              }}
             >
               <FontAwesomeIcon
                 icon="fa-wallet"
@@ -508,7 +517,10 @@ export function Navbar(props) {
                 variant="outline-light"
                 size="sm"
                 className="btn btn-block"
-                onClick={() => setTimeToConnect((prevCheck) => !prevCheck)}
+                onClick={() => {
+                  setTimeToConnectVal(true);
+                  //setTimeToConnect((prevCheck) => !prevCheck);
+                }}
               >
                 <FontAwesomeIcon
                   icon="fa-wallet"

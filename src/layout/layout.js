@@ -20,6 +20,8 @@ function Layout(props) {
               debugLog={props.debugLog}
               updateWalletAddress={props.updateWalletAddress}
               address={props.address}
+              setTimeToConnect={props.setTimeToConnect}
+              timeToConnect={props.timeToConnect}
             />
             <Outlet clientReportData={props.clientReportData} />
           </Col>

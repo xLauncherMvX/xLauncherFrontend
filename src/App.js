@@ -13,7 +13,7 @@ import {
   faUserCircle,
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -79,10 +79,11 @@ const fakeConnectedWalletData = {
 };
 
 function App() {
-  const {address} = useGetAccountInfo();
+  
   const [walletState, setWalletState] = useState({
-    address: address,
+    address: "",
     clientReportData: defaultClientReportData,
+    timeToConnect: false
   });
 
   const updateWalletAddress = (newAddress) => {
@@ -92,23 +93,28 @@ function App() {
     });
   };
 
-  const logout = () => {
-    setWalletState((prevWalletState) => {
-      return { ...prevWalletState, address: null };
-    });
-  };
-
   const debugLog = (message) => {
     console.log(message);
   };
+
+  const setTimeToConnect = (timeToConnect) => {
+    setWalletState((prevWalletState) => {
+      return { ...prevWalletState, timeToConnect: timeToConnect };
+    });
+  };
+
+  const setAddress = (address) => {
+    setWalletState((prevWalletState) => {
+      return { ...prevWalletState, address: address };
+    });
+  }
+  
 
   //Set the config network
   const customNetConfig = networkConfig[networkId];
 
   //<Route path="/staking" element={<Staking />} />
   //              <Route path="/projects" element={<Projects />} />
-  
-
 
   const router = createBrowserRouter([
     {
@@ -116,15 +122,19 @@ function App() {
       element: (
         <Layout
           updateWalletAddress={updateWalletAddress}
-          logout={logout}
           debugLog={debugLog}
           clientReportData={walletState.clientReportData}
           address={walletState.address}
+          setTimeToConnect={setTimeToConnect}
+          timeToConnect={walletState.timeToConnect}
         />
       ),
       children: [
         { path: "/", element: <Staking /> },
-        { path: "/staking", element: <Staking clientReportData={walletState.clientReportData}/> },
+        {
+          path: "/staking",
+          element: <Staking clientReportData={walletState.clientReportData} />,
+        },
         { path: "/projects", element: <Projects /> },
       ],
     },
