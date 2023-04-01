@@ -132,10 +132,10 @@ function App() {
         />
       ),
       children: [
-        { path: "/", element: <Staking /> },
+        { path: "/", element: <Staking walletState={walletState}/> },
         {
           path: "/staking",
-          element: <Staking clientReportData={walletState.clientReportData} />,
+          element: <Staking walletState={walletState} />,
         },
         { path: "/projects", element: <Projects /> },
       ],

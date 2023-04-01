@@ -21,18 +21,38 @@ import {
 import { getIsLoggedIn } from "@multiversx/sdk-dapp/utils";
 
 function Staking(props) {
- 
-    let clientReportData1 = props.clientReportData;
-  console.log(
-    "clientReportData from Staking: " + JSON.stringify(clientReportData1, null, 2)
-  );
+  let walletState = props.walletState;
+
+  // decode address from walletState
+  const { address } = walletState;
+
   //Set the config network
   const config = customConfig[networkId];
   const tokens = allTokens[networkId];
 
-  //Get the user address
-  const { address } = useGetAccountInfo();
   const isLoggedIn = Boolean(address);
+  const [isLoggedInValue, setIsLoggedInValue] = useState(isLoggedIn);
+  if (isLoggedIn !== isLoggedInValue) {
+    setIsLoggedInValue(isLoggedIn); // this line is needed to trigger the useEffect
+  }
+
+   useEffect(() => {
+    if (isLoggedIn) {
+      getClientReportData();
+      getClientStateData();
+      getClientUnstakeStateData();
+      const interval = window.setInterval(() => {
+        getWalletData();
+        getClientReportData();
+        getClientStateData();
+        getClientUnstakeStateData();
+      }, 2000);
+      return () => window.clearInterval(interval);
+    }
+    // eslint-disable-next-line
+  }, [isLoggedInValue]); 
+
+
   const networkProvider = new ProxyNetworkProvider(config.provider);
   const stakeScAddress = config.stakeAddress;
   const stakeToken = config.token;
@@ -95,16 +115,16 @@ function Staking(props) {
         }
       });
     }
-    /* setClientReportData({
-            totalAmount,
-            totalRewards,
-            farm1Amount,
-            farm1Rewards,
-            farm2Amount,
-            farm2Rewards,
-            farm3Amount,
-            farm3Rewards
-        }); */
+    setClientReportData({
+      totalAmount,
+      totalRewards,
+      farm1Amount,
+      farm1Rewards,
+      farm2Amount,
+      farm2Rewards,
+      farm3Amount,
+      farm3Rewards,
+    });
   };
 
   //Get client report data query
@@ -515,21 +535,9 @@ function Staking(props) {
   let disabledUnstakeButton3;
   disabledUnstakeButton3 = xlhAmountU === 0 || xlhAmountU > unstakedAmount3;
 
-  useEffect(() => {
-    if (getIsLoggedIn()) {
-      getClientReportData();
-      getClientStateData();
-      getClientUnstakeStateData();
-      const interval = window.setInterval(() => {
-        getWalletData();
-        getClientReportData();
-        getClientStateData();
-        getClientUnstakeStateData();
-      }, 2000);
-      return () => window.clearInterval(interval);
-    }
-    // eslint-disable-next-line
-  }, []);
+  
+
+
 
   return (
     <div>
