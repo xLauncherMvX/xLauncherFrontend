@@ -1,3 +1,4 @@
+import { useGetAccountInfo } from "@multiversx/sdk-dapp/hooks/account";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import {
@@ -78,8 +79,9 @@ const fakeConnectedWalletData = {
 };
 
 function App() {
+  const {address} = useGetAccountInfo();
   const [walletState, setWalletState] = useState({
-    address: "",
+    address: address,
     clientReportData: defaultClientReportData,
   });
 
@@ -105,7 +107,7 @@ function App() {
 
   //<Route path="/staking" element={<Staking />} />
   //              <Route path="/projects" element={<Projects />} />
-
+  
 
 
   const router = createBrowserRouter([

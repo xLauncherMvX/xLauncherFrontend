@@ -45,9 +45,13 @@ export function Navbar(props) {
   const config = customConfig[networkId];
   const tokens = allTokens[networkId];
 
+  function setFakeAddress(){
+    console.log("setFakeAddress");
+  }
+
   //Get the user address
-  const debugAccountInfo = useGetAccountInfo();
-  //const {address, account} = debugAccountInfo
+  //const debugAccountInfo = useGetAccountInfo();
+  //const {address} = useGetAccountInfo()
   let account = {
     address: "",
     balance: "...",
