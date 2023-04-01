@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import Layout from 'layout/layout';
 import StakingCard from 'cards/StakingCard';
 import CompleteUnstakeCard from 'cards/CompleteUnStakeCard';
 import Row from 'react-bootstrap/Row';

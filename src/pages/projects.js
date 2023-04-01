@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from 'layout/layout';
 import DefaultProjectCard from "cards/DefaultProjectCard";
 import profile1 from "assets/images/zero2InfinityMini.jpeg";
 import profile2 from "assets/images/estarGamesMini.png";
@@ -18,7 +17,7 @@ function Projects() {
     }
 
     return (
-        <Layout>
+        <div>
             <p className="text-white font-bold mt-4 ms-2" style={{fontSize: '40px'}}>Projects</p>
             <Row>
                 <Col xs={12} md={6} lg={4}>
@@ -84,7 +83,7 @@ function Projects() {
                     </div>
                 </Col>
             </Row>
-        </Layout>
+        </div>
     );
 }
 
