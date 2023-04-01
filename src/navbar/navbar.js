@@ -67,7 +67,6 @@ export function Navbar(props) {
   };
 
   const isLoggedIn = Boolean(address);
-  console.log("isLoggedIn: " + isLoggedIn);
 
   //Tokens + NFTS APIs
   const tokensAPI = config.apiLink + address + "/tokens?size=2000";

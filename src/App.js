@@ -85,8 +85,6 @@ function App() {
     timeToConnect: false,
   });
 
-  console.log("App address", walletState.address);
-
   const updateWalletAddress = (newAddress) => {
     console.log("newAddress", newAddress);
     setWalletState((prevWalletState) => {
