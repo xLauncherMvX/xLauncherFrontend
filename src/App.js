@@ -13,7 +13,14 @@ import {
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate, createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 import Dashboard from "pages/dashboard";
 import Staking from "pages/staking";
 import Projects from "pages/projects";
@@ -60,10 +67,20 @@ function App() {
   //Set the config network
   const customNetConfig = networkConfig[networkId];
 
-  const router = createBrowserRouter([{
-    path: '/',
-    element: <Layout/>,
-  }])
+  //<Route path="/staking" element={<Staking />} />
+  //              <Route path="/projects" element={<Projects />} />
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        { path: "/", element: <Staking /> },
+        { path: "/staking", element: <Staking /> },
+        { path: "/projects", element: <Projects /> },
+      ],
+    },
+  ]);
 
   return (
     <DappProvider
@@ -75,10 +92,9 @@ function App() {
       <TransactionsToastList />
       <NotificationModal />
       <SignTransactionsModals />
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </DappProvider>
   );
 }
 
 export default App;
-

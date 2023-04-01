@@ -1,4 +1,5 @@
 import React, { createContext } from 'react';
+import { Outlet } from 'react-router-dom';
 import {Sidenav} from "sidenav/sidenav";
 import {Navbar} from "navbar/navbar";
 import 'assets/css/globals.css';
@@ -16,7 +17,7 @@ function Layout(props) {
                     <Row>
                         <Col>
                             <Navbar />
-                            {props.children}
+                            <Outlet />
                         </Col>
                     </Row>
             </Container>

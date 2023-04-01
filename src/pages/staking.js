@@ -456,7 +456,7 @@ function Staking() {
     }, []);
 
     return (
-        <Layout>
+        <div>
             <p className="text-white font-bold mt-4 ms-2" style={{fontSize: '40px'}}>Staking</p>
             <Row>
                 <Col xs="12" lg="4">
@@ -685,7 +685,7 @@ function Staking() {
             ):(
                 ''
             )}
-        </Layout>
+        </div>
     );
 }
 
