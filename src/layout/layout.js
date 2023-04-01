@@ -22,6 +22,7 @@ function Layout(props) {
               address={props.address}
               setTimeToConnect={props.setTimeToConnect}
               timeToConnect={props.timeToConnect}
+              setAddress={props.setAddress}
             />
             <Outlet clientReportData={props.clientReportData} />
           </Col>

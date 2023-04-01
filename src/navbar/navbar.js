@@ -39,7 +39,7 @@ export function Navbar(props) {
   //let address = props.address;
   let timeToConnectVal = props.timeToConnect;
   let setTimeToConnectVal = props.setTimeToConnect;
-  console.log("timeToConnectVal: " + timeToConnectVal);
+  let setAddress = props.setAddress;
   //Used to detect mobile screen
   const { toggleSidebar, broken } = useProSidebar();
 
@@ -53,7 +53,10 @@ export function Navbar(props) {
 
   //Get the user address
   //const debugAccountInfo = useGetAccountInfo();
-  const {address} = useGetAccountInfo()
+  const { address } = useGetAccountInfo();
+  if (address) {
+    setAddress(address);
+  }
   let account = {
     address: "",
     balance: "...",

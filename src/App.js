@@ -79,12 +79,13 @@ const fakeConnectedWalletData = {
 };
 
 function App() {
-  
   const [walletState, setWalletState] = useState({
     address: "",
     clientReportData: defaultClientReportData,
-    timeToConnect: false
+    timeToConnect: false,
   });
+
+  console.log("App address", walletState.address);
 
   const updateWalletAddress = (newAddress) => {
     console.log("newAddress", newAddress);
@@ -104,11 +105,14 @@ function App() {
   };
 
   const setAddress = (address) => {
+    if (walletState.address === address) {
+      return;
+    }
+
     setWalletState((prevWalletState) => {
       return { ...prevWalletState, address: address };
     });
-  }
-  
+  };
 
   //Set the config network
   const customNetConfig = networkConfig[networkId];
@@ -124,9 +128,9 @@ function App() {
           updateWalletAddress={updateWalletAddress}
           debugLog={debugLog}
           clientReportData={walletState.clientReportData}
-          address={walletState.address}
           setTimeToConnect={setTimeToConnect}
           timeToConnect={walletState.timeToConnect}
+          setAddress={setAddress}
         />
       ),
       children: [
