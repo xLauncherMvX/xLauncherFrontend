@@ -59,9 +59,20 @@ function App() {
   const [walletState, setWalletState] = useState({});
 
   const updateWalletAddress = (newAddress) => {
-    setWalletState((prefWalletAddress) => {
-      return { ...prefWalletAddress, address: newAddress };
+    console.log("newAddress", newAddress);
+    setWalletState((prevWalletState) => {
+      return { ...prevWalletState, address: newAddress };
     });
+  };
+
+  const logout = () => {
+    setWalletState((prevWalletState) => {
+      return { ...prevWalletState, address: null };
+    });
+  };
+
+  const debugLog = (message) => {
+    console.log(message);
   };
 
   //Set the config network
@@ -73,7 +84,13 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout />,
+      element: (
+        <Layout
+          updateWalletAddress={updateWalletAddress}
+          logout={logout}
+          debugLog={debugLog}
+        />
+      ),
       children: [
         { path: "/", element: <Staking /> },
         { path: "/staking", element: <Staking /> },

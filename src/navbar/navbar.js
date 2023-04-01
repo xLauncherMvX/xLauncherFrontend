@@ -25,7 +25,7 @@ import {multiplier, calc2} from "utils/utilities";
 import {allTokens, customConfig, defaultWalletData, networkId} from "config/customConfig";
 import {getAccountNFTS, getAccountTokens} from "utils/api";
 
-export function Navbar() {
+export function Navbar(props) {
     //Used to detect mobile screen
     const {toggleSidebar, broken} = useProSidebar();
 
