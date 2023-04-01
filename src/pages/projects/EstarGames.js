@@ -70,7 +70,7 @@ const details = [
 
 export default function EstarGames() {
     return (
-        <Layout>
+        <div>
             <Row>
                 <Col xs={12} md={12} lg={{offset: 2, span:8}}>
                     <ProjectCard
@@ -87,6 +87,6 @@ export default function EstarGames() {
                     />
                 </Col>
             </Row>
-        </Layout>
+        </div>
     );
 }

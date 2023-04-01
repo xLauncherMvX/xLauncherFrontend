@@ -281,7 +281,7 @@ function Bloodshed() {
   };
 
   return (
-    <Layout>
+    <div>
       <Container>
         <Row className="text-center mt-5">
           {/* <Col>{topInfo}</Col> */}
@@ -343,7 +343,7 @@ function Bloodshed() {
           </Col>
         </Row>
       </Container>
-    </Layout>
+    </div>
   );
 }
 

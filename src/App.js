@@ -63,18 +63,7 @@ const defaultClientReportData = {
   farm1Rewards: "",
   farm2Amount: "",
   farm2Rewards: "",
-  farm3Amount: "125.25",
-  farm3Rewards: "",
-};
-
-const fakeConnectedWalletData = {
-  totalAmount: "",
-  totalRewards: "",
-  farm1Amount: "",
-  farm1Rewards: "",
-  farm2Amount: "",
-  farm2Rewards: "",
-  farm3Amount: "125.25",
+  farm3Amount: "",
   farm3Rewards: "",
 };
 
@@ -138,6 +127,12 @@ function App() {
           element: <Staking walletState={walletState} />,
         },
         { path: "/projects", element: <Projects /> },
+        { path: "/team", element: <Team /> },
+        { path: "/admin", element: <Admin /> },
+        { path: "/lottery/bloodshed", element: <Bloodshed /> },
+        { path: "/zero2infinity", element: <Zero2Infinity /> },
+        { path: "/estargames", element: <EstarGames /> },
+        { path: "/vestaxfinance", element: <VestaXFinance /> },
       ],
     },
   ]);

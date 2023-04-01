@@ -3,9 +3,9 @@ import Layout from 'layout/layout';
 
 function Team(props) {
     return (
-        <Layout>
+        <div>
             <p style={{fontSize: '50px', color: 'white'}}>Team</p>
-        </Layout>
+        </div>
     );
 }
 

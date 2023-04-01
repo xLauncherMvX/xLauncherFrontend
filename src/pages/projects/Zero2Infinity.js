@@ -70,7 +70,7 @@ const details = [
 
 export default function Zero2Infinity() {
     return (
-        <Layout>
+        <div>
             <Row>
                 <Col xs={12} md={12} lg={{offset: 2, span:8}}>
                     <ProjectCard
@@ -88,6 +88,6 @@ export default function Zero2Infinity() {
                     />
                 </Col>
             </Row>
-        </Layout>
+        </div>
     );
 }

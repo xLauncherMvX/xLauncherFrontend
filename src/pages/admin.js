@@ -28,10 +28,10 @@ function Admin() {
     };
 
     return (
-        <Layout>
+        <div>
             <p style={{fontSize: '50px', color: 'white'}}>Admin</p>
             <Button onClick={()=> getClientStateData("erd14h0nwmg553xqkly6lcjvty3pteypuup774y7c84jn9x0jkctgs4s59y8he")}> Query Client State Data</Button>
-        </Layout>
+        </div>
     );
 }
 
