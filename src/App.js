@@ -13,7 +13,7 @@ import {
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "pages/dashboard";
 import Staking from "pages/staking";
 import Projects from "pages/projects";
@@ -32,6 +32,7 @@ import {
 } from "@multiversx/sdk-dapp/UI";
 import { networkId } from "config/customConfig";
 import { networkConfig } from "config/networks";
+import Layout from "layout/layout";
 
 library.add(
   fab,
@@ -48,8 +49,21 @@ library.add(
 );
 
 function App() {
+  const [walletState, setWalletState] = useState({});
+
+  const updateWalletAddress = (newAddress) => {
+    setWalletState((prefWalletAddress) => {
+      return { ...prefWalletAddress, address: newAddress };
+    });
+  };
+
   //Set the config network
   const customNetConfig = networkConfig[networkId];
+
+  const router = createBrowserRouter([{
+    path: '/',
+    element: <Layout/>,
+  }])
 
   return (
     <DappProvider
@@ -61,23 +75,10 @@ function App() {
       <TransactionsToastList />
       <NotificationModal />
       <SignTransactionsModals />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Staking />} />
-          {/*<Route path="/dashboard" element={<Dashboard />}/>*/}
-          <Route path="/staking" element={<Staking />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/team" element={<Team />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/lottery/bloodshed" element={<Bloodshed />} />
-          <Route path="/projects/zero-2-infinity" element={<Zero2Infinity />} />
-          <Route path="/projects/estar-games" element={<EstarGames />} />
-          <Route path="/projects/vestax-finance" element={<VestaXFinance />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </BrowserRouter>
+      <RouterProvider router={router}/>
     </DappProvider>
   );
 }
 
 export default App;
+
