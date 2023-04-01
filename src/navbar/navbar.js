@@ -45,7 +45,6 @@ export function Navbar(props) {
 
   //Get the user address
   const debugAccountInfo = useGetAccountInfo();
-  console.log("debugAccountInfo", debugAccountInfo);
   //const {address, account} = debugAccountInfo
   let address = "";
   let account = {

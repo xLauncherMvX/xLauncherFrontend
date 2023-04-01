@@ -55,8 +55,32 @@ library.add(
   faCheck
 );
 
+const defaultClientReportData = {
+  totalAmount: "",
+  totalRewards: "",
+  farm1Amount: "",
+  farm1Rewards: "",
+  farm2Amount: "",
+  farm2Rewards: "",
+  farm3Amount: "125.25",
+  farm3Rewards: "",
+};
+
+const fakeConnectedWalletData = {
+  totalAmount: "",
+  totalRewards: "",
+  farm1Amount: "",
+  farm1Rewards: "",
+  farm2Amount: "",
+  farm2Rewards: "",
+  farm3Amount: "125.25",
+  farm3Rewards: "",
+};
+
 function App() {
-  const [walletState, setWalletState] = useState({});
+  const [walletState, setWalletState] = useState({
+    clientReportData: defaultClientReportData,
+  });
 
   const updateWalletAddress = (newAddress) => {
     console.log("newAddress", newAddress);
@@ -81,6 +105,11 @@ function App() {
   //<Route path="/staking" element={<Staking />} />
   //              <Route path="/projects" element={<Projects />} />
 
+  let propsWalletDefaultData = walletState.clientReportData;
+  console.log(
+    "app clientReportData: " + JSON.stringify(propsWalletDefaultData, null, 2)
+  );
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -89,11 +118,12 @@ function App() {
           updateWalletAddress={updateWalletAddress}
           logout={logout}
           debugLog={debugLog}
+          clientReportData={walletState.clientReportData}
         />
       ),
       children: [
         { path: "/", element: <Staking /> },
-        { path: "/staking", element: <Staking /> },
+        { path: "/staking", element: <Staking clientReportData={walletState.clientReportData}/> },
         { path: "/projects", element: <Projects /> },
       ],
     },
