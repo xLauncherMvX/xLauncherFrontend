@@ -16,8 +16,12 @@ function Layout(props) {
       <Container className="main-container">
         <Row>
           <Col>
-            <Navbar debugLog={props.debugLog} updateWalletAddress={props.updateWalletAddress} />
-            <Outlet clientReportData = {props.clientReportData} />
+            <Navbar
+              debugLog={props.debugLog}
+              updateWalletAddress={props.updateWalletAddress}
+              address={props.address}
+            />
+            <Outlet clientReportData={props.clientReportData} />
           </Col>
         </Row>
       </Container>

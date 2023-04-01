@@ -79,6 +79,7 @@ const fakeConnectedWalletData = {
 
 function App() {
   const [walletState, setWalletState] = useState({
+    address: "",
     clientReportData: defaultClientReportData,
   });
 
@@ -105,10 +106,7 @@ function App() {
   //<Route path="/staking" element={<Staking />} />
   //              <Route path="/projects" element={<Projects />} />
 
-  let propsWalletDefaultData = walletState.clientReportData;
-  console.log(
-    "app clientReportData: " + JSON.stringify(propsWalletDefaultData, null, 2)
-  );
+
 
   const router = createBrowserRouter([
     {
@@ -119,6 +117,7 @@ function App() {
           logout={logout}
           debugLog={debugLog}
           clientReportData={walletState.clientReportData}
+          address={walletState.address}
         />
       ),
       children: [

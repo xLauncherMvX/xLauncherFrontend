@@ -36,6 +36,8 @@ import {
 import { getAccountNFTS, getAccountTokens } from "utils/api";
 
 export function Navbar(props) {
+  let address = props.address;
+
   //Used to detect mobile screen
   const { toggleSidebar, broken } = useProSidebar();
 
@@ -46,7 +48,6 @@ export function Navbar(props) {
   //Get the user address
   const debugAccountInfo = useGetAccountInfo();
   //const {address, account} = debugAccountInfo
-  let address = "";
   let account = {
     address: "",
     balance: "...",
