@@ -19,13 +19,13 @@ import { ProxyNetworkProvider } from "@multiversx/sdk-network-providers/out";
 import { getIsLoggedIn, refreshAccount } from "@multiversx/sdk-dapp/utils";
 import { useGetAccountInfo } from "@multiversx/sdk-dapp/hooks";
 import { Address, AddressValue } from "@multiversx/sdk-core/out";
-import BloodshedTicketsSaleCard from "cards/BloodshedTicketsSaleCard";
+import XLHBloodshedTicketsSaleCard from "cards/XLHBloodshedTicketsSaleCard";
 // import DateCountdown from "components/dateCountdown";
 import { multiplier } from "utils/utilities";
 import { Card } from "react-bootstrap";
 import logoTitle from "assets/images/zalmoxis_logo.png";
 
-function Bloodshed(props) {
+function XLHBloodshed(props) {
   let walletState = props.walletState;
   const { address } = walletState;
   const isLoggedIn = Boolean(address);
@@ -43,8 +43,8 @@ function Bloodshed(props) {
   const config = customConfig[networkId];
   const tokens = allTokens[networkId];
   const networkProvider = new ProxyNetworkProvider(config.provider);
-  const scAddress = config.bloodshedAddress;
-  const scToken = config.bloodshedToken;
+  const scAddress = config.bloodshedXLHAddress;
+  const scToken = config.token;
   const scName = "Launchpad";
   const chainID = networkConfig[networkId].shortId;
   const tokensAPI = config.apiLink + address + "/tokens?size=2000";
@@ -88,11 +88,11 @@ function Bloodshed(props) {
       const seconds = Math.floor(timeDiff / one_second);
       timeDiff -= seconds * one_second;
       return (
-          <span className="custom-ctt-numbers2">
+        <span className="custom-ctt-numbers2">
             {days > 0 && <span>{days} <span className="text-white">d</span> </span>}
-            {hours > 0 && <span>{hours} <span className="text-white">h</span> </span>}
-            {minutes > 0 && <span>{minutes} <span className="text-white">min</span> </span>}
-            {seconds > 0 && <span>{seconds} <span className="text-white">s</span> </span>}
+          {hours > 0 && <span>{hours} <span className="text-white">h</span> </span>}
+          {minutes > 0 && <span>{minutes} <span className="text-white">min</span> </span>}
+          {seconds > 0 && <span>{seconds} <span className="text-white">s</span> </span>}
           </span>
       );
     }
@@ -196,12 +196,12 @@ function Bloodshed(props) {
       setTotalNumberOfTicketsForAddress(newTotalNumberOfTicketsForAddress);
 
       const newIsWhitelisted = await contractQuery(
-          networkProvider,
-          lotteryAbi,
-          scAddress,
-          scName,
-          "isWhitelisted",
-          [new AddressValue(new Address(address))]
+        networkProvider,
+        lotteryAbi,
+        scAddress,
+        scName,
+        "isWhitelisted",
+        [new AddressValue(new Address(address))]
       );
       setIsWhitelisted(newIsWhitelisted);
     }
@@ -249,16 +249,6 @@ function Bloodshed(props) {
     return () => window.clearInterval(interval);
     // eslint-disable-next-line
   }, [configuration]);
-
-  //   useEffect(() => {
-  //     const interval = window.setInterval(() => {
-  //       setTicketCounters().then(() => {
-  //         //do nothing
-  //       });
-  //     }, 6000);
-  //     return () => window.clearInterval(interval);
-  //     // eslint-disable-next-line
-  //   }, []);
 
   const dataToBeRefreshed = async () => {
     let configurationToUse = configuration;
@@ -321,10 +311,14 @@ function Bloodshed(props) {
             lg={{ offset: 4, span: 4 }}
             className="text-center"
           >
-            <p className="h5 text-white mt-4">
-              Owned Tickets: {totalNumberOfTicketsForAddress.toString()}, KYC - {isWhitelisted ? 'Approved' : 'None'}
-            </p>
-            <BloodshedTicketsSaleCard
+            {totalNumberOfSoldTickets ? (
+              <p className="h5 text-white mt-4">
+                Owned Tickets: {totalNumberOfTicketsForAddress.toString()}, KYC - {isWhitelisted ? 'Approved' : 'None'}
+              </p>
+            ) : (
+              ""
+            )}
+            <XLHBloodshedTicketsSaleCard
               buyTickets={(amount) =>
                 buyTickets(
                   networkProvider,
@@ -333,7 +327,8 @@ function Bloodshed(props) {
                   scName,
                   chainID,
                   scToken,
-                  amount
+                  amount,
+                  10000
                 )
               }
               disabledVar={disabledVar}
@@ -349,4 +344,4 @@ function Bloodshed(props) {
   );
 }
 
-export default Bloodshed;
+export default XLHBloodshed;

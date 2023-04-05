@@ -11,7 +11,8 @@ import {refreshAccount} from "@multiversx/sdk-dapp/__commonjs/utils";
 import {sendTransactions} from "@multiversx/sdk-dapp/services";
 import {BigNumber} from "bignumber.js";
 
-export const buyTickets = async (networkProvider, abiFile, scAddress, scName, chainID, token, amount) => {
+export const buyTickets = async (networkProvider, abiFile, scAddress, scName, chainID, token, amount, tokenMultiplier) => {
+    if(!tokenMultiplier) tokenMultiplier = 1;
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
         let abi = new SmartContractAbi(abiRegistry, [scName]);
@@ -24,7 +25,7 @@ export const buyTickets = async (networkProvider, abiFile, scAddress, scName, ch
             .confirmTickets([new U8Value(amount)])
             .withChainID(chainID)
             .withSingleESDTTransfer(
-                TokenPayment.fungibleFromAmount(token, amount, 18)
+                TokenPayment.fungibleFromAmount(token, amount * tokenMultiplier, 18)
             )
             .buildTransaction();
         const buyTicketsTransaction = {

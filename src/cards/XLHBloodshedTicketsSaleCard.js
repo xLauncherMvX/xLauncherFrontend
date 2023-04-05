@@ -15,7 +15,7 @@ import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { useGetIsLoggedIn } from "@multiversx/sdk-dapp/hooks";
 import {openInNewTab} from "utils/utilities";
 
-export default function BloodshedTicketsSaleCard({
+export default function XLHBloodshedTicketsSaleCard({
   buyTickets,
   disabledVar,
   vegldBalance,
@@ -57,7 +57,7 @@ export default function BloodshedTicketsSaleCard({
           className="btn btn-block btn-sm btn-info mt-3"
           style={{ minWidth: "90px" }}
         >
-          Insufficient vEGLD
+          Insufficient XLH
         </Button>
       );
     } else {
@@ -109,38 +109,9 @@ export default function BloodshedTicketsSaleCard({
             alignItems="center"
             mt={2}
           >
-            <p className="h4 text-white">{ticketsNumber} vEGLD</p>
+            <p className="h4 text-white">{ticketsNumber * 10000} XLH</p>
           </Box>
         </Col>
-
-        <Col xs={1}> </Col>
-        <Col xs={10}>
-          <div className="light-divider"> </div>
-          <Input
-            value={ticketsNumber}
-            size="small"
-            placeholder="Mint Amount"
-            onChange={handleInputChangeS}
-            onKeyPress={(event) => {
-              if (!/[0-9]/.test(event.key)) {
-                event.preventDefault();
-              }
-            }}
-            disableUnderline
-            // disabled={disabledVar}
-            className="text-white ps-3 pe-5 pt-1 b-r-md"
-            style={{ border: "0.5px solid rgb(74, 85, 104)", width: "100%" }}
-          />
-          <Slider
-            value={ticketsNumber}
-            onChange={handleSliderChangeS}
-            step={1}
-            min={1}
-            max={500}
-            // disabled={disabledVar}
-          />
-        </Col>
-        <Col xs={1}> </Col>
 
         <Col xs={{ offset: 1, span: 10 }}>
           <Box mb={3}>
@@ -155,7 +126,7 @@ export default function BloodshedTicketsSaleCard({
             <Button
               variant="success"
               className="btn btn-sm btn-block"
-              // disabled={disabledVar}
+              disabled={true}
               onClick={() => increaseAmount(1)}
             >
               <FontAwesomeIcon fontSize={"medium"} icon={faAdd} color="white" />
@@ -166,7 +137,7 @@ export default function BloodshedTicketsSaleCard({
             <Button
               variant="danger"
               className="btn btn-sm btn-block mt-1"
-              // disabled={disabledVar}
+              disabled={true}
               onClick={() => decreaseAmount(1)}
             >
               <FontAwesomeIcon
@@ -176,17 +147,6 @@ export default function BloodshedTicketsSaleCard({
                 style={{ marginLeft: "-9px" }}
               />
               <span className="ms-2">Buy less</span>
-            </Button>
-          </Col>
-          <Col xs={12}>
-            <Button
-                variant="info"
-                className="btn btn-sm btn-block mt-1"
-                // disabled={disabledVar}
-                onClick={() => openInNewTab("https://vegld.vestax.finance/")}
-            >
-              <FontAwesomeIcon fontSize={"medium"} icon={faShoppingCart} color="white" />
-              <span className="ms-2">Get vEGLD</span>
             </Button>
           </Col>
         </Col>
@@ -202,15 +162,12 @@ export default function BloodshedTicketsSaleCard({
             </div>
           </Box>
         </Col>
-        <Col xs={12}>
-          <p className="font-bold text-white text-uppercase">You can buy one time only</p>
-        </Col>
         {(totalNumberOfTicketsForAddress <= 0 && isWhitelisted && currentPhase === 'tickets_purchase') && <Col xs={12}>{getBuyButton()}</Col>}
         {!isLoggedIn && <Col xs={12}>
           <Button
-              className="btn btn-block btn-sm btn-info mt-3"
-              style={{ minWidth: "90px" }}
-              disabled={true}
+            className="btn btn-block btn-sm btn-info mt-3"
+            style={{ minWidth: "90px" }}
+            disabled={true}
           >
             You are not logged in
           </Button>

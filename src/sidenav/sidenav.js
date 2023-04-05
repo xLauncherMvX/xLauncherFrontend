@@ -90,7 +90,7 @@ export function Sidenav() {
                             label="Staking"
                             icon={<Stake />}
                             component={<Link to="/staking"/>}
-                            active={window.location.pathname === "/staking" || window.location.pathname === "/"}
+                            //active={window.location.pathname === "/staking" || window.location.pathname === "/"}
                         >
                             Staking
                         </MenuItem>
@@ -98,7 +98,7 @@ export function Sidenav() {
                             label="Projects"
                             icon={<Cubes />}
                             component={<Link to="/projects"/>}
-                            active={window.location.pathname === "/projects"}
+                            //active={window.location.pathname === "/projects"}
                         >
                             Projects
                         </MenuItem>
@@ -112,9 +112,17 @@ export function Sidenav() {
                             label="Lottery"
                             icon={<ShoppingCart />}
                             component={<Link to="/lottery/bloodshed"/>}
-                            active={window.location.pathname === "/presale/bloodshed"}
+                            //active={window.location.pathname === "/lottery/bloodshed"}
                         >
                             Lottery
+                        </MenuItem>
+                        <MenuItem
+                          label="Lottery with XLH"
+                          icon={<ShoppingCart />}
+                          component={<Link to="/lottery/xlh-bloodshed"/>}
+                          //active={window.location.pathname === "/lottery/xlh-bloodshed"}
+                        >
+                            Lottery with XLH
                         </MenuItem>
                     </Menu>
 
