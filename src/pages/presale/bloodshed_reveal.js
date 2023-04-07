@@ -1,20 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "assets/css/globals.css";
 import "assets/css/bloodshed.css";
 import "assets/css/dateCountdown.css";
 import Container from "@mui/material/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
+import fetch from "axios";
 import BloodshedRevealCard from "cards/BloodshedRevealCard";
+import { useGetAccountInfo } from "@multiversx/sdk-dapp/hooks";
+import { Address } from "@multiversx/sdk-core/out";
+import { sendTransactions } from "@multiversx/sdk-dapp/services";
 
 function BloodshedReveal() {
-  const [totalNumberOfTicketsForAddress, setTotalNumberOfTicketsForAddress] =
-    useState(0);
+  const { address } = useGetAccountInfo();
+  const contractAddress =
+    "erd1nnfycz3rn9lkdfxdrn8cdlg83rrtasr9hanlmn96jx04f2kth03scfu735";
+  const [pendingRevealsRemaining, setPendingRevealsRemaining] = useState(0);
 
   const handleReveal = async () => {
-    window.alert("todo");
+    const amountToReveal =
+      pendingRevealsRemaining > 30 ? 30 : pendingRevealsRemaining;
+    let amountAsHex = amountToReveal.toString(16);
+    if (amountAsHex.length % 2 === 1) {
+      amountAsHex = "0" + amountAsHex;
+    }
+    const contractAddress = new Address(contractAddress).hex();
+
+    const txData = `ESDTNFTTransfer@424c4f4f4444524f502d363364633762@01@${amountAsHex}@${contractAddress}@627579@${amountAsHex}`;
+
+    const tx = {
+      data: txData,
+      gasLimit: 20_000_000 * amountToReveal,
+      sender: address,
+      receiver: address,
+      value: "0",
+      chainID: "1",
+    };
+
+    await sendTransactions({ transactions: [tx] });
   };
+
+  const fetchRevealSFTs = async () => {
+    const apiResponse = await fetch(
+      `https://api.multiversx.com/accounts/${address}/nfts?identifiers=BLOODDROP-63dc7b-01`
+    );
+    if (apiResponse.status === 200 && apiResponse.data.length > 0) {
+      return parseInt(apiResponse.data[0].balance);
+    }
+    return 0;
+  };
+
+  useEffect(() => {
+    fetchRevealSFTs().then((v) => setPendingRevealsRemaining(v));
+  }, [address]);
 
   return (
     <div>
@@ -35,7 +73,7 @@ function BloodshedReveal() {
             className="text-center"
           >
             <BloodshedRevealCard
-              pendingRevealsRemaining={totalNumberOfTicketsForAddress}
+              pendingRevealsRemaining={pendingRevealsRemaining}
               handleReveal={handleReveal}
             />
           </Col>

@@ -41,7 +41,7 @@ export default function BloodshedRevealCard({
       <Row>
         <Col xs={12}>
           <p className="h4 text-white">
-            Pending Reveals: {pendingRevealsRemaining.toString()}
+            Pending Reveals: {pendingRevealsRemaining?.toString()}
           </p>
         </Col>
       </Row>
@@ -72,7 +72,7 @@ export default function BloodshedRevealCard({
             Reveal{" "}
             {pendingRevealsRemaining > 30
               ? "30"
-              : pendingRevealsRemaining.toString()}
+              : pendingRevealsRemaining?.toString()}
           </Button>
         </Col>
       </Row>
