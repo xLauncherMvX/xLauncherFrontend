@@ -1,7 +1,7 @@
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import React from "react";
+import React, { useState } from "react";
 import { Card } from "react-bootstrap";
 import image from "assets/images/bloodshed_nfts.png";
 import logoTitle from "assets/images/zalmoxis_logo.png";
@@ -14,6 +14,15 @@ export default function BloodshedRevealCard({
   if (pendingRevealsRemaining > 0) {
     showButton = false;
   }
+
+  const RELEASE_TIME = 1680890400000;
+  const [currentTimestamp, setCurrentTimestamp] = useState(
+    new Date().getTime()
+  );
+  const [isPastReleaseTime, setIsPastReleaseTime] = useState(
+    currentTimestamp > RELEASE_TIME
+  );
+
   return (
     <div className="farm-card">
       <Row>
@@ -63,17 +72,28 @@ export default function BloodshedRevealCard({
       </div>
       <Row>
         <Col xs={12}>
-          <Button
-            className="btn btn-block  btn-success mt-3"
-            style={{ minWidth: "90px" }}
-            onClick={handleReveal}
-            disabled={showButton}
-          >
-            Reveal{" "}
-            {pendingRevealsRemaining > 30
-              ? "30"
-              : pendingRevealsRemaining?.toString()}
-          </Button>
+          {isPastReleaseTime && (
+            <Button
+              className="btn btn-block  btn-success mt-3"
+              style={{ minWidth: "90px" }}
+              onClick={handleReveal}
+              disabled={showButton}
+            >
+              Reveal{" "}
+              {pendingRevealsRemaining > 30
+                ? "30"
+                : pendingRevealsRemaining?.toString()}
+            </Button>
+          )}
+          {!isPastReleaseTime && (
+            <Button
+              className="btn btn-block  btn-success mt-3"
+              style={{ minWidth: "90px" }}
+              disabled={true}
+            >
+              Reveal starts at 18:00 UTC
+            </Button>
+          )}
         </Col>
       </Row>
     </div>
