@@ -11,7 +11,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import { contractQuery, getAccountTokens } from "utils/api";
-import { buyTickets } from "utils/bloodshedLotteryApi.js";
+import { buyTickets, claimResults } from "utils/bloodshedLotteryApi.js";
 import { customConfig, networkId, allTokens } from "config/customConfig";
 import { networkConfig } from "config/networks";
 import lotteryAbi from "abiFiles/launchpad.abi.json";
@@ -20,20 +20,13 @@ import { getIsLoggedIn, refreshAccount } from "@multiversx/sdk-dapp/utils";
 import { useGetAccountInfo } from "@multiversx/sdk-dapp/hooks";
 import { Address, AddressValue } from "@multiversx/sdk-core/out";
 import XLHBloodshedTicketsSaleCard from "cards/XLHBloodshedTicketsSaleCard";
+import BloodshedClaimCard from "cards/BloodshedClaimCard";
 // import DateCountdown from "components/dateCountdown";
 import { multiplier } from "utils/utilities";
 import { Card } from "react-bootstrap";
 import logoTitle from "assets/images/zalmoxis_logo.png";
 
-function XLHBloodshed(props) {
-  let walletState = props.walletState;
-  const { address } = walletState;
-  const isLoggedIn = Boolean(address);
-  const [isLoggedInValue, setIsLoggedInValue] = useState(isLoggedIn);
-  if (isLoggedIn !== isLoggedInValue) {
-    setIsLoggedInValue(isLoggedIn); // this line is needed to trigger the useEffect
-  }
-
+function XLHBloodshed() {
   const PHASE_MESSAGE_CLAIM_REWARDS = "Claim Rewards Phase is Open";
   const PHASE_MESSAGE_NOT_STARTED = "Buying Tickets Phase Starts in";
   const PHASE_MESSAGE_STARTED = "Buying Tickets Phase is Open";
@@ -42,6 +35,8 @@ function XLHBloodshed(props) {
   //Set the config network
   const config = customConfig[networkId];
   const tokens = allTokens[networkId];
+  const { address } = useGetAccountInfo();
+  const isLoggedIn = address.startsWith("erd1");
   const networkProvider = new ProxyNetworkProvider(config.provider);
   const scAddress = config.bloodshedXLHAddress;
   const scToken = config.token;
@@ -54,6 +49,8 @@ function XLHBloodshed(props) {
   const [totalNumberOfSoldTickets, setTotalNumberOfSoldTickets] =
     useState(null);
   const [totalNumberOfTicketsForAddress, setTotalNumberOfTicketsForAddress] =
+    useState(0);
+  const [numberOfWinningTicketsForAddress, setNumberOfWinningTicketsForAddress] =
     useState(0);
   const [disabledVar, setDisabledVar] = useState(false);
   const [isWhitelisted, setIsWhitelisted] = useState(false);
@@ -185,6 +182,16 @@ function XLHBloodshed(props) {
     setTotalNumberOfSoldTickets(newTotalNumberOfSoldTickets);
 
     if (isLoggedIn) {
+      const newNumberOfWinningTicketsForAddress = await contractQuery(
+        networkProvider,
+        lotteryAbi,
+        scAddress,
+        scName,
+        "getNumberOfWinningTicketsForAddress",
+        [new AddressValue(new Address(address))]
+      );
+      setNumberOfWinningTicketsForAddress(newNumberOfWinningTicketsForAddress);
+
       const newTotalNumberOfTicketsForAddress = await contractQuery(
         networkProvider,
         lotteryAbi,
@@ -303,42 +310,62 @@ function XLHBloodshed(props) {
             </div>
           </Col>
         </Row>
-        <Row>
-          <Col
-            xs={12}
-            sm={{ offset: 2, span: 8 }}
-            md={{ offset: 3, span: 6 }}
-            lg={{ offset: 4, span: 4 }}
-            className="text-center"
-          >
-            {totalNumberOfSoldTickets ? (
-              <p className="h5 text-white mt-4">
-                Owned Tickets: {totalNumberOfTicketsForAddress.toString()}, KYC - {isWhitelisted ? 'Approved' : 'None'}
-              </p>
-            ) : (
-              ""
-            )}
-            <XLHBloodshedTicketsSaleCard
-              buyTickets={(amount) =>
-                buyTickets(
-                  networkProvider,
-                  lotteryAbi,
-                  scAddress,
-                  scName,
-                  chainID,
-                  scToken,
-                  amount,
-                  10000
-                )
-              }
-              disabledVar={disabledVar}
-              vegld={vegldBalance}
-              totalNumberOfTicketsForAddress={totalNumberOfTicketsForAddress}
-              isWhitelisted={isWhitelisted}
-              currentPhase={currentPhase}
-            />
-          </Col>
-        </Row>
+        {currentPhase === "tickets_purchase" && (
+          <Row>
+            <Col
+              xs={12}
+              sm={{ offset: 2, span: 8 }}
+              md={{ offset: 3, span: 6 }}
+              lg={{ offset: 4, span: 4 }}
+              className="text-center"
+            >
+              {totalNumberOfSoldTickets ? (
+                <p className="h5 text-white mt-4">
+                  Owned Tickets: {totalNumberOfTicketsForAddress.toString()}, Whitelisted - {isWhitelisted ? 'Yes' : 'No'}
+                </p>
+              ) : (
+                ""
+              )}
+              <XLHBloodshedTicketsSaleCard
+                buyTickets={(amount) =>
+                  buyTickets(
+                    networkProvider,
+                    lotteryAbi,
+                    scAddress,
+                    scName,
+                    chainID,
+                    scToken,
+                    amount,
+                    10000
+                  )
+                }
+                disabledVar={disabledVar}
+                vegld={vegldBalance}
+                totalNumberOfTicketsForAddress={totalNumberOfTicketsForAddress}
+                isWhitelisted={isWhitelisted}
+                currentPhase={currentPhase}
+              />
+            </Col>
+          </Row>
+        )}
+        {(currentPhase === "winner_selection" || currentPhase === "claim_results") && (
+          <Row>
+            <Col
+              xs={12}
+              sm={{ offset: 2, span: 8 }}
+              md={{ offset: 2, span: 8 }}
+              lg={{ offset: 3, span: 6 }}
+              className="text-center"
+            >
+              <BloodshedClaimCard
+                totalNumberOfTicketsForAddress={totalNumberOfTicketsForAddress}
+                claimResults={()=>claimResults(networkProvider, lotteryAbi, scAddress, scName, chainID)}
+                numberOfWinningTicketsForAddress={numberOfWinningTicketsForAddress}
+                currentPhase={currentPhase}
+              />
+            </Col>
+          </Row>
+        )}
       </Container>
     </div>
   );

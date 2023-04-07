@@ -69,7 +69,7 @@ export const claimResults = async (networkProvider, abiFile, scAddress, scName, 
             value: 0,
             data: Buffer.from(transaction.getData().valueOf()),
             receiver: scAddress,
-            gasLimit: '15000000'
+            gasLimit: '40000000'
         };
         await refreshAccount();
 
