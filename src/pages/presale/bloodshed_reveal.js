@@ -30,7 +30,7 @@ function BloodshedReveal() {
 
     const tx = {
       data: txData,
-      gasLimit: 20_000_000 * amountToReveal,
+      gasLimit: 3_000_000 * amountToReveal + 10_000_000,
       sender: address,
       receiver: address,
       value: "0",
