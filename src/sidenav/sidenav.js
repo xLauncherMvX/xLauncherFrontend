@@ -124,6 +124,14 @@ export function Sidenav() {
                         >
                             Lottery with XLH
                         </MenuItem>
+                        <MenuItem
+                          label="Lottery with XLH"
+                          icon={<ShoppingCart />}
+                          component={<Link to="/lottery/bloodshed-reveal"/>}
+                          //active={window.location.pathname === "/lottery/xlh-bloodshed"}
+                        >
+                            Bloodshed NFT Reveal
+                        </MenuItem>
                     </Menu>
 
                     <div className='sidebar-label-divider'>

@@ -29,6 +29,7 @@ import Team from "pages/team";
 import Admin from "pages/admin";
 import Bloodshed from "pages/presale/bloodshed";
 import XLHBloodshed from "pages/presale/xlh_bloodshed";
+import BloodshedReveal from "pages/presale/bloodshed_reveal";
 import Zero2Infinity from "pages/projects/Zero2Infinity";
 import EstarGames from "pages/projects/EstarGames";
 import VestaXFinance from "pages/projects/VestaXFinance";
@@ -131,6 +132,7 @@ function App() {
         { path: "/admin", element: <Admin /> },
         { path: "/lottery/bloodshed", element: <Bloodshed walletState={walletState}/> },
         { path: "/lottery/xlh-bloodshed", element: <XLHBloodshed walletState={walletState}/> },
+        { path: "/lottery/bloodshed-reveal", element: <BloodshedReveal walletState={walletState}/> },
         { path: "/zero2infinity", element: <Zero2Infinity /> },
         { path: "/estargames", element: <EstarGames /> },
         { path: "/vestaxfinance", element: <VestaXFinance /> },
