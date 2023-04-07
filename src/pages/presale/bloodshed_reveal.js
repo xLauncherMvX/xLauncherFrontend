@@ -14,7 +14,7 @@ import { sendTransactions } from "@multiversx/sdk-dapp/services";
 function BloodshedReveal() {
   const { address } = useGetAccountInfo();
   const contractAddress =
-    "erd1nnfycz3rn9lkdfxdrn8cdlg83rrtasr9hanlmn96jx04f2kth03scfu735";
+    "erd1qqqqqqqqqqqqqpgquqwc8v09e5pmcz9h4569gynle8qwjdenyl5sayfsl0";
   const [pendingRevealsRemaining, setPendingRevealsRemaining] = useState(0);
 
   const handleReveal = async () => {
