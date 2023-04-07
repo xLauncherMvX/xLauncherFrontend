@@ -26,7 +26,7 @@ function BloodshedReveal() {
     }
     const hexContractAddr = new Address(contractAddress).hex();
 
-    const txData = `ESDTNFTTransfer@424c4f4f4444524f502d363364633762@01@${amountAsHex}@${hexContractAddr}@627579@${amountAsHex}`;
+    const txData = `ESDTNFTTransfer@424c4f4f4444524f502d363364633762@01@${amountAsHex}@${hexContractAddr}@627579@01@${amountAsHex}`;
 
     const tx = {
       data: txData,
