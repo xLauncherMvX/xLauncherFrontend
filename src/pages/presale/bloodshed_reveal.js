@@ -17,6 +17,41 @@ function BloodshedReveal() {
     "erd1qqqqqqqqqqqqqpgquqwc8v09e5pmcz9h4569gynle8qwjdenyl5sayfsl0";
   const [pendingRevealsRemaining, setPendingRevealsRemaining] = useState(0);
 
+  const [timeLeftCountdown, setTimeLeftCountdown] = useState("");
+  const countdownToTimestamp = (timestamp) => {
+    const currentUtcTimestamp = new Date().getTime();
+    let timeDiff = timestamp - currentUtcTimestamp;
+
+    if (timeDiff < 0) {
+      return "";
+    } else {
+      const one_second = 1000;
+      const one_minute = 60 * one_second;
+      const one_hour = 60 * one_minute;
+      const one_day = 24 * one_hour;
+
+      const days = Math.floor(timeDiff / one_day);
+      timeDiff -= days * one_day;
+
+      const hours = Math.floor(timeDiff / one_hour);
+      timeDiff -= hours * one_hour;
+
+      const minutes = Math.floor(timeDiff / one_minute);
+      timeDiff -= minutes * one_minute;
+
+      const seconds = Math.floor(timeDiff / one_second);
+      timeDiff -= seconds * one_second;
+      return (
+        <span className="custom-ctt-numbers2">
+            {days > 0 && <span>{days} <span className="text-white">d</span> </span>}
+          {hours > 0 && <span>{hours} <span className="text-white">h</span> </span>}
+          {minutes > 0 && <span>{minutes} <span className="text-white">min</span> </span>}
+          {seconds > 0 && <span>{seconds} <span className="text-white">s</span> </span>}
+          </span>
+      );
+    }
+  };
+
   const handleReveal = async () => {
     const amountToReveal =
       pendingRevealsRemaining > 30 ? 30 : pendingRevealsRemaining;
@@ -54,6 +89,14 @@ function BloodshedReveal() {
     fetchRevealSFTs().then((v) => setPendingRevealsRemaining(v));
   }, [address]);
 
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setTimeLeftCountdown(countdownToTimestamp(1680890400000));
+    }, 1000);
+    return () => window.clearInterval(interval);
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <div>
       <Container>
@@ -61,6 +104,7 @@ function BloodshedReveal() {
           <Col>
             <div className="show-counter">
               <h1 className="text-white">Bloodshed NFT Reveal</h1>
+              <a className="countdown-link">{timeLeftCountdown}</a>
             </div>
           </Col>
         </Row>
@@ -78,7 +122,6 @@ function BloodshedReveal() {
             />
           </Col>
         </Row>
-        s
       </Container>
     </div>
   );
