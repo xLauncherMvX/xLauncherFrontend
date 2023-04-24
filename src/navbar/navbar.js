@@ -149,6 +149,7 @@ export function Navbar(props) {
               <Col className="text-center">
                 <WebWalletLoginButton
                   callbackRoute="/"
+                  nativeAuth={true}
                   loginButtonText="Web wallet"
                   className="btn btn-sm dapp-primary font-size-sm w-60"
                 />
@@ -158,6 +159,7 @@ export function Navbar(props) {
               <Col>
                 <LedgerLoginButton
                   loginButtonText="Ledger"
+                  nativeAuth={true}
                   callbackRoute="/"
                   className="btn btn-sm dapp-primary font-size-sm w-60"
                 />
@@ -167,6 +169,7 @@ export function Navbar(props) {
               <Col>
                 <WalletConnectLoginButton
                   callbackRoute="/"
+                  nativeAuth={true}
                   loginButtonText={"xPortal App"}
                   isWalletConnectV2={true}
                   className="btn btn-sm dapp-primary font-size-sm w-60"
@@ -177,6 +180,7 @@ export function Navbar(props) {
               <Col>
                 <ExtensionLoginButton
                   callbackRoute="/"
+                  nativeAuth={true}
                   loginButtonText="Extension"
                   className="btn btn-block btn-sm dapp-primary font-size-sm w-60 mt-1"
                 />
