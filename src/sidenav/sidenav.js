@@ -12,6 +12,7 @@ import { SidenavHeader } from 'sidenav/components/sidenavHeader';
 import { SidenavFooter } from 'sidenav/components/sidenavFooter';
 import FilterIcon from '@mui/icons-material/Filter';
 import 'assets/css/sidenav.css';
+import { useLocation } from "react-router-dom";
 
 
 const sidenavColor = {
@@ -37,6 +38,9 @@ const sidenavColor = {
 }
 
 export function Sidenav() {
+    const location = useLocation();
+    const { pathname } = location;
+
     const menuItemStyles = {
         root: {
             fontSize: '0.875rem',
@@ -90,15 +94,23 @@ export function Sidenav() {
                             label="Staking"
                             icon={<Stake />}
                             component={<Link to="/staking"/>}
-                            //active={window.location.pathname === "/staking" || window.location.pathname === "/"}
+                            active={pathname === "/staking" || pathname === "/"}
                         >
                             Staking
+                        </MenuItem>
+                        <MenuItem
+                          label="Staking V2"
+                          icon={<Stake />}
+                          component={<Link to="/stakingV2"/>}
+                          active={pathname === "/stakingV2"}
+                        >
+                            Staking V2
                         </MenuItem>
                         <MenuItem
                             label="Projects"
                             icon={<Cubes />}
                             component={<Link to="/projects"/>}
-                            //active={window.location.pathname === "/projects"}
+                            active={pathname === "/projects"}
                         >
                             Projects
                         </MenuItem>
@@ -112,7 +124,7 @@ export function Sidenav() {
                             label="Lottery"
                             icon={<ShoppingCart />}
                             component={<Link to="/lottery/bloodshed"/>}
-                            //active={window.location.pathname === "/lottery/bloodshed"}
+                            active={pathname === "/lottery/bloodshed"}
                         >
                             Lottery
                         </MenuItem>
@@ -120,7 +132,7 @@ export function Sidenav() {
                           label="Lottery with XLH"
                           icon={<ShoppingCart />}
                           component={<Link to="/lottery/xlh-bloodshed"/>}
-                          //active={window.location.pathname === "/lottery/xlh-bloodshed"}
+                          active={window.location.pathname === "/lottery/xlh-bloodshed"}
                         >
                             Lottery with XLH
                         </MenuItem>
@@ -128,7 +140,7 @@ export function Sidenav() {
                           label="Lottery with XLH"
                           icon={<ShoppingCart />}
                           component={<Link to="/lottery/bloodshed-reveal"/>}
-                          //active={window.location.pathname === "/lottery/xlh-bloodshed"}
+                          active={pathname === "/lottery/bloodshed-reveal"}
                         >
                             Bloodshed NFT Reveal
                         </MenuItem>
