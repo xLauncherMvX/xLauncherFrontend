@@ -124,7 +124,7 @@ export const claim = async (abiFile, scAddress, scName, chainID, pool) => {
     }
 };
 
-export const stakeSFT = async (abiFile, scAddress, scName, chainID, token) => {
+export const stakeSFT = async (abiFile, scAddress, scName, chainID, token, address) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
         let abi = new SmartContractAbi(abiRegistry, [scName]);
@@ -136,8 +136,9 @@ export const stakeSFT = async (abiFile, scAddress, scName, chainID, token) => {
         const transaction = contract.methodsExplicit
           .stakeSft()
           .withChainID(chainID)
-          .withSingleESDTTransfer(
-            TokenPayment.semiFungible(token, 1, 1)
+          .withSingleESDTNFTTransfer(
+            TokenPayment.semiFungible(token, 1, 1),
+            new Address(address)
           )
           .buildTransaction();
         const stakeSFTTransaction = {
