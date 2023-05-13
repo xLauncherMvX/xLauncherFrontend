@@ -52,3 +52,13 @@
     border-radius: 0.75rem !important;
     line-height: 1.4 !important;
 }
+.rank-text{
+    font-size: 13px;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+.progress{
+    height: 10px !important;
+    margin-left: 5px;
+    margin-right: 5px;
+}
