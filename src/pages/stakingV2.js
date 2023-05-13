@@ -3,7 +3,7 @@ import Layout from 'layout/layout';
 import {Address, AddressValue, U32Value, U64Value} from "@multiversx/sdk-core/out";
 import Button from 'react-bootstrap/Button';
 import {contractQuery, getAccountTokens} from "utils/api";
-import {stakeSFT} from "utils/stakingV2API";
+import {stakeSFT, unstakeSFT} from "utils/stakingV2API";
 import stakeV2Abi from "abiFiles/xlauncher-staking-v2.abi.json";
 import {ProxyNetworkProvider} from "@multiversx/sdk-network-providers/out";
 import {allTokens, networkId, customConfig} from "config/customConfig";
@@ -191,6 +191,7 @@ function StakingV2(props) {
         <div>
             <p style={{fontSize: '50px', color: 'white'}}>Staking V2</p>
             <Button onClick={()=> stakeSFT(stakeV2Abi, stakeScAddress, scName, chainID, sft, address)}>StakeSFT </Button>
+            <Button onClick={()=> unstakeSFT(stakeV2Abi, stakeScAddress, scName, chainID)}>UnstakeSFT </Button>
             <Row>{cols}</Row>
         </div>
     );

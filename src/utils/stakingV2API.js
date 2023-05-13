@@ -164,3 +164,40 @@ export const stakeSFT = async (abiFile, scAddress, scName, chainID, token, addre
         console.error(error);
     }
 };
+
+
+export const unstakeSFT = async (abiFile, scAddress, scName, chainID) => {
+    try {
+        let abiRegistry = AbiRegistry.create(abiFile);
+        let abi = new SmartContractAbi(abiRegistry, [scName]);
+        let contract = new SmartContract({
+            address: new Address(scAddress),
+            abi: abi
+        });
+
+        const transaction = contract.methodsExplicit
+          .unstakeSft([new U64Value(1)])
+          .withChainID(chainID)
+          .buildTransaction();
+        const stakeTransaction = {
+            value: 0,
+            data: Buffer.from(transaction.getData().valueOf()),
+            receiver: scAddress,
+            gasLimit: '15000000'
+        };
+        await refreshAccount();
+
+        const { sessionId /*, error*/ } = await sendTransactions({
+            transactions: stakeTransaction,
+            transactionsDisplayInfo: {
+                processingMessage: 'Processing Unstake transaction',
+                errorMessage: 'An error has occurred during Unstake transaction',
+                successMessage: 'Unstake transaction successful'
+            },
+            redirectAfterSign: false
+        });
+
+    } catch (error) {
+        console.error(error);
+    }
+};
