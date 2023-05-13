@@ -102,7 +102,9 @@ function StakingV2(props) {
           "getClientReport",
           [new AddressValue(new Address(address))]
         );
-        setUserFarmsDetails(newUserPoolData);
+        if(newUserPoolData) {
+          setUserFarmsDetails(newUserPoolData);
+        }
     };
 
     useEffect(() => {
@@ -127,7 +129,6 @@ function StakingV2(props) {
             let myRewardsXlh = 0;
             let availableStakeXLH = pool_total_xlh ? (1000000 - pool_total_xlh) : 0;
             let percentage = pool_total_xlh? ((pool_total_xlh / 1000000) * 100) : 0;
-
             if(Object.keys(userFarmsDetails).length > 0 && isLoggedIn){
                 userFarmsDetails.report_pool_vector.map((element) => {
                     if (farm.pool_id.toString() === element.pool_id.toString()){
@@ -189,7 +190,7 @@ function StakingV2(props) {
     return (
         <div>
             <p style={{fontSize: '50px', color: 'white'}}>Staking V2</p>
-            <Button onClick={()=> stakeSFT(stakeV2Abi, stakeScAddress, scName, chainID, sft)}>StakeSFT </Button>
+            <Button onClick={()=> stakeSFT(stakeV2Abi, stakeScAddress, scName, chainID, sft, address)}>StakeSFT </Button>
             <Row>{cols}</Row>
         </div>
     );
