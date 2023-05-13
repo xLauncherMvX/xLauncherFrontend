@@ -24,6 +24,7 @@ import {
 } from "react-router-dom";
 import Dashboard from "pages/dashboard";
 import Staking from "pages/staking";
+import StakingV2 from "pages/stakingV2";
 import Projects from "pages/projects";
 import Team from "pages/team";
 import Admin from "pages/admin";
@@ -136,6 +137,8 @@ function App() {
         { path: "/zero2infinity", element: <Zero2Infinity /> },
         { path: "/estargames", element: <EstarGames /> },
         { path: "/vestaxfinance", element: <VestaXFinance /> },
+        { path: "/stakingV2", element: <StakingV2 walletState={walletState} /> },
+        { path: "*", element: <Staking walletState={walletState}/> },
       ],
     },
   ]);
