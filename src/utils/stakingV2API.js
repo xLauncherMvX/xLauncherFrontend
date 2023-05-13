@@ -137,14 +137,15 @@ export const stakeSFT = async (abiFile, scAddress, scName, chainID, token, addre
           .stakeSft()
           .withChainID(chainID)
           .withSingleESDTNFTTransfer(
-            TokenPayment.semiFungible(token, 1, 1),
+            TokenPayment.semiFungible(token, 1, 2),
             new Address(address)
           )
+
           .buildTransaction();
         const stakeSFTTransaction = {
             value: 0,
             data: Buffer.from(transaction.getData().valueOf()),
-            receiver: scAddress,
+            receiver: address,
             gasLimit: '15000000'
         };
         await refreshAccount();
