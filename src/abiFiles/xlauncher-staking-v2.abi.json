@@ -1,0 +1,573 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.69.0-nightly",
+            "commitHash": "658fad6c5506f41c35b64fb1a22ceb0992697ff3",
+            "commitDate": "2023-02-03",
+            "channel": "Nightly",
+            "short": "rustc 1.69.0-nightly (658fad6c5 2023-02-03)"
+        },
+        "contractCrate": {
+            "name": "xlauncher-staking",
+            "version": "0.1.0"
+        },
+        "framework": {
+            "name": "multiversx-sc",
+            "version": "0.39.8"
+        }
+    },
+    "name": "HelloWorld",
+    "constructor": {
+        "inputs": [],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "setContractSettings",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "sft_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "sft_nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "max_staking_val",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "unstake_xlh_lock_span",
+                    "type": "u64"
+                },
+                {
+                    "name": "unstake_sft_lock_span",
+                    "type": "u64"
+                },
+                {
+                    "name": "min_apy",
+                    "type": "u64"
+                },
+                {
+                    "name": "max_apy",
+                    "type": "u64"
+                },
+                {
+                    "name": "sft_increment_apy",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setPoolPrice",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "rank_1_price",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "rank_2_price",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "rank_3_price",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "createNewPool",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "pool_rank",
+                    "type": "u64"
+                },
+                {
+                    "name": "pool_title",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "fundWithRewords",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "stakeXlh",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "pool_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "unstakeSft",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "amount",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "unstakeXlh",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "pool_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claimUnstakedXlhValue",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "claimUnstakedSftValue",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "stakeSft",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "claimRewards",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "pool_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getClientReport",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "client",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "ReportClientAllPools"
+                }
+            ]
+        },
+        {
+            "name": "getAllClientsReport",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<ReportClientAllPools>"
+                }
+            ]
+        },
+        {
+            "name": "getContractSettings",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "StakingSettings"
+                }
+            ]
+        },
+        {
+            "name": "getSftSettings",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "SftSettings"
+                }
+            ]
+        },
+        {
+            "name": "getTotalStakedData",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TotalStakedData"
+                }
+            ]
+        },
+        {
+            "name": "getPoolData",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "pool_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "PoolData"
+                }
+            ]
+        },
+        {
+            "name": "getSimplePoolData",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "pool_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "SimplePoolData"
+                }
+            ]
+        },
+        {
+            "name": "getPoolPrice",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "pool_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "PoolPrice"
+                }
+            ]
+        },
+        {
+            "name": "getClientState",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "client_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "ClientData"
+                }
+            ]
+        },
+        {
+            "name": "getUnstakeXlhState",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "client_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "UnstakeXlhState"
+                }
+            ]
+        },
+        {
+            "name": "getUnstakeSftState",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "client_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "UnstakeSftState"
+                }
+            ]
+        },
+        {
+            "name": "getClientList",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        }
+    ],
+    "events": [],
+    "hasCallback": false,
+    "types": {
+        "ClientData": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "sft_amount",
+                    "type": "u64"
+                },
+                {
+                    "name": "xlh_data",
+                    "type": "List<ClientXlhData>"
+                }
+            ]
+        },
+        "ClientXlhData": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "pool_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "xlh_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "time_stamp",
+                    "type": "u64"
+                }
+            ]
+        },
+        "PoolData": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "pool_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "pool_rank",
+                    "type": "u64"
+                },
+                {
+                    "name": "pool_title",
+                    "type": "bytes"
+                },
+                {
+                    "name": "pool_total_xlh",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "pool_creation_funds",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "pool_owner",
+                    "type": "Address"
+                }
+            ]
+        },
+        "PoolPrice": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "rank_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "xlh_price",
+                    "type": "BigUint"
+                }
+            ]
+        },
+        "ReportClientAllPools": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "client_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "total_xlh_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "total_xlh_rewards",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "total_sft_amount",
+                    "type": "u64"
+                },
+                {
+                    "name": "report_pool_vector",
+                    "type": "List<ReportClientPoolPoolItem>"
+                }
+            ]
+        },
+        "ReportClientPoolPoolItem": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "pool_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "xlh_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "xlh_rewords",
+                    "type": "BigUint"
+                }
+            ]
+        },
+        "SftSettings": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "sft_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                }
+            ]
+        },
+        "SimplePoolData": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "pool_title",
+                    "type": "bytes"
+                }
+            ]
+        },
+        "StakingSettings": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "max_staking_val",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "unstake_xlh_lock_span",
+                    "type": "u64"
+                },
+                {
+                    "name": "unstake_sft_lock_span",
+                    "type": "u64"
+                },
+                {
+                    "name": "min_apy",
+                    "type": "u64"
+                },
+                {
+                    "name": "max_apy",
+                    "type": "u64"
+                },
+                {
+                    "name": "sft_increment_apy",
+                    "type": "u64"
+                }
+            ]
+        },
+        "TotalStakedData": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "last_pool_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "last_price_rank_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "total_xlh_staked",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "total_xlh_available_for_rewords",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "total_sft_staked",
+                    "type": "u64"
+                }
+            ]
+        },
+        "UnstakeSftState": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "total_unstaked_sft_amount",
+                    "type": "u64"
+                },
+                {
+                    "name": "free_after_time_stamp",
+                    "type": "u64"
+                }
+            ]
+        },
+        "UnstakeXlhState": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "total_unstaked_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "requested_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "free_after_time_stamp",
+                    "type": "u64"
+                }
+            ]
+        }
+    }
+}
