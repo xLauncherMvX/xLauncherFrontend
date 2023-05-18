@@ -174,7 +174,7 @@ export default function StakingV2Card({
                     <p className="details-text text-white">{apr}</p>
                 </div>
                 <div className="d-flex justify-content-between align-items-end">
-                    <p className="details-text">My Stacked XLH:</p>
+                    <p className="details-text">My Staked XLH:</p>
                     <p className="details-text text-white">{intlNumberFormat(myXLH)}</p>
                 </div>
                 <div className="d-flex justify-content-between align-items-end">
