@@ -142,11 +142,13 @@ function StakingV2(props) {
 			setUserFarmsDetails(newUserPoolData);
 		}
 		let rewardsAux = 0;
-		if(Object.keys(newUserPoolData).length > 0){
-			newUserPoolData.report_pool_vector.map((element) => {
-				let myRewardsXlh = element.xlh_rewords ? (element.xlh_rewords / multiplier) : 0;
-				rewardsAux += myRewardsXlh;
-			});
+		if(newUserPoolData) {
+			if (Object.keys(newUserPoolData).length > 0) {
+				newUserPoolData.report_pool_vector.map((element) => {
+					let myRewardsXlh = element.xlh_rewords ? (element.xlh_rewords / multiplier) : 0;
+					rewardsAux += myRewardsXlh;
+				});
+			}
 		}
 		if(rewardsAux){
 			setTotalRewards(rewardsAux);
