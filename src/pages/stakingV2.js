@@ -306,7 +306,7 @@ function StakingV2(props) {
 						scName={scName}
 						chainID={chainID}
 
-						lockedTime="2 Months Locked"
+						lockedTime="60 Days Locked"
 						amount={claimUnstakeSFTAmount}
 						timestamp={claimUnstakeSFTTimestamp * 1000}
 						isSftCard={true}
@@ -343,7 +343,7 @@ function StakingV2(props) {
 							color: "dark",
 							label: "Unstake SFT",
 							hint:
-								"Individual rewards can be claimed 10 days after unstake transaction",
+								"Individual rewards can be claimed 60 days after unstake transaction",
 							disabled: false
 						}}
 					/>
