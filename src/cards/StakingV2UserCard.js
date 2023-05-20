@@ -54,7 +54,7 @@ const componentsProps={
 
 export default function StakingV2UserCard({
     stakeV2Abi, stakeScAddress, scName, chainID, sft, address,
-    title, sftBalance, isLoggedIn, myRewardsColor,
+    title, sftBalance, isLoggedIn,
     sftNumber, totalStaked, totalRewards, createdFarms,
     stake, unstake
 }) {
@@ -172,7 +172,7 @@ export default function StakingV2UserCard({
                 </div>
                 <div className="d-flex justify-content-between align-items-end">
                     <p className="details-text">Total Earned XLH:</p>
-                    <p className={`details-text text-${myRewardsColor}`}>{intlNumberFormat(totalRewards)}</p>
+                    <p className={`details-text text-white`}>{intlNumberFormat(totalRewards)}</p>
                 </div>
             </div>
             <div className="light-divider" style={{ width: '100%', marginLeft: 0, marginBottom: '5px' }}> </div>
