@@ -15,7 +15,7 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
 import Slider from "@mui/material/Slider";
-import {calc2, intlNumberFormat} from "../utils/utilities";
+import {calc2, intlNumberFormat} from "utils/utilities";
 import Modal from "@mui/material/Modal";
 import {stake as stakeMethod, unstake as unstakeMethod, claim as claimMethod} from "utils/stakingV2API";
 import ProgressBar from 'react-bootstrap/ProgressBar';
@@ -210,7 +210,7 @@ export default function StakingV2Card({
 			<div>
 				<ProgressBar animated now={capacityPercentage}/>
 				<p className="text-center text-white"
-					 style={{fontSize: '12px', marginTop: '3px'}}>Capacity: {calc2(currentPoolXLh)} / 1000000</p>
+					 style={{fontSize: '12px', marginTop: '3px'}}>Capacity: {intlNumberFormat(calc2(currentPoolXLh))} / {intlNumberFormat(1000000, "en-GB", 0, 0)}</p>
 			</div>
 
 			<div className="light-divider" style={{width: '100%', marginLeft: 0, marginBottom: '5px'}}></div>
