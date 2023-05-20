@@ -10,6 +10,7 @@ import {networkConfig} from "config/networks";
 import {multiplier} from "utils/utilities";
 import StakingV2Card from "cards/StakingV2Card";
 import StakingV2UserCard from "cards/StakingV2UserCard";
+import CompleteUnstakeCardV2 from "cards/CompleteUnstakeCardV2";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
@@ -152,12 +153,52 @@ function StakingV2(props) {
 		}
 	};
 
+	const [claimUnstakeXLHAmount, setClaimUnstakeXLHAmount] = useState(0);
+	const [claimUnstakeXLHTimestamp, setClaimUnstakeXLHTimestamp] = useState(null);
+	const [claimUnstakeSFTAmount, setClaimUnstakeSFTAmount] = useState(0);
+	const [claimUnstakeSFTTimestamp, setClaimUnstakeSFTTimestamp] = useState(null);
+	const getClaimUnstakeStatsNumber = async () => {
+		const newStateXlh = await contractQuery(
+			networkProvider,
+			stakeV2Abi,
+			stakeScAddress,
+			"HelloWorld",
+			"getUnstakeXlhState",
+			[new AddressValue(new Address(address))]
+		);
+		if(newStateXlh){
+			const unstakedAmount = newStateXlh.total_unstaked_amount / multiplier;
+			const unlockingTimestamp = newStateXlh.free_after_time_stamp;
+
+			setClaimUnstakeXLHAmount(unstakedAmount);
+			setClaimUnstakeXLHTimestamp(unlockingTimestamp);
+		}
+
+		const newStateSft = await contractQuery(
+			networkProvider,
+			stakeV2Abi,
+			stakeScAddress,
+			"HelloWorld",
+			"getUnstakeSftState",
+			[new AddressValue(new Address(address))]
+		);
+
+		if(newStateSft){
+			const unstakedAmountS = newStateSft.total_unstaked_sft_amount;
+			const unlockingTimestampS = newStateSft.free_after_time_stamp;
+
+			setClaimUnstakeSFTAmount(unstakedAmountS);
+			setClaimUnstakeSFTTimestamp(unlockingTimestampS);
+		}
+	};
+
 	useEffect(() => {
 		const interval = window.setInterval(() => {
 			getFarmsDetails();
 			getSFTNumber();
 			if (isLoggedIn) {
 				getUserFarmsDetails();
+				getClaimUnstakeStatsNumber();
 			}
 		}, 1000);
 
@@ -243,6 +284,36 @@ function StakingV2(props) {
 			<p style={{fontSize: '50px', color: 'white'}}>Staking V2</p>
 			<Button onClick={() => stakeSFT(stakeV2Abi, stakeScAddress, scName, chainID, sft, address, 2)}>StakeSFT </Button>
 			<Button onClick={() => unstakeSFT(stakeV2Abi, stakeScAddress, scName, chainID)}>UnstakeSFT </Button>
+			<Row className="mt-5">
+				<Col xs={12} lg={4}>
+					<CompleteUnstakeCardV2
+						stakeV2Abi={stakeV2Abi}
+						stakeScAddress={stakeScAddress}
+						scName={scName}
+						chainID={chainID}
+
+						lockedTime="10 Days Locked"
+						amount={claimUnstakeXLHAmount}
+						timestamp={claimUnstakeXLHTimestamp * 1000}
+						isSftCard={false}
+						isLoggedIn={isLoggedIn}
+					/>
+				</Col>
+				<Col xs={12} lg={4}>
+					<CompleteUnstakeCardV2
+						stakeV2Abi={stakeV2Abi}
+						stakeScAddress={stakeScAddress}
+						scName={scName}
+						chainID={chainID}
+
+						lockedTime="2 Months Locked"
+						amount={claimUnstakeSFTAmount}
+						timestamp={claimUnstakeSFTTimestamp * 1000}
+						isSftCard={true}
+						isLoggedIn={isLoggedIn}
+					/>
+				</Col>
+			</Row>
 			<Row>
 				<Col xs={12} lg={4}>
 					<StakingV2UserCard
