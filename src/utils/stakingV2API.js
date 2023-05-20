@@ -201,3 +201,77 @@ export const unstakeSFT = async (abiFile, scAddress, scName, chainID, amount) =>
         console.error(error);
     }
 };
+
+export const claimUnstakeXLH = async (abiFile, scAddress, scName, chainID) => {
+    try {
+        let abiRegistry = AbiRegistry.create(abiFile);
+        let abi = new SmartContractAbi(abiRegistry, [scName]);
+        let contract = new SmartContract({
+            address: new Address(scAddress),
+            abi: abi
+        });
+
+        const transaction = contract.methodsExplicit
+          .claimUnstakedXlhValue()
+          .withChainID(chainID)
+          .buildTransaction();
+
+        const claimUnstakeTransaction = {
+            value: 0,
+            data: Buffer.from(transaction.getData().valueOf()),
+            receiver: scAddress,
+            gasLimit: '15000000'
+        };
+        await refreshAccount();
+
+        const { sessionId /*, error*/ } = await sendTransactions({
+            transactions: claimUnstakeTransaction,
+            transactionsDisplayInfo: {
+                processingMessage: 'Processing claim unstake transaction',
+                errorMessage: 'An error has occurred during claim unstake transaction',
+                successMessage: 'Claim Unstake transaction successful'
+            },
+            redirectAfterSign: false
+        });
+
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+export const claimUnstakeSFT = async (abiFile, scAddress, scName, chainID) => {
+    try {
+        let abiRegistry = AbiRegistry.create(abiFile);
+        let abi = new SmartContractAbi(abiRegistry, [scName]);
+        let contract = new SmartContract({
+            address: new Address(scAddress),
+            abi: abi
+        });
+
+        const transaction = contract.methodsExplicit
+          .claimUnstakedSftValue()
+          .withChainID(chainID)
+          .buildTransaction();
+
+        const claimUnstakeTransaction = {
+            value: 0,
+            data: Buffer.from(transaction.getData().valueOf()),
+            receiver: scAddress,
+            gasLimit: '15000000'
+        };
+        await refreshAccount();
+
+        const { sessionId /*, error*/ } = await sendTransactions({
+            transactions: claimUnstakeTransaction,
+            transactionsDisplayInfo: {
+                processingMessage: 'Processing claim unstake transaction',
+                errorMessage: 'An error has occurred during claim unstake transaction',
+                successMessage: 'Claim Unstake transaction successful'
+            },
+            redirectAfterSign: false
+        });
+
+    } catch (error) {
+        console.error(error);
+    }
+};
