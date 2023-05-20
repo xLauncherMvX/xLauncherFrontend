@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Address, AddressValue, U64Value} from "@multiversx/sdk-core/out";
 import Button from 'react-bootstrap/Button';
 import {contractQuery, getAccountTokens, getAccountNFTS} from "utils/api";
-import {stakeSFT, unstakeSFT} from "utils/stakingV2API";
+import {createFarm} from "utils/stakingV2API";
 import stakeV2Abi from "abiFiles/xlauncher-staking-v2.abi.json";
 import {ProxyNetworkProvider} from "@multiversx/sdk-network-providers/out";
 import {allTokens, networkId, customConfig} from "config/customConfig";
@@ -13,6 +13,31 @@ import StakingV2UserCard from "cards/StakingV2UserCard";
 import CompleteUnstakeCardV2 from "cards/CompleteUnstakeCardV2";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Dropdown from "react-bootstrap/Dropdown";
+import Backdrop from "@mui/material/Backdrop";
+import Fade from "@mui/material/Fade/Fade";
+import Box from "@mui/material/Box";
+import Image from "react-bootstrap/Image";
+import XLHLogo from "assets/images/logo.svg";
+import Input from "@mui/material/Input";
+import Modal from "@mui/material/Modal";
+import {intlNumberFormat} from "../utils/utilities";
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
+
+const style = {
+	position: 'absolute',
+	top: '50%',
+	left: '50%',
+	transform: 'translate(-50%, -50%)',
+	width: 400,
+	boxShadow: 5,
+	backgroundColor: '#060b28f0',
+	borderRadius: "25px",
+	p: 4
+};
 
 function StakingV2(props) {
 	let walletState = props.walletState;
@@ -41,10 +66,10 @@ function StakingV2(props) {
 		}
 
 		const newNftsList = await getAccountNFTS(nftsAPI);
-		if (newNftsList.v2StakeSFT > 0){
+		if (newNftsList.v2StakeSFT > 0) {
 			setSftBalance(parseInt(newNftsList.v2StakeSFT));
 		}
-};
+	};
 
 	//Get the total number of created farms
 	const [sftNumber, setSftNumber] = useState(0);
@@ -57,7 +82,7 @@ function StakingV2(props) {
 			"getClientState",
 			[new AddressValue(new Address(address))]
 		);
-		if(newSFTNumber && isLoggedIn) {
+		if (newSFTNumber && isLoggedIn) {
 			setSftNumber(newSFTNumber.sft_amount);
 		}
 	};
@@ -95,7 +120,7 @@ function StakingV2(props) {
 				[new U64Value(i)]
 			);
 
-			if(newPoolData){
+			if (newPoolData) {
 				// Convert pool title buffer to ASCII string
 				const poolTitleString = Buffer.from(newPoolData.pool_title).toString("ascii");
 				const formattedTotal = newPoolData.pool_total_xlh / multiplier;
@@ -103,7 +128,7 @@ function StakingV2(props) {
 				totalAux += formattedTotal;
 
 				const poolOwner = newPoolData.pool_owner.bech32();
-				if(poolOwner === address){
+				if (poolOwner === address) {
 					createdFarmsAux += 1;
 				}
 
@@ -142,7 +167,7 @@ function StakingV2(props) {
 			setUserFarmsDetails(newUserPoolData);
 		}
 		let rewardsAux = 0;
-		if(newUserPoolData) {
+		if (newUserPoolData) {
 			if (Object.keys(newUserPoolData).length > 0) {
 				newUserPoolData.report_pool_vector.map((element) => {
 					let myRewardsXlh = element.xlh_rewords ? (element.xlh_rewords / multiplier) : 0;
@@ -150,7 +175,7 @@ function StakingV2(props) {
 				});
 			}
 		}
-		if(rewardsAux){
+		if (rewardsAux) {
 			setTotalRewards(rewardsAux);
 		}
 	};
@@ -168,7 +193,7 @@ function StakingV2(props) {
 			"getUnstakeXlhState",
 			[new AddressValue(new Address(address))]
 		);
-		if(newStateXlh){
+		if (newStateXlh) {
 			const unstakedAmount = newStateXlh.total_unstaked_amount / multiplier;
 			const unlockingTimestamp = newStateXlh.free_after_time_stamp;
 
@@ -185,7 +210,7 @@ function StakingV2(props) {
 			[new AddressValue(new Address(address))]
 		);
 
-		if(newStateSft){
+		if (newStateSft) {
 			const unstakedAmountS = newStateSft.total_unstaked_sft_amount;
 			const unlockingTimestampS = newStateSft.free_after_time_stamp;
 
@@ -194,26 +219,70 @@ function StakingV2(props) {
 		}
 	};
 
+	//Options button triggers
+	const [showClaimUnstakedCards, setShowClaimUnstakedCards] = useState(false);
+	const handleOptionsSelect = () => {
+		setShowClaimUnstakedCards(!showClaimUnstakedCards);
+	};
+
+	//NewFarm modal
+	const [farmTitle, setFarmTitle] = useState('');
+	const handleInputChangeN = (event) => {
+		const inputValue = event.target.value;
+
+		const filteredValue = inputValue.replace(/[^a-zA-Z0-9\s-]/g, "");
+		setFarmTitle(filteredValue);
+	};
+
+	const [farmTier, setFarmTier] = useState(0);
+	const [farmCost, setFarmCost] = useState(0);
+	const handleSelectChange = (event) => {
+		const selectedValue = event.target.value;
+		setFarmTier(parseInt(selectedValue));
+
+		switch (event.target.value) {
+			case 1: setFarmCost(300000); break;
+			case 2: setFarmCost(200000); break;
+			case 3: setFarmCost(100000); break;
+			default: setFarmCost(0); break;
+		}
+	};
+
+	const [openN, setOpenN] = useState(false);
+	const handleOpenN = () => setOpenN(true);
+	const handleCloseN = () => {
+		setOpenN(false);
+		setFarmTitle('');
+		setFarmTier(0);
+		setFarmCost(0);
+	};
+
+	let disabledN = true;
+	if(xlhBalance >= farmCost && isLoggedIn && farmCost > 0){
+		disabledN = false;
+	}
+
+
+
 	useEffect(() => {
+		getFarmsDetails();
+		getSFTNumber();
+		if (isLoggedIn) {
+			getUserFarmsDetails();
+			getClaimUnstakeStatsNumber();
+			getWalletData();
+		}
 		const interval = window.setInterval(() => {
 			getFarmsDetails();
 			getSFTNumber();
 			if (isLoggedIn) {
 				getUserFarmsDetails();
 				getClaimUnstakeStatsNumber();
-			}
-		}, 1000);
-
-		const interval2 = window.setInterval(() => {
-			if (isLoggedIn) {
 				getWalletData();
 			}
-		}, 3000);
+		}, 5000);
 
-		return () => {
-			window.clearInterval(interval);
-			window.clearInterval(interval2);
-		}
+		return () => window.clearInterval(interval);
 		// eslint-disable-next-line
 	}, [isLoggedIn]);
 
@@ -221,6 +290,7 @@ function StakingV2(props) {
 	if (farmsDetails.length > 0) {
 		cols = farmsDetails.map((farm) => {
 			const {pool_id, pool_title, pool_rank, pool_total_xlh} = farm;
+			let myClass = 'Class1';
 			let myStackedXlh = 0;
 			let myRewardsXlh = 0;
 			let availableStakeXLH = pool_total_xlh ? (1000000 - pool_total_xlh) : 0;
@@ -230,6 +300,7 @@ function StakingV2(props) {
 					if (farm.pool_id.toString() === element.pool_id.toString()) {
 						myStackedXlh = element.xlh_amount ? (element.xlh_amount / multiplier) : 0;
 						myRewardsXlh = element.xlh_rewords ? (element.xlh_rewords / multiplier) : 0;
+						myClass = 'Class2';
 					}
 				});
 			}
@@ -284,38 +355,56 @@ function StakingV2(props) {
 	return (
 		<div>
 			<p style={{fontSize: '50px', color: 'white'}}>Staking V2</p>
-			<Button onClick={() => stakeSFT(stakeV2Abi, stakeScAddress, scName, chainID, sft, address, 2)}>StakeSFT </Button>
-			<Button onClick={() => unstakeSFT(stakeV2Abi, stakeScAddress, scName, chainID)}>UnstakeSFT </Button>
-			<Row className="mt-5">
-				<Col xs={12} lg={4}>
-					<CompleteUnstakeCardV2
-						stakeV2Abi={stakeV2Abi}
-						stakeScAddress={stakeScAddress}
-						scName={scName}
-						chainID={chainID}
 
-						lockedTime="10 Days Locked"
-						amount={claimUnstakeXLHAmount}
-						timestamp={claimUnstakeXLHTimestamp * 1000}
-						isSftCard={false}
-						isLoggedIn={isLoggedIn}
-					/>
+			<Row className="mt-2">
+				<Col xs={6} lg={2}>
+					<Button className="btn btn-block" onClick={handleOpenN}>New Farm</Button>
 				</Col>
-				<Col xs={12} lg={4}>
-					<CompleteUnstakeCardV2
-						stakeV2Abi={stakeV2Abi}
-						stakeScAddress={stakeScAddress}
-						scName={scName}
-						chainID={chainID}
-
-						lockedTime="60 Days Locked"
-						amount={claimUnstakeSFTAmount}
-						timestamp={claimUnstakeSFTTimestamp * 1000}
-						isSftCard={true}
-						isLoggedIn={isLoggedIn}
-					/>
+				<Col xs={6} lg={2}>
+					<Dropdown>
+						<Dropdown.Toggle variant="primary" id="options-dropdown" style={{width: "100%"}}>
+							Options
+						</Dropdown.Toggle>
+						<Dropdown.Menu variant="dark">
+							<Dropdown.Item onClick={handleOptionsSelect}>
+								{showClaimUnstakedCards ? "Hide Claim Unstaked Cards" : "Show Claim Unstaked Cards"}
+							</Dropdown.Item>
+						</Dropdown.Menu>
+					</Dropdown>
 				</Col>
 			</Row>
+			{showClaimUnstakedCards ? (
+				<Row>
+					<Col xs={12} lg={4}>
+						<CompleteUnstakeCardV2
+							stakeV2Abi={stakeV2Abi}
+							stakeScAddress={stakeScAddress}
+							scName={scName}
+							chainID={chainID}
+
+							lockedTime="10 Days Locked"
+							amount={claimUnstakeXLHAmount}
+							timestamp={claimUnstakeXLHTimestamp * 1000}
+							isSftCard={false}
+							isLoggedIn={isLoggedIn}
+						/>
+					</Col>
+					<Col xs={12} lg={4}>
+						<CompleteUnstakeCardV2
+							stakeV2Abi={stakeV2Abi}
+							stakeScAddress={stakeScAddress}
+							scName={scName}
+							chainID={chainID}
+
+							lockedTime="60 Days Locked"
+							amount={claimUnstakeSFTAmount}
+							timestamp={claimUnstakeSFTTimestamp * 1000}
+							isSftCard={true}
+							isLoggedIn={isLoggedIn}
+						/>
+					</Col>
+				</Row>
+			) : ('')}
 			<Row>
 				<Col xs={12} lg={4}>
 					<StakingV2UserCard
@@ -323,7 +412,7 @@ function StakingV2(props) {
 						stakeScAddress={stakeScAddress}
 						scName={scName}
 						chainID={chainID}
-            sft={sft}
+						sft={sft}
 						address={address}
 
 						title="User Panel"
@@ -352,6 +441,92 @@ function StakingV2(props) {
 				</Col>
 				{cols}
 			</Row>
+
+			{/* New Farm Modal	*/}
+			<Modal
+				aria-labelledby="transition-modal-title2"
+				aria-describedby="transition-modal-description2"
+				open={openN}
+				onClose={handleCloseN}
+				closeAfterTransition
+				BackdropComponent={Backdrop}
+				BackdropProps={{
+					timeout: 500,
+				}}
+			>
+				<Fade in={openN}>
+					<Box sx={style}>
+						<div style={{minHeight: "250px"}} className="farm-card">
+							<div className="d-flex mb-5 align-items-center">
+								<Image
+									width={42}
+									height={35}
+									alt="18x18"
+									src={XLHLogo}
+								/>
+								<div id="transition-modal-title2" className="ms-3 font-size-md text-capitalize text-white font-medium">
+									Open New Farm
+								</div>
+							</div>
+							<div id="transition-modal-description2" className="mt-5">
+								<Input
+									value={farmTitle}
+									size="small"
+									placeholder="Enter Farm Name"
+									onChange={handleInputChangeN}
+									maxLength={18}
+									disableUnderline
+									disabled={false}
+									className="text-white ps-3 pe-5 pt-1 b-r-md"
+									style={{border: '0.5px solid rgb(74, 85, 104)', width: '100%'}}
+								/>
+								<FormControl fullWidth>
+									<Select
+										value={farmTier}
+										onChange={handleSelectChange}
+										size="small"
+										className="text-white b-r-md mt-2"
+										sx={{border: '0.5px solid rgb(74, 85, 104)', fontSize: '15px', padding: '0'}}
+									>
+										<MenuItem value={0}>Select Farm Tier</MenuItem>
+										<MenuItem value={1}>Tier 1</MenuItem>
+										<MenuItem value={2}>Tier 2</MenuItem>
+										<MenuItem value={3}>Tier 3</MenuItem>
+									</Select>
+								</FormControl>
+
+								<p className="font-size-sm text-white text-capitalize mt-3 ms-1">
+									Payment Cost: {intlNumberFormat(farmCost, "en-GB", 0, 0)} XLH
+								</p>
+								<p className="font-size-sm text-white text-capitalize ms-1" style={{marginTop: '-10px'}}>
+									Available XLH: {intlNumberFormat(xlhBalance)}
+								</p>
+								<Row className="mt-5">
+									<Col xs={12} md={6} lg={6} className="mt-4">
+										<Button
+											className="btn btn-block btn-sm btn-info"
+											style={{minWidth: "90px"}}
+											onClick={() => createFarm(stakeV2Abi, stakeScAddress, scName, chainID, farmTier, farmTitle, stakeToken, parseInt(farmCost))}
+											disabled={disabledN}
+										>
+											Create Farm
+										</Button>
+									</Col>
+									<Col xs={12} md={6} lg={6} className="mt-4">
+										<Button
+											className="btn btn-block btn-sm btn-outline-light"
+											style={{minWidth: "90px"}}
+											onClick={handleCloseN}
+										>
+											Cancel
+										</Button>
+									</Col>
+								</Row>
+							</div>
+						</div>
+					</Box>
+				</Fade>
+			</Modal>
 		</div>
 	);
 }

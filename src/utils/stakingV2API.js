@@ -11,6 +11,7 @@ import {refreshAccount} from "@multiversx/sdk-dapp/__commonjs/utils";
 import {sendTransactions} from "@multiversx/sdk-dapp/services";
 import {BigNumber} from "bignumber.js";
 import {multiplier} from "utils/utilities";
+import {BytesValue} from "@multiversx/sdk-core/out/smartcontracts/typesystem/bytes";
 
 export const stake = async (abiFile, scAddress, scName, chainID, token, amount, pool) => {
     try {
@@ -267,6 +268,45 @@ export const claimUnstakeSFT = async (abiFile, scAddress, scName, chainID) => {
                 processingMessage: 'Processing claim unstake transaction',
                 errorMessage: 'An error has occurred during claim unstake transaction',
                 successMessage: 'Claim Unstake transaction successful'
+            },
+            redirectAfterSign: false
+        });
+
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+export const createFarm = async (abiFile, scAddress, scName, chainID, tier, title, token, amount) => {
+    try {
+        let abiRegistry = AbiRegistry.create(abiFile);
+        let abi = new SmartContractAbi(abiRegistry, [scName]);
+        let contract = new SmartContract({
+            address: new Address(scAddress),
+            abi: abi
+        });
+
+        const transaction = contract.methodsExplicit
+          .createNewPool([new U64Value(tier),  BytesValue.fromUTF8(title)])
+          .withChainID(chainID)
+          .withSingleESDTTransfer(
+            TokenPayment.fungibleFromAmount(token, amount, 18)
+          )
+          .buildTransaction();
+        const stakeTransaction = {
+            value: 0,
+            data: Buffer.from(transaction.getData().valueOf()),
+            receiver: scAddress,
+            gasLimit: '15000000'
+        };
+        await refreshAccount();
+
+        const { sessionId /*, error*/ } = await sendTransactions({
+            transactions: stakeTransaction,
+            transactionsDisplayInfo: {
+                processingMessage: 'Processing create farm transaction',
+                errorMessage: 'An error has occurred during create farm transaction',
+                successMessage: 'Create farm transaction successful'
             },
             redirectAfterSign: false
         });
