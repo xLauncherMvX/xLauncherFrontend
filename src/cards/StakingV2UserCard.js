@@ -138,7 +138,7 @@ export default function StakingV2UserCard({
     }
 
     return (
-        <div className="farming-card" id={"user_panel"} style={{minHeight: '325px'}}>
+        <div className="farming-card" id={"user_panel"}>
             <div className="d-flex align-items-center">
                 <Image
                   width={49}
@@ -152,7 +152,7 @@ export default function StakingV2UserCard({
                 </div>
             </div>
             <div className="light-divider" style={{ width: '100%', marginLeft: 0, marginBottom: '5px' }}> </div>
-            <div className="mt-2">
+            <div className="mt-2" style={{minHeight: '159px'}}>
                 <div className="d-flex justify-content-between align-items-end">
                     <p className="details-text">My APR:</p>
                     <p className="details-text text-white">{apr}%</p>

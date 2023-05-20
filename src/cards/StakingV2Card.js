@@ -175,7 +175,7 @@ export default function StakingV2Card({
 
 
 	return (
-		<div className="farming-card" id={"id" + title.toString()} style={{minHeight: '325px'}}>
+		<div className="farming-card" id={"id" + title.toString()}>
 			<div className="float-end">
 				{!visible ? (
 					<Tooltip key="show" title="Show Extra" arrow placement="bottom" componentsProps={componentsProps}>
@@ -214,7 +214,7 @@ export default function StakingV2Card({
 			</div>
 
 			<div className="light-divider" style={{width: '100%', marginLeft: 0, marginBottom: '5px'}}></div>
-			<div className="mt-2">
+			<div className="mt-2" style={{minHeight: '75px'}}>
 				<div className="d-flex justify-content-between align-items-end">
 					<p className="details-text">My APR:</p>
 					<p className="details-text text-white">{apr}%</p>
