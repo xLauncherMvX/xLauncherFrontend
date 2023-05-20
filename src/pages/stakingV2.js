@@ -77,11 +77,13 @@ function StakingV2(props) {
 	//get the farms data
 	const [farmsDetails, setFarmsDetails] = useState([]);
 	const [totalStaked, setTotalStaked] = useState(0);
+	const [createdFarms, setCreatedFarms] = useState(0);
 	const getFarmsDetails = async () => {
 		const farmsNumber = await getFarmsNumber();
 		const newFarmsDetails = [];
 
 		let totalAux = 0;
+		let createdFarmsAux = 0;
 		for (let i = 1; i <= farmsNumber; i++) {
 			const newPoolData = await contractQuery(
 				networkProvider,
@@ -99,6 +101,11 @@ function StakingV2(props) {
 				const formattedCreationFunds = newPoolData.pool_creation_funds / multiplier;
 				totalAux += formattedTotal;
 
+				const poolOwner = newPoolData.pool_owner.bech32();
+				if(poolOwner === address){
+					createdFarmsAux += 1;
+				}
+
 				// Format farms details object with formatted pool title
 				const formattedFarmDetails = {
 					pool_id: newPoolData.pool_id,
@@ -108,7 +115,6 @@ function StakingV2(props) {
 					pool_creation_funds: formattedCreationFunds,
 					pool_owner: newPoolData.pool_owner,
 				};
-
 				newFarmsDetails.push(formattedFarmDetails);
 			}
 		}
@@ -116,6 +122,7 @@ function StakingV2(props) {
 		// Set farms details state with formatted farms details
 		setFarmsDetails(newFarmsDetails);
 		setTotalStaked(totalAux);
+		setCreatedFarms(createdFarmsAux);
 	};
 
 	//get the user farms staked data
@@ -252,7 +259,7 @@ function StakingV2(props) {
 						sftNumber={sftNumber}
 						totalStaked={totalStaked}
 						totalRewards={totalRewards}
-						createdFarms="0"
+						createdFarms={createdFarms}
 
 						stake={{
 							size: "sm",
