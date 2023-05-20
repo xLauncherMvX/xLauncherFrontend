@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import Layout from 'layout/layout';
-import {Address, AddressValue, U32Value, U64Value} from "@multiversx/sdk-core/out";
+import {Address, AddressValue, U64Value} from "@multiversx/sdk-core/out";
 import Button from 'react-bootstrap/Button';
 import {contractQuery, getAccountTokens, getAccountNFTS} from "utils/api";
 import {stakeSFT, unstakeSFT} from "utils/stakingV2API";
@@ -13,7 +12,6 @@ import StakingV2Card from "cards/StakingV2Card";
 import StakingV2UserCard from "cards/StakingV2UserCard";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {element} from "prop-types";
 
 function StakingV2(props) {
 	let walletState = props.walletState;
@@ -168,9 +166,6 @@ function StakingV2(props) {
 		}
 		// eslint-disable-next-line
 	}, [isLoggedIn]);
-
-	//Change the color for the earned xlh if can be claimed / reinvested
-	let earnedColor = "white";
 
 	let cols = [];
 	if (farmsDetails.length > 0) {
