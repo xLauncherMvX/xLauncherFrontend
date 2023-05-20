@@ -139,16 +139,18 @@ export default function StakingV2UserCard({
 
     return (
         <div className="farming-card" id={"user_panel"}>
-            <div className="d-flex align-items-center">
-                <Image
-                  width={49}
-                  height={42}
-                  alt="18x18"
-                  src={XLHLogo}
-                  style={{filter: 'saturate(4)'}}
-                />
-                <div className="ms-2">
-                    <p className="farm-title" style={{fontSize: '18px'}}>{title}</p>
+            <div className="d-flex align-items-center justify-content-between">
+                <div className="text-center">
+                    <Image
+                      width={49}
+                      height={42}
+                      alt="18x18"
+                      src={XLHLogo}
+                      style={{filter: 'saturate(4)'}}
+                    />
+                </div>
+                <div className="mx-auto">
+                    <p className="farm-title" style={{fontSize: '18px', marginLeft: '-30px'}}>{title}</p>
                 </div>
             </div>
             <div className="light-divider" style={{ width: '100%', marginLeft: 0, marginBottom: '5px' }}> </div>
