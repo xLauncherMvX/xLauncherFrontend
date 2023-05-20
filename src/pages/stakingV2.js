@@ -198,7 +198,6 @@ function StakingV2(props) {
 						chainID={chainID}
 						stakeToken={stakeToken}
 						poolId={pool_id}
-						sft={sft}
 
 						title={pool_title}
 						tier={pool_rank.toString()}
@@ -207,7 +206,6 @@ function StakingV2(props) {
 						myRewards={myRewardsXlh}
 						xlhBalance={xlhBalance}
 						isLoggedIn={isLoggedIn}
-						myRewardsColor={earnedColor}
 						maxXLH={availableStakeXLH}
 						capacityPercentage={percentage}
 
@@ -215,15 +213,14 @@ function StakingV2(props) {
 							size: "sm",
 							color: "info",
 							label: "Stake",
-							disabled: false,
-							disabledAction: false,
+							disabled: false
 						}}
 						claim={{
 							size: "sm",
 							color: "primary",
 							label: "Claim",
-							hint: "Individual rewards can be claimed with a minimum of 20 XLH",
-							disabled: false,
+							hint: "Individual rewards can be claimed with a minimum of 0.1 XLH",
+							disabled: true
 						}}
 						unstake={{
 							size: "sm",
@@ -257,7 +254,6 @@ function StakingV2(props) {
 						title="User Panel"
 						sftBalance={sftBalance}
 						isLoggedIn={isLoggedIn}
-						myRewardsColor={earnedColor}
 						sftNumber={sftNumber}
 						totalStaked={totalStaked}
 						totalRewards={totalRewards}
