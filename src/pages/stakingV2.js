@@ -506,7 +506,7 @@ function StakingV2(props) {
 										<Button
 											className="btn btn-block btn-sm btn-info"
 											style={{minWidth: "90px"}}
-											onClick={() => createFarm(stakeV2Abi, stakeScAddress, scName, chainID, farmTier, farmTitle, stakeToken, parseInt(farmCost))}
+											onClick={() => createFarm(stakeV2Abi, stakeScAddress, scName, chainID, farmTier, farmTitle, stakeToken, farmCost)}
 											disabled={disabledN}
 										>
 											Create Farm

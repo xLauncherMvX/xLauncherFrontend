@@ -290,7 +290,7 @@ export const createFarm = async (abiFile, scAddress, scName, chainID, tier, titl
           .createNewPool([new U64Value(tier),  BytesValue.fromUTF8(title)])
           .withChainID(chainID)
           .withSingleESDTTransfer(
-            TokenPayment.fungibleFromAmount(token, amount * multiplier, 18)
+            TokenPayment.fungibleFromAmount(token, amount, 18)
           )
           .buildTransaction();
         const stakeTransaction = {
