@@ -293,7 +293,7 @@ function StakingV2(props) {
 			let myClass = 'Class1';
 			let myStackedXlh = 0;
 			let myRewardsXlh = 0;
-			let availableStakeXLH = pool_total_xlh ? (1000000 - pool_total_xlh) : 0;
+			let availableStakeXLH = pool_total_xlh ? (1000000 - pool_total_xlh) : 1000000;
 			let percentage = pool_total_xlh ? ((pool_total_xlh / 1000000) * 100) : 0;
 			if (Object.keys(userFarmsDetails).length > 0 && isLoggedIn) {
 				userFarmsDetails.report_pool_vector.map((element) => {
