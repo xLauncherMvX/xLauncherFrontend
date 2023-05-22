@@ -447,10 +447,10 @@ function StakingV2(props) {
 								{showClaimUnstakedCards ? "Hide Claim Unstaked Cards" : "Show Claim Unstaked Cards"}
 							</Dropdown.Item>
 							<Dropdown.Item  className={'text-white'} onClick={() => setMyFarms(!myFarms)}>
-								{!myFarms ? "Show My Farms Only" : "Show All Farms"}
+								{!myFarms ? "Show My Staking Farms" : "Show All Staking Farms"}
 							</Dropdown.Item>
 							<Dropdown.Item  className={'text-white'} onClick={() => setMyCreatedFarms(!myCreatedFarms)}>
-								{myCreatedFarms ? "Show All Created Farms" : "Show My Created Farms Only"}
+								{myCreatedFarms ? "Show All Created Farms" : "Show My Created Farms"}
 							</Dropdown.Item>
 							<div className="light-divider" style={{width: '100%', marginLeft: 0, marginTop: '5px', marginBottom: '10px'}}></div>
 							<Dropdown.Item  className={sortOptions === 'tierAsc' ? 'bg-primary text-white' : ''} onClick={() => handleSortOption('tierAsc')}>
