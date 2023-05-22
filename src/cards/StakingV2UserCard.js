@@ -331,8 +331,8 @@ export default function StakingV2UserCard({
                     timeout: 500,
                 }}
             >
-                <Fade in={openU}>
-                    <Box sx={openU && !loadingTransactions}>
+                <Fade in={openU && !loadingTransactions}>
+                    <Box sx={style}>
                         <div style={{ minHeight: "250px" }} className="farm-card">
                             <div className="d-flex mb-5 align-items-center">
                                 <Image
