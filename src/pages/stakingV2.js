@@ -327,7 +327,30 @@ function StakingV2(props) {
 	//get loading transactions for sending to elements
 	const loadingTransactions = useGetPendingTransactions().hasPendingTransactions;
 
+	//blacklist to hide unwanted farm pools
+	const [blacklist, setBlacklist] = useState([]);
+	const getBlacklist=()=>{
+		fetch('blacklist.json'
+			,{
+				headers : {
+					'Content-Type': 'application/json',
+					'Accept': 'application/json'
+				}
+			})
+			.then(function(response){
+				return response.json();
+			})
+			.then(function(myJson) {
+				setBlacklist(myJson);
+			});
+	};
+
+	//Build a new array without blacklisted farms
+	const filteredFarmsDetails = farmsDetails.filter(farm => !blacklist.farms.some(blacklistedTitle => blacklistedTitle.toLowerCase() === farm.pool_title.toLowerCase()));
+
+
 	useEffect(() => {
+		getBlacklist();
 		getFarmsDetails();
 		getSFTNumber();
 		if (isLoggedIn) {
@@ -336,6 +359,7 @@ function StakingV2(props) {
 			getWalletData();
 		}
 		const interval = window.setInterval(() => {
+			getBlacklist();
 			getFarmsDetails();
 			getSFTNumber();
 			if (isLoggedIn) {
@@ -351,9 +375,8 @@ function StakingV2(props) {
 
 
 	let cols = [];
-	if (farmsDetails.length > 0) {
-		cols = farmsDetails.map((farm) => {
-
+	if (filteredFarmsDetails.length > 0) {
+		cols = filteredFarmsDetails.map((farm) => {
 			let createdClass = 'hide-created-farms';
 			const owner = farm.pool_owner.bech32();
 			if (owner === address) {
