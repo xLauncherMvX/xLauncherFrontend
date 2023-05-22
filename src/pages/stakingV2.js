@@ -302,6 +302,23 @@ function StakingV2(props) {
 		}
 	}, [myFarms]);
 
+	//Show my created farms only
+	const [myCreatedFarms, setMyCreatedFarms] = useState(false);
+
+	useEffect(() => {
+		const hideCreatedFarmsElements = document.querySelectorAll('.hide-created-farms');
+
+		if (myCreatedFarms) {
+			hideCreatedFarmsElements.forEach((element) => {
+				element.style.display = 'none';
+			});
+		} else {
+			hideCreatedFarmsElements.forEach((element) => {
+				element.style.display = 'block';
+			});
+		}
+	}, [myCreatedFarms]);
+
 	useEffect(() => {
 		getFarmsDetails();
 		getSFTNumber();
@@ -328,6 +345,13 @@ function StakingV2(props) {
 	let cols = [];
 	if (farmsDetails.length > 0) {
 		cols = farmsDetails.map((farm) => {
+
+			let createdClass = 'hide-created-farms';
+			const owner = farm.pool_owner.bech32();
+			if (owner === address) {
+				createdClass = 'show-created-farms'
+			}
+
 			const {pool_id, pool_title, pool_rank, pool_total_xlh} = farm;
 			let myClass = 'hide-farms';
 			let myStackedXlh = 0;
@@ -345,7 +369,7 @@ function StakingV2(props) {
 			}
 
 			return (
-				<Col key={`poolNumber${pool_id}`} xs={12} lg={4} className={myClass}>
+				<Col key={`poolNumber${pool_id}`} xs={12} lg={4} className={`${myClass} ${createdClass}`}>
 					<StakingV2Card
 						stakeV2Abi={stakeV2Abi}
 						stakeScAddress={stakeScAddress}
@@ -411,6 +435,10 @@ function StakingV2(props) {
 							<Dropdown.Item  className={'text-white'} onClick={() => setMyFarms(!myFarms)}>
 								{!myFarms ? "Show My Farms Only" : "Show All Farms"}
 							</Dropdown.Item>
+							<Dropdown.Item  className={'text-white'} onClick={() => setMyCreatedFarms(!myCreatedFarms)}>
+								{myCreatedFarms ? "Show All Created Farms" : "Show My Created Farms Only"}
+							</Dropdown.Item>
+							<div className="light-divider" style={{width: '100%', marginLeft: 0, marginTop: '5px', marginBottom: '10px'}}></div>
 							<Dropdown.Item  className={sortOptions === 'tierAsc' ? 'bg-primary text-white' : ''} onClick={() => handleSortOption('tierAsc')}>
 								Sort by Tier <FontAwesomeIcon icon={faArrowUp} />
 							</Dropdown.Item>
