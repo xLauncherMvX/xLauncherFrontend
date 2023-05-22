@@ -285,6 +285,23 @@ function StakingV2(props) {
 		setSortOptions(name);
 	};
 
+	//Show my farms only
+	const [myFarms, setMyFarms] = useState(false);
+
+	useEffect(() => {
+		const hideFarmsElements = document.querySelectorAll('.hide-farms');
+
+		if (myFarms) {
+			hideFarmsElements.forEach((element) => {
+				element.style.display = 'none';
+			});
+		} else {
+			hideFarmsElements.forEach((element) => {
+				element.style.display = 'block';
+			});
+		}
+	}, [myFarms]);
+
 	useEffect(() => {
 		getFarmsDetails();
 		getSFTNumber();
@@ -312,7 +329,7 @@ function StakingV2(props) {
 	if (farmsDetails.length > 0) {
 		cols = farmsDetails.map((farm) => {
 			const {pool_id, pool_title, pool_rank, pool_total_xlh} = farm;
-			let myClass = 'Class1';
+			let myClass = 'hide-farms';
 			let myStackedXlh = 0;
 			let myRewardsXlh = 0;
 			let availableStakeXLH = pool_total_xlh ? (1000000 - pool_total_xlh) : 1000000;
@@ -322,13 +339,13 @@ function StakingV2(props) {
 					if (farm.pool_id.toString() === element.pool_id.toString()) {
 						myStackedXlh = element.xlh_amount ? (element.xlh_amount / multiplier) : 0;
 						myRewardsXlh = element.xlh_rewords ? (element.xlh_rewords / multiplier) : 0;
-						myClass = 'Class2';
+						myClass = 'show-farms';
 					}
 				});
 			}
 
 			return (
-				<Col key={`poolNumber${pool_id}`} xs={12} lg={4}>
+				<Col key={`poolNumber${pool_id}`} xs={12} lg={4} className={myClass}>
 					<StakingV2Card
 						stakeV2Abi={stakeV2Abi}
 						stakeScAddress={stakeScAddress}
@@ -388,8 +405,11 @@ function StakingV2(props) {
 							Options
 						</Dropdown.Toggle>
 						<Dropdown.Menu variant="dark">
-							<Dropdown.Item  className={showClaimUnstakedCards ? 'bg-primary text-white' : ''} onClick={handleOptionsClaimUnstake}>
+							<Dropdown.Item  className={'text-white'} onClick={handleOptionsClaimUnstake}>
 								{showClaimUnstakedCards ? "Hide Claim Unstaked Cards" : "Show Claim Unstaked Cards"}
+							</Dropdown.Item>
+							<Dropdown.Item  className={'text-white'} onClick={() => setMyFarms(!myFarms)}>
+								{!myFarms ? "Show My Farms Only" : "Show All Farms"}
 							</Dropdown.Item>
 							<Dropdown.Item  className={sortOptions === 'tierAsc' ? 'bg-primary text-white' : ''} onClick={() => handleSortOption('tierAsc')}>
 								Sort by Tier <FontAwesomeIcon icon={faArrowUp} />
