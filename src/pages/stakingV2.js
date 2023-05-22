@@ -25,7 +25,8 @@ import {intlNumberFormat} from "../utils/utilities";
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSortAmountUp, faSortAmountDesc, faArrowUp, faArrowDown} from '@fortawesome/free-solid-svg-icons';
 
 const style = {
 	position: 'absolute',
@@ -55,6 +56,13 @@ function StakingV2(props) {
 	const nftsAPI = config.apiLink + address + "/nfts?size=1000";
 	const tokens = allTokens[networkId];
 	const sft = config.stakeV2SFT;
+
+	//Options button triggers
+	const [showClaimUnstakedCards, setShowClaimUnstakedCards] = useState(false);
+	const handleOptionsClaimUnstake = () => {
+		setShowClaimUnstakedCards(!showClaimUnstakedCards);
+	};
+
 
 	//Get Account Tokens Balance
 	const [xlhBalance, setXlhBalance] = useState(0);
@@ -101,6 +109,7 @@ function StakingV2(props) {
 	};
 
 	//get the farms data
+	const [sortOptions, setSortOptions] = useState('tierAsc');
 	const [farmsDetails, setFarmsDetails] = useState([]);
 	const [totalStaked, setTotalStaked] = useState(0);
 	const [createdFarms, setCreatedFarms] = useState(0);
@@ -144,9 +153,24 @@ function StakingV2(props) {
 				newFarmsDetails.push(formattedFarmDetails);
 			}
 		}
+		// Sort options
+		if(sortOptions === 'tierAsc' ){
+			newFarmsDetails.sort((a, b) => parseInt(a.pool_rank) - parseInt(b.pool_rank));
+			setFarmsDetails(newFarmsDetails);
+		}else if(sortOptions === 'tierDesc' ) {
+			newFarmsDetails.sort((a, b) => parseInt(b.pool_rank) - parseInt(a.pool_rank));
+			setFarmsDetails(newFarmsDetails);
+		}else if(sortOptions === 'capacityAsc' ) {
+			newFarmsDetails.sort((a, b) => a.pool_total_xlh - b.pool_total_xlh);
+			setFarmsDetails(newFarmsDetails);
+		}else if(sortOptions === 'capacityDesc' ) {
+			newFarmsDetails.sort((a, b) => b.pool_total_xlh - a.pool_total_xlh);
+			setFarmsDetails(newFarmsDetails);
+		}else if(sortOptions === 'alphabet' ) {
+			newFarmsDetails.sort((a, b) => a.pool_title.localeCompare(b.pool_title));
+			setFarmsDetails(newFarmsDetails);
+		}
 
-		// Set farms details state with formatted farms details
-		setFarmsDetails(newFarmsDetails);
 		setTotalStaked(totalAux);
 		setCreatedFarms(createdFarmsAux);
 	};
@@ -219,12 +243,6 @@ function StakingV2(props) {
 		}
 	};
 
-	//Options button triggers
-	const [showClaimUnstakedCards, setShowClaimUnstakedCards] = useState(false);
-	const handleOptionsSelect = () => {
-		setShowClaimUnstakedCards(!showClaimUnstakedCards);
-	};
-
 	//NewFarm modal
 	const [farmTitle, setFarmTitle] = useState('');
 	const handleInputChangeN = (event) => {
@@ -262,7 +280,10 @@ function StakingV2(props) {
 		disabledN = false;
 	}
 
-
+	//Handle the options sort dropdown
+	const handleSortOption = (name) => {
+		setSortOptions(name);
+	};
 
 	useEffect(() => {
 		getFarmsDetails();
@@ -284,7 +305,8 @@ function StakingV2(props) {
 
 		return () => window.clearInterval(interval);
 		// eslint-disable-next-line
-	}, [isLoggedIn]);
+	}, [isLoggedIn, sortOptions]);
+
 
 	let cols = [];
 	if (farmsDetails.length > 0) {
@@ -366,8 +388,23 @@ function StakingV2(props) {
 							Options
 						</Dropdown.Toggle>
 						<Dropdown.Menu variant="dark">
-							<Dropdown.Item onClick={handleOptionsSelect}>
+							<Dropdown.Item  className={showClaimUnstakedCards ? 'bg-primary text-white' : ''} onClick={handleOptionsClaimUnstake}>
 								{showClaimUnstakedCards ? "Hide Claim Unstaked Cards" : "Show Claim Unstaked Cards"}
+							</Dropdown.Item>
+							<Dropdown.Item  className={sortOptions === 'tierAsc' ? 'bg-primary text-white' : ''} onClick={() => handleSortOption('tierAsc')}>
+								Sort by Tier <FontAwesomeIcon icon={faArrowUp} />
+							</Dropdown.Item>
+							<Dropdown.Item  className={sortOptions === 'tierDesc' ? 'bg-primary text-white' : ''} onClick={() => handleSortOption('tierDesc')}>
+								Sort by Tier <FontAwesomeIcon icon={faArrowDown} />
+							</Dropdown.Item>
+							<Dropdown.Item  className={sortOptions === 'capacityAsc' ? 'bg-primary text-white' : ''} onClick={() => handleSortOption('capacityAsc')}>
+								Sort by Capacity <FontAwesomeIcon icon={faArrowUp} />
+							</Dropdown.Item>
+							<Dropdown.Item className={sortOptions === 'capacityDesc' ? 'bg-primary text-white' : ''} onClick={() => handleSortOption('capacityDesc')}>
+								Sort by Capacity <FontAwesomeIcon icon={faArrowDown} />
+							</Dropdown.Item>
+							<Dropdown.Item  className={sortOptions === 'alphabet' ? 'bg-primary text-white' : ''} onClick={() => handleSortOption('alphabet')}>
+								Sort Alphabetically <FontAwesomeIcon icon={faArrowUp} />
 							</Dropdown.Item>
 						</Dropdown.Menu>
 					</Dropdown>
