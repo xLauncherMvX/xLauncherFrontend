@@ -56,7 +56,7 @@ export default function StakingV2UserCard({
     stakeV2Abi, stakeScAddress, scName, chainID, sft, address,
     title, sftBalance, isLoggedIn,
     sftNumber, totalStaked, totalRewards, createdFarms,
-    stake, unstake
+    stake, unstake, loadingTransactions
 }) {
     if(!isLoggedIn){
         stake.disabled = true;
@@ -137,6 +137,14 @@ export default function StakingV2UserCard({
         disabledU = true;
     }
 
+    //disable modals / buttons if there is any loading transactions
+    if(loadingTransactions){
+        stake.disabled = true;
+        unstake.disabled = true;
+        disabledS = true;
+        disabledU = true;
+    }
+
     return (
         <div className="farming-card" id={"user_panel"}>
             <div className="d-flex align-items-center justify-content-between">
@@ -214,7 +222,7 @@ export default function StakingV2UserCard({
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
-                open={openS}
+                open={openS && !loadingTransactions}
                 onClose={handleCloseS}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
@@ -222,7 +230,7 @@ export default function StakingV2UserCard({
                     timeout: 500,
                 }}
             >
-                <Fade in={openS}>
+                <Fade in={openS && !loadingTransactions}>
                     <Box sx={style}>
                         <div style={{ minHeight: "250px" }} className="farm-card">
                             <div className="d-flex mb-5 align-items-center">
@@ -315,7 +323,7 @@ export default function StakingV2UserCard({
             <Modal
                 aria-labelledby="transition-modal-title2"
                 aria-describedby="transition-modal-description2"
-                open={openU}
+                open={openU && !loadingTransactions}
                 onClose={handleCloseU}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
@@ -324,7 +332,7 @@ export default function StakingV2UserCard({
                 }}
             >
                 <Fade in={openU}>
-                    <Box sx={style}>
+                    <Box sx={openU && !loadingTransactions}>
                         <div style={{ minHeight: "250px" }} className="farm-card">
                             <div className="d-flex mb-5 align-items-center">
                                 <Image

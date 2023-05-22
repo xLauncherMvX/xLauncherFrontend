@@ -27,6 +27,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortAmountUp, faSortAmountDesc, faArrowUp, faArrowDown} from '@fortawesome/free-solid-svg-icons';
+import { useGetPendingTransactions } from "@multiversx/sdk-dapp/hooks/transactions";
 
 const style = {
 	position: 'absolute',
@@ -319,6 +320,9 @@ function StakingV2(props) {
 		}
 	}, [myCreatedFarms]);
 
+	//get loading transactions for sending to elements
+	const loadingTransactions = useGetPendingTransactions().hasPendingTransactions;
+
 	useEffect(() => {
 		getFarmsDetails();
 		getSFTNumber();
@@ -387,6 +391,7 @@ function StakingV2(props) {
 						isLoggedIn={isLoggedIn}
 						maxXLH={availableStakeXLH}
 						capacityPercentage={percentage}
+						loadingTransactions={loadingTransactions}
 
 						stake={{
 							size: "sm",
@@ -415,13 +420,18 @@ function StakingV2(props) {
 		});
 	}
 
+	let disabledCreate = false;
+	if(loadingTransactions || !isLoggedIn){
+		disabledCreate = true;
+	}
+
 	return (
 		<div>
 			<p style={{fontSize: '50px', color: 'white'}}>Staking V2</p>
 
 			<Row className="mt-2">
 				<Col xs={6} lg={2}>
-					<Button className="btn btn-block" onClick={handleOpenN}>New Farm</Button>
+					<Button className="btn btn-block" onClick={handleOpenN} disabled={disabledCreate}>New Farm</Button>
 				</Col>
 				<Col xs={6} lg={2}>
 					<Dropdown>
@@ -472,6 +482,7 @@ function StakingV2(props) {
 							timestamp={claimUnstakeXLHTimestamp * 1000}
 							isSftCard={false}
 							isLoggedIn={isLoggedIn}
+							loadingTransactions={loadingTransactions}
 						/>
 					</Col>
 					<Col xs={12} lg={4}>
@@ -486,6 +497,7 @@ function StakingV2(props) {
 							timestamp={claimUnstakeSFTTimestamp * 1000}
 							isSftCard={true}
 							isLoggedIn={isLoggedIn}
+							loadingTransactions={loadingTransactions}
 						/>
 					</Col>
 				</Row>
@@ -507,6 +519,7 @@ function StakingV2(props) {
 						totalStaked={totalStaked}
 						totalRewards={totalRewards}
 						createdFarms={createdFarms}
+						loadingTransactions={loadingTransactions}
 
 						stake={{
 							size: "sm",

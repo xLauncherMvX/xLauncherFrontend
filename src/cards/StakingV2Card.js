@@ -58,7 +58,7 @@ export default function StakingV2Card({
 																				stakeV2Abi, stakeScAddress, scName, chainID, stakeToken, poolId,
 																				title, tier, sftNumber, myXLH, myRewards, xlhBalance, isLoggedIn,
 																				maxXLH, capacityPercentage,
-																				stake, unstake, claim
+																				stake, unstake, claim, loadingTransactions
 																			}) {
 	const [visible, setVisible] = useState(false);
 
@@ -171,6 +171,15 @@ export default function StakingV2Card({
 	if (myRewards >= 0.1) {
 		myRewardsColor = "lexaloffle-green";
 		claim.disabled = false;
+	}
+
+	//disable modals / buttons if there is any loading transactions
+	if(loadingTransactions){
+		stake.disabled = true;
+		unstake.disabled = true;
+		claim.disabled = true;
+		disabledS = true;
+		disabledU = true;
 	}
 
 
@@ -286,7 +295,7 @@ export default function StakingV2Card({
 			<Modal
 				aria-labelledby="transition-modal-title"
 				aria-describedby="transition-modal-description"
-				open={openS}
+				open={openS && !loadingTransactions}
 				onClose={handleCloseS}
 				closeAfterTransition
 				BackdropComponent={Backdrop}
@@ -294,7 +303,7 @@ export default function StakingV2Card({
 					timeout: 500,
 				}}
 			>
-				<Fade in={openS}>
+				<Fade in={openS && !loadingTransactions}>
 					<Box sx={style}>
 						<div style={{minHeight: "250px"}} className="farm-card">
 							<div className="d-flex align-items-center justify-content-between" style={{marginLeft: '-10px'}}>
@@ -391,7 +400,7 @@ export default function StakingV2Card({
 			<Modal
 				aria-labelledby="transition-modal-title2"
 				aria-describedby="transition-modal-description2"
-				open={openU}
+				open={openU && !loadingTransactions}
 				onClose={handleCloseU}
 				closeAfterTransition
 				BackdropComponent={Backdrop}
@@ -399,7 +408,7 @@ export default function StakingV2Card({
 					timeout: 500,
 				}}
 			>
-				<Fade in={openU}>
+				<Fade in={openU && !loadingTransactions}>
 					<Box sx={style}>
 						<div style={{minHeight: "250px"}} className="farm-card">
 							<div className="d-flex align-items-center justify-content-between" style={{marginLeft: '-10px'}}>

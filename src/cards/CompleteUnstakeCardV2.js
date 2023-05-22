@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 import {claimUnstakeXLH, claimUnstakeSFT} from "utils/stakingV2API";
 import Fade from "@mui/material/Fade/Fade";
 import Tooltip from "@mui/material/Tooltip/Tooltip";
+import {useGetPendingTransactions} from "@multiversx/sdk-dapp/hooks";
 
 const componentsProps={
   tooltip: {
@@ -31,7 +32,7 @@ const componentsProps={
   TransitionComponent: Fade,
 };
 
-export default function CompleteUnstakeCardV2({stakeV2Abi, stakeScAddress, scName, chainID, lockedTime, amount, timestamp, isSftCard, isLoggedIn}) {
+export default function CompleteUnstakeCardV2({stakeV2Abi, stakeScAddress, scName, chainID, lockedTime, amount, timestamp, isSftCard, isLoggedIn, loadingTransactions}) {
 
   let getMethod = () => () => claimUnstakeXLH(stakeV2Abi, stakeScAddress, scName, chainID);
 	if (isSftCard) {
@@ -110,6 +111,11 @@ export default function CompleteUnstakeCardV2({stakeV2Abi, stakeScAddress, scNam
     hint = '';
     timestampF = '-';
   }
+
+	//disable modals / buttons if there is any loading transactions
+	if(loadingTransactions){
+		disabled = true;
+	}
 
 	return (
 		<div className="farming-card claim-unstake-items" style={{minHeight: '100px'}}>
