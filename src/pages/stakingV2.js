@@ -112,13 +112,11 @@ function StakingV2(props) {
 	//get the farms data
 	const [sortOptions, setSortOptions] = useState('tierAsc');
 	const [farmsDetails, setFarmsDetails] = useState([]);
-	const [totalStaked, setTotalStaked] = useState(0);
 	const [createdFarms, setCreatedFarms] = useState(0);
 	const getFarmsDetails = async () => {
 		const farmsNumber = await getFarmsNumber();
 		const newFarmsDetails = [];
 
-		let totalAux = 0;
 		let createdFarmsAux = 0;
 		for (let i = 1; i <= farmsNumber; i++) {
 			const newPoolData = await contractQuery(
@@ -135,7 +133,6 @@ function StakingV2(props) {
 				const poolTitleString = Buffer.from(newPoolData.pool_title).toString("ascii");
 				const formattedTotal = newPoolData.pool_total_xlh / multiplier;
 				const formattedCreationFunds = newPoolData.pool_creation_funds / multiplier;
-				totalAux += formattedTotal;
 
 				const poolOwner = newPoolData.pool_owner.bech32();
 				if (poolOwner === address) {
@@ -172,13 +169,13 @@ function StakingV2(props) {
 			setFarmsDetails(newFarmsDetails);
 		}
 
-		setTotalStaked(totalAux);
 		setCreatedFarms(createdFarmsAux);
 	};
 
 	//get the user farms staked data
 	const [userFarmsDetails, setUserFarmsDetails] = useState([]);
 	const [totalRewards, setTotalRewards] = useState(0);
+	const [totalStaked, setTotalStaked] = useState(0);
 	const getUserFarmsDetails = async () => {
 		const newUserPoolData = await contractQuery(
 			networkProvider,
@@ -192,16 +189,23 @@ function StakingV2(props) {
 			setUserFarmsDetails(newUserPoolData);
 		}
 		let rewardsAux = 0;
+		let totalAux = 0;
 		if (newUserPoolData) {
 			if (Object.keys(newUserPoolData).length > 0) {
 				newUserPoolData.report_pool_vector.map((element) => {
 					let myRewardsXlh = element.xlh_rewords ? (element.xlh_rewords / multiplier) : 0;
 					rewardsAux += myRewardsXlh;
+
+					let myStakedTotal = element.xlh_amount ? (element.xlh_amount / multiplier) : 0;
+					totalAux += myStakedTotal;
 				});
 			}
 		}
 		if (rewardsAux) {
 			setTotalRewards(rewardsAux);
+		}
+		if(totalAux){
+			setTotalStaked(totalAux);
 		}
 	};
 
