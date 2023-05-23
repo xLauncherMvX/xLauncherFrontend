@@ -236,11 +236,11 @@ export default function StakingV2Card({
 				</div>
 				<div className="d-flex justify-content-between align-items-end">
 					<p className="details-text">My Staked XLH:</p>
-					<p className="details-text text-white">{intlNumberFormat(myXLH)}</p>
+					<p className="details-text text-white">{myXLH ? (intlNumberFormat(myXLH)): ('-')}</p>
 				</div>
 				<div className="d-flex justify-content-between align-items-end">
 					<p className="details-text">My Earned XLH:</p>
-					<p className={`details-text text-${myRewardsColor}`}>{intlNumberFormat(myRewards)}</p>
+					<p className={`details-text text-${myRewardsColor}`}>{myRewards ? (intlNumberFormat(myRewards)): ('-')}</p>
 				</div>
 			</div>
 			<div className="light-divider" style={{width: '100%', marginLeft: 0, marginBottom: '5px'}}></div>
