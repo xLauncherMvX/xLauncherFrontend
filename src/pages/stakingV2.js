@@ -253,6 +253,10 @@ function StakingV2(props) {
 	const handleInputChangeN = (event) => {
 		const inputValue = event.target.value;
 
+		if (inputValue.length > 18) {
+			return;
+		}
+
 		const filteredValue = inputValue.replace(/[^a-zA-Z0-9\s-]/g, "");
 		setFarmTitle(filteredValue);
 	};
@@ -599,7 +603,6 @@ function StakingV2(props) {
 									size="small"
 									placeholder="Enter Farm Name"
 									onChange={handleInputChangeN}
-									maxLength={18}
 									disableUnderline
 									disabled={false}
 									className="text-white ps-3 pe-5 pt-1 b-r-md"
