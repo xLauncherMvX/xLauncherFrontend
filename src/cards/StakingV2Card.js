@@ -232,7 +232,7 @@ export default function StakingV2Card({
 			<div className="mt-2" style={{minHeight: '75px'}}>
 				<div className="d-flex justify-content-between align-items-end">
 					<p className="details-text">My APR:</p>
-					<p className="details-text text-white">{apr}%</p>
+					<p className="details-text text-white">{myXLH ? (apr + '%'): ('-')}</p>
 				</div>
 				<div className="d-flex justify-content-between align-items-end">
 					<p className="details-text">My Staked XLH:</p>
