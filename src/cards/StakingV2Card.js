@@ -129,9 +129,15 @@ export default function StakingV2Card({
 	};
 
 	//Main methods
-	const getMethodS = (poolId) => () => stakeMethod(stakeV2Abi, stakeScAddress, scName, chainID, stakeToken, xlhAmountS, poolId);
+	const getMethodS = (poolId) => () => {
+		stakeMethod(stakeV2Abi, stakeScAddress, scName, chainID, stakeToken, xlhAmountS, poolId);
+		setOpenS(false);
+	};
 	const getMethodC = (poolId) => () => claimMethod(stakeV2Abi, stakeScAddress, scName, chainID, poolId);
-	const getMethodU = (poolId) => () => unstakeMethod(stakeV2Abi, stakeScAddress, scName, chainID, stakeToken, xlhAmountU, poolId);
+	const getMethodU = (poolId) => () => {
+		unstakeMethod(stakeV2Abi, stakeScAddress, scName, chainID, stakeToken, xlhAmountU, poolId);
+		setOpenU(false);
+	};
 
 	//Calculate the max amount of xlh that can be staked in current pool
 	let currentPoolXLh = 0;
@@ -295,7 +301,7 @@ export default function StakingV2Card({
 			<Modal
 				aria-labelledby="transition-modal-title"
 				aria-describedby="transition-modal-description"
-				open={openS && !loadingTransactions}
+				open={openS}
 				onClose={handleCloseS}
 				closeAfterTransition
 				BackdropComponent={Backdrop}
@@ -303,7 +309,7 @@ export default function StakingV2Card({
 					timeout: 500,
 				}}
 			>
-				<Fade in={openS && !loadingTransactions}>
+				<Fade in={openS}>
 					<Box sx={style}>
 						<div style={{minHeight: "250px"}} className="farm-card">
 							<div className="d-flex align-items-center justify-content-between" style={{marginLeft: '-10px'}}>
@@ -400,7 +406,7 @@ export default function StakingV2Card({
 			<Modal
 				aria-labelledby="transition-modal-title2"
 				aria-describedby="transition-modal-description2"
-				open={openU && !loadingTransactions}
+				open={openU}
 				onClose={handleCloseU}
 				closeAfterTransition
 				BackdropComponent={Backdrop}
@@ -408,7 +414,7 @@ export default function StakingV2Card({
 					timeout: 500,
 				}}
 			>
-				<Fade in={openU && !loadingTransactions}>
+				<Fade in={openU}>
 					<Box sx={style}>
 						<div style={{minHeight: "250px"}} className="farm-card">
 							<div className="d-flex align-items-center justify-content-between" style={{marginLeft: '-10px'}}>

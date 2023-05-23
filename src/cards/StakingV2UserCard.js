@@ -121,8 +121,14 @@ export default function StakingV2UserCard({
         setAmountU(0);
     };
 
-    const getMethodS = () => () => stakeMethod(stakeV2Abi, stakeScAddress, scName, chainID, sft, address, amountS);
-    const getMethodU = () => () => unstakeMethod(stakeV2Abi, stakeScAddress, scName, chainID, amountU);
+    const getMethodS = () => () => {
+        stakeMethod(stakeV2Abi, stakeScAddress, scName, chainID, sft, address, amountS)
+        setOpenS(false);
+    };
+    const getMethodU = () => () => {
+        unstakeMethod(stakeV2Abi, stakeScAddress, scName, chainID, amountU)
+        setOpenU(false);
+    };
 
     let apr = sftNumber ? (sftNumber * 1.5 + 15) : 15;
     if (apr > 30) apr = 30;
@@ -222,7 +228,7 @@ export default function StakingV2UserCard({
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
-                open={openS && !loadingTransactions}
+                open={openS}
                 onClose={handleCloseS}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
@@ -230,7 +236,7 @@ export default function StakingV2UserCard({
                     timeout: 500,
                 }}
             >
-                <Fade in={openS && !loadingTransactions}>
+                <Fade in={openS}>
                     <Box sx={style}>
                         <div style={{ minHeight: "250px" }} className="farm-card">
                             <div className="d-flex mb-5 align-items-center">
@@ -323,7 +329,7 @@ export default function StakingV2UserCard({
             <Modal
                 aria-labelledby="transition-modal-title2"
                 aria-describedby="transition-modal-description2"
-                open={openU && !loadingTransactions}
+                open={openU}
                 onClose={handleCloseU}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
@@ -331,7 +337,7 @@ export default function StakingV2UserCard({
                     timeout: 500,
                 }}
             >
-                <Fade in={openU && !loadingTransactions}>
+                <Fade in={openU}>
                     <Box sx={style}>
                         <div style={{ minHeight: "250px" }} className="farm-card">
                             <div className="d-flex mb-5 align-items-center">
