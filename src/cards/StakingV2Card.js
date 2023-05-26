@@ -1,9 +1,9 @@
 import "assets/css/staking.css";
 import "assets/css/globals.css";
 import React, {useState} from "react";
-import rank1logo from "assets/images/ranks/rank1.png";
-import rank2logo from "assets/images/ranks/rank2.png";
-import rank3logo from "assets/images/ranks/rank3.png";
+import rank1logo from "assets/images/ranks/tier1_yellow_500.png";
+import rank2logo from "assets/images/ranks/tier2_blue_700.png";
+import rank3logo from "assets/images/ranks/tier3.png";
 import Image from "react-bootstrap/Image";
 import {Col, Row} from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
@@ -55,12 +55,42 @@ const componentsProps = {
 };
 
 export default function StakingV2Card({
-																				stakeV2Abi, stakeScAddress, scName, chainID, stakeToken, poolId,
-																				title, tier, sftNumber, myXLH, myRewards, xlhBalance, isLoggedIn,
-																				maxXLH, capacityPercentage,
-																				stake, unstake, claim, loadingTransactions
-																			}) {
+	stakeV2Abi, stakeScAddress, scName, chainID, stakeToken, poolId,
+	title, tier, sftNumber, myXLH, myRewards, xlhBalance, isLoggedIn,
+	maxXLH, capacityPercentage,
+	stake, unstake, claim, loadingTransactions
+}) {
 	const [visible, setVisible] = useState(false);
+
+	//Change the logo based on farm tier
+	let logo = rank1logo;
+	let customBorder = '';
+	let tierText = '';
+	let progressColor = '';
+	let btnTextColor = '';
+	switch (tier) {
+		case "1":
+			logo = rank1logo;
+			customBorder = 'shadow-yellow-500';
+			tierText = 'text-yellow-500';
+			progressColor = 'yellow-500';
+			btnTextColor = 'text-black';
+			break;
+		case "2":
+			logo = rank2logo;
+			customBorder = 'shadow-blue-700';
+			tierText = 'text-blue-700';
+			progressColor = 'blue-700';
+			btnTextColor = 'text-white';
+			break;
+		case "3":
+			logo = rank3logo;
+			customBorder = 'shadow-silver';
+			tierText = 'text-silver';
+			progressColor = 'dark';
+			btnTextColor = 'text-white';
+			break;
+	}
 
 	if (!isLoggedIn) {
 		stake.disabled = true;
@@ -143,19 +173,7 @@ export default function StakingV2Card({
 	let currentPoolXLh = 0;
 	if (maxXLH) currentPoolXLh = 1000000 - maxXLH;
 
-	//Change the logo based on farm tier
-	let logo = rank1logo;
-	switch (tier) {
-		case "1":
-			logo = rank1logo;
-			break;
-		case "2":
-			logo = rank2logo;
-			break;
-		case "3":
-			logo = rank3logo;
-			break;
-	}
+
 
 	//Calculate apr based on staked sfts
 	let apr = sftNumber ? (sftNumber * 1.5 + 15) : 15;
@@ -190,18 +208,18 @@ export default function StakingV2Card({
 
 
 	return (
-		<div className="farming-card" id={"id" + title.toString()}>
+		<div className={`farming-card-v2 ${customBorder} text-white`} id={"id" + title.toString()}>
 			<div className="float-end">
 				{!visible ? (
 					<Tooltip key="show" title="Show Extra" arrow placement="bottom" componentsProps={componentsProps}>
-						<Button variant="text" onClick={() => setVisible(!visible)}>
-							<FontAwesomeIcon fontSize={"medium"} icon={faAnglesDown} color="white"/>
+						<Button variant="text" className={`float-right ${tierText}`} onClick={() => setVisible(!visible)}>
+							<FontAwesomeIcon fontSize={"medium"} icon={faAnglesDown}/>
 						</Button>
 					</Tooltip>
 				) : (
 					<Tooltip key="hide" title="Hide extra" arrow placement="bottom" componentsProps={componentsProps}>
-						<Button variant="text" className="float-right" onClick={() => setVisible(!visible)}>
-							<FontAwesomeIcon fontSize={"medium"} icon={faAnglesUp} color="white"/>
+						<Button variant="text" className={`float-right ${tierText}`} onClick={() => setVisible(!visible)}>
+							<FontAwesomeIcon fontSize={"medium"} icon={faAnglesUp}/>
 						</Button>
 					</Tooltip>
 				)}
@@ -213,34 +231,33 @@ export default function StakingV2Card({
 						height={56}
 						alt="18x18"
 						src={logo}
-						style={{filter: 'saturate(8)'}}
 					/>
 				</div>
 				<div className="mx-auto text-center">
-					<p className="farm-title" style={{fontSize: '18px'}}>{title}</p>
+					<p className="farm-title-v2" style={{fontSize: '18px'}}>{title}</p>
 				</div>
 			</div>
-			<p className="rank-text mt-1 text-info ms-3">Tier</p>
+			<p className={`rank-text mt-1 ms-3 ${tierText}`}>Tier</p>
 
 			<div>
-				<ProgressBar animated now={capacityPercentage}/>
-				<p className="text-center text-white"
-					 style={{fontSize: '12px', marginTop: '3px'}}>Capacity: {intlNumberFormat(calc2(currentPoolXLh))} / {intlNumberFormat(1000000, "en-GB", 0, 0)}</p>
+				<ProgressBar animated now={capacityPercentage} variant={`${progressColor}`}/>
+				<p className="text-center"
+					 style={{fontSize: '12px', marginTop: '3px', fontWeight: '800'}}>Capacity: {intlNumberFormat(calc2(currentPoolXLh))} / {intlNumberFormat(1000000, "en-GB", 0, 0)}</p>
 			</div>
 
 			<div className="light-divider" style={{width: '100%', marginLeft: 0, marginBottom: '5px'}}></div>
 			<div className="mt-2" style={{minHeight: '75px'}}>
 				<div className="d-flex justify-content-between align-items-end">
-					<p className="details-text">My APR:</p>
-					<p className="details-text text-white">{myXLH ? (apr + '%'): ('-')}</p>
+					<p className="details-text-v2">My APR:</p>
+					<p className="details-text-v2">{myXLH ? (apr + '%'): ('-')}</p>
 				</div>
 				<div className="d-flex justify-content-between align-items-end">
-					<p className="details-text">My Staked XLH:</p>
-					<p className="details-text text-white">{myXLH ? (intlNumberFormat(myXLH)): ('-')}</p>
+					<p className="details-text-v2">My Staked XLH:</p>
+					<p className="details-text-v2">{myXLH ? (intlNumberFormat(myXLH)): ('-')}</p>
 				</div>
 				<div className="d-flex justify-content-between align-items-end">
-					<p className="details-text">My Earned XLH:</p>
-					<p className={`details-text text-${myRewardsColor}`}>{myRewards ? (intlNumberFormat(myRewards)): ('-')}</p>
+					<p className="details-text-v2">My Earned XLH:</p>
+					<p className={`details-text-v2`}>{myRewards ? (intlNumberFormat(myRewards)): ('-')}</p>
 				</div>
 			</div>
 			<div className="light-divider" style={{width: '100%', marginLeft: 0, marginBottom: '5px'}}></div>
@@ -248,9 +265,9 @@ export default function StakingV2Card({
 			<Row>
 				<Col xs={12} md={6} lg={6} className="mt-2">
 					<Button
-						variant={stake.color}
+						variant={progressColor}
 						size={stake.size}
-						className="btn btn-block farms-button"
+						className={`btn btn-block farms-button-v2 ${btnTextColor}`}
 						style={{minWidth: "90px"}}
 						onClick={handleOpenS}
 						disabled={stake.disabled}
@@ -262,9 +279,9 @@ export default function StakingV2Card({
 					<Tooltip key="claim" title={claim.hint} arrow placement="bottom" componentsProps={componentsProps}>
 						<div>
 							<Button
-								variant={claim.color}
+								variant={progressColor}
 								size={claim.size}
-								className="btn btn-block farms-button"
+								className={`btn btn-block farms-button-v2 ${btnTextColor}`}
 								style={{minWidth: "90px", width: '100%'}}
 								onClick={getMethodC(poolId)}
 								disabled={claim.disabled}
@@ -282,9 +299,9 @@ export default function StakingV2Card({
 						<Tooltip key="unstake" title={unstake.hint} arrow placement="bottom" componentsProps={componentsProps}>
 							<div>
 								<Button
-									variant={unstake.color}
+									variant={progressColor}
 									size={unstake.size}
-									className="btn btn-block farms-button"
+									className={`btn btn-block farms-button-v2 ${btnTextColor}`}
 									style={{minWidth: "90px", width: '100%'}}
 									onClick={handleOpenU}
 									disabled={unstake.disabled}
@@ -319,14 +336,13 @@ export default function StakingV2Card({
 										height={56}
 										alt="18x18"
 										src={logo}
-										style={{filter: 'saturate(8)'}}
 									/>
 								</div>
 								<div className="mx-auto text-center">
 									<p className="farm-title" style={{fontSize: '18px', marginLeft: '-30px'}}>{title}</p>
 								</div>
 							</div>
-							<p className="rank-text mt-1 text-info ms-2">Tier</p>
+							<p className={`rank-text ${tierText} mt-1 ms-2`}>Tier</p>
 							<div id="transition-modal-description" className="mt-5">
 								<Row className="mb-2">
 									<Col xs={12}>
@@ -355,13 +371,14 @@ export default function StakingV2Card({
 											step={100}
 											min={0}
 											max={maxS}
-											className="text-white"
+											className={`${tierText}`}
 											style={{marginLeft: '10px'}}
 										/>
 									</Col>
 									<Col xs={3}>
 										<Button
-											className="btn btn-block btn-outline-info btn-sm text-white"
+											variant={`${progressColor}`}
+											className={`btn btn-block btn-sm farms-button-v2 ${btnTextColor}`}
 											onClick={() => setMaxAmountS()}
 											style={{fontSize: '11px', paddingBottom: '2px'}}
 										>
@@ -378,7 +395,8 @@ export default function StakingV2Card({
 								<Row className="mt-5">
 									<Col xs={12} md={6} lg={6} className="mt-4">
 										<Button
-											className="btn btn-block btn-sm btn-info"
+											variant={`${progressColor}`}
+											className={`btn btn-block btn-sm farms-button-v2 ${btnTextColor}`}
 											style={{minWidth: "90px"}}
 											onClick={getMethodS(poolId)}
 											disabled={disabledS}
@@ -424,14 +442,13 @@ export default function StakingV2Card({
 										height={56}
 										alt="18x18"
 										src={logo}
-										style={{filter: 'saturate(8)'}}
 									/>
 								</div>
 								<div className="mx-auto text-center">
 									<p className="farm-title" style={{fontSize: '18px', marginLeft: '-30px'}}>{title}</p>
 								</div>
 							</div>
-							<p className="rank-text mt-1 text-info ms-2">Tier</p>
+							<p className={`rank-text ${tierText} mt-1 ms-2`}>Tier</p>
 							<div id="transition-modal-description2" className="mt-5">
 								<Row className="mb-2">
 									<Col xs={12}>
@@ -460,13 +477,14 @@ export default function StakingV2Card({
 											step={100}
 											min={0}
 											max={(calc2(myXLH))}
-											className="text-white"
+											className={`${tierText}`}
 											style={{marginLeft: '10px'}}
 										/>
 									</Col>
 									<Col xs={3}>
 										<Button
-											className="btn btn-block btn-outline-info btn-sm text-white"
+											variant={`${progressColor}`}
+											className={`btn btn-block btn-sm farms-button-v2 ${btnTextColor}`}
 											onClick={setMaxAmountU}
 											style={{fontSize: '11px', paddingBottom: '2px'}}
 										>
@@ -480,7 +498,8 @@ export default function StakingV2Card({
 								<Row className="mt-5">
 									<Col xs={12} md={6} lg={6} className="mt-4">
 										<Button
-											className="btn btn-block btn-sm btn-info"
+											variant={`${progressColor}`}
+											className={`btn btn-block btn-sm ${progressColor} ${btnTextColor}`}
 											style={{minWidth: "90px"}}
 											onClick={getMethodU(poolId)}
 											disabled={disabledU}
