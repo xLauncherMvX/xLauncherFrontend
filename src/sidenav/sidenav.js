@@ -120,24 +120,24 @@ export function Sidenav() {
                         >
                             Stake NFTS
                         </MenuItem>
+                        {/*<MenuItem*/}
+                        {/*    label="Lottery"*/}
+                        {/*    icon={<ShoppingCart />}*/}
+                        {/*    component={<Link to="/lottery/bloodshed"/>}*/}
+                        {/*    active={pathname === "/lottery/bloodshed"}*/}
+                        {/*>*/}
+                        {/*    Lottery*/}
+                        {/*</MenuItem>*/}
+                        {/*<MenuItem*/}
+                        {/*  label="Lottery with XLH"*/}
+                        {/*  icon={<ShoppingCart />}*/}
+                        {/*  component={<Link to="/lottery/xlh-bloodshed"/>}*/}
+                        {/*  active={window.location.pathname === "/lottery/xlh-bloodshed"}*/}
+                        {/*>*/}
+                        {/*    Lottery with XLH*/}
+                        {/*</MenuItem>*/}
                         <MenuItem
-                            label="Lottery"
-                            icon={<ShoppingCart />}
-                            component={<Link to="/lottery/bloodshed"/>}
-                            active={pathname === "/lottery/bloodshed"}
-                        >
-                            Lottery
-                        </MenuItem>
-                        <MenuItem
-                          label="Lottery with XLH"
-                          icon={<ShoppingCart />}
-                          component={<Link to="/lottery/xlh-bloodshed"/>}
-                          active={window.location.pathname === "/lottery/xlh-bloodshed"}
-                        >
-                            Lottery with XLH
-                        </MenuItem>
-                        <MenuItem
-                          label="Lottery with XLH"
+                          label="Bloodshed NFT Reveal"
                           icon={<ShoppingCart />}
                           component={<Link to="/lottery/bloodshed-reveal"/>}
                           active={pathname === "/lottery/bloodshed-reveal"}
