@@ -434,7 +434,7 @@ function StakingV2(props) {
 							size: "sm",
 							color: "primary",
 							label: "Claim",
-							hint: "Individual rewards can be claimed with a minimum of 0.1 XLH",
+							hint: "Individual rewards can be claimed with a minimum of 100 XLH",
 							disabled: true
 						}}
 						unstake={{
