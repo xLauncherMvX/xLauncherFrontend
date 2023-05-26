@@ -565,7 +565,7 @@ function Staking(props) {
               size: "sm",
               color: "info",
               label: "Stake",
-              disabled: unlockedStake1,
+              disabled: true,
               disabledAction: disabledStakeButton,
             }}
             claim={{
@@ -586,7 +586,7 @@ function Staking(props) {
                 "Individual rewards can be reinvested with a minimum of " +
                 calc2(apr1) +
                 " XLH",
-              disabled: disabledCR1,
+              disabled: true,
             }}
             unstake={{
               size: "sm",
@@ -669,7 +669,7 @@ function Staking(props) {
               size: "sm",
               color: "info",
               label: "Stake",
-              disabled: unlockedStake2,
+              disabled: true,
               disabledAction: disabledStakeButton,
             }}
             claim={{
@@ -690,7 +690,7 @@ function Staking(props) {
                 "Individual rewards can be reinvested with a minimum of " +
                 calc2(apr2) +
                 " XLH",
-              disabled: disabledCR2,
+              disabled: true,
             }}
             unstake={{
               size: "sm",
@@ -774,7 +774,7 @@ function Staking(props) {
               size: "sm",
               color: "info",
               label: "Stake",
-              disabled: unlockedStake3,
+              disabled: true,
               disabledAction: disabledStakeButton,
             }}
             claim={{
@@ -795,7 +795,7 @@ function Staking(props) {
                 "Individual rewards can be reinvested with a minimum of " +
                 calc2(apr3) +
                 " XLH",
-              disabled: disabledCR3,
+              disabled: true,
             }}
             unstake={{
               size: "sm",
