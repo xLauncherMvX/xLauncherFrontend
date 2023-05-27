@@ -53,18 +53,11 @@ export function Navbar(props) {
 
   //Get the user address
   //const debugAccountInfo = useGetAccountInfo();
-  const { address } = useGetAccountInfo();
+  const { address, account } = useGetAccountInfo();
+  console.log(JSON.stringify(useGetAccountInfo(), null, 2));
   if (address) {
     setAddress(address);
   }
-  let account = {
-    address: "",
-    balance: "...",
-    claimableRewards: "0",
-    nonce: 0,
-    scrCount: 0,
-    txCount: 0,
-  };
 
   const isLoggedIn = Boolean(address);
 
