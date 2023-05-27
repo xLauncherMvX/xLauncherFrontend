@@ -274,26 +274,26 @@ export function Navbar(props) {
                     <Row>
                       <Col xs={{ offset: 1, span: 5 }}>
                         <Image
-                          width={18}
-                          height={18}
+                          width={20}
+                          height={20}
                           alt="18x18"
                           src={XLHLogo}
                           style={{ marginTop: "-3px", marginRight: "5px" }}
                         />
-                        <p className="font-size-sm d-inline">
+                        <p className="font-size-sm d-inline" style={{whiteSpace: "nowrap"}}>
                           XLH: {walletData.tokens.xlh}
                         </p>
                       </Col>
                       <Col xs={{ offset: 1, span: 5 }}>
                         <Image
-                          width={16}
-                          height={16}
+                          width={25}
+                          height={25}
                           alt="16x16"
                           src={EGLDLogo}
                           style={{ marginTop: "-3px", marginRight: "5px" }}
-                          className="inverted-icon"
+
                         />
-                        <p className="font-size-sm d-inline">
+                        <p className="font-size-sm d-inline" style={{whiteSpace: "nowrap"}}>
                           EGLD: {accountBalance}
                         </p>
                       </Col>
