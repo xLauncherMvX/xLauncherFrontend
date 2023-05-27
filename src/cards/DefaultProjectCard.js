@@ -37,7 +37,7 @@ export default function DefaultProjectCard({image, label, title, description, to
           </Col>
           <Col xs={6}>
             {action2 ? (
-              <a href={action2.route} target="_blank" rel="noreferrer">
+              <a href={action2.route} target={action2.type === "internal" ? ("_self") : ("_blank")} rel="noreferrer">
                 <Button className="btn btn-outline-light btn-block" style={{minWidth: '120px'}}
                         size="sm">{action2.label}</Button>
               </a>
