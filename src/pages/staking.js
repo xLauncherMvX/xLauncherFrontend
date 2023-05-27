@@ -457,22 +457,13 @@ function Staking(props) {
   let earned1Color1 = "white";
   let earned1Color2 = "white";
   let earned1Color3 = "white";
-  if (
-    clientReportData["farm1Rewards"] >= apr1 &&
-    clientReportData["farm1Rewards"] > 0
-  ) {
+  if (clientReportData["farm1Rewards"] >= 10) {
     earned1Color1 = "lexaloffle-green";
   }
-  if (
-    clientReportData["farm2Rewards"] >= apr2 &&
-    clientReportData["farm2Rewards"] > 0
-  ) {
+  if (clientReportData["farm2Rewards"] >= 10) {
     earned1Color2 = "lexaloffle-green";
   }
-  if (
-    clientReportData["farm3Rewards"] >= apr3 &&
-    clientReportData["farm3Rewards"] > 0
-  ) {
+  if (clientReportData["farm3Rewards"] >= 10) {
     earned1Color3 = "lexaloffle-green";
   }
 
@@ -481,19 +472,19 @@ function Staking(props) {
   let disabledCR2 = true;
   let disabledCR3 = true;
   if (
-    clientReportData["farm1Rewards"] >= apr1 &&
+    clientReportData["farm1Rewards"] >= 10 &&
     clientReportData["farm1Rewards"] > 0
   ) {
     disabledCR1 = false;
   }
   if (
-    clientReportData["farm2Rewards"] >= apr2 &&
+    clientReportData["farm2Rewards"] >= 10 &&
     clientReportData["farm2Rewards"] > 0
   ) {
     disabledCR2 = false;
   }
   if (
-    clientReportData["farm3Rewards"] >= apr3 &&
+    clientReportData["farm3Rewards"] >= 10 &&
     clientReportData["farm3Rewards"] > 0
   ) {
     disabledCR3 = false;
@@ -572,20 +563,13 @@ function Staking(props) {
               size: "sm",
               color: "primary",
               label: "Claim",
-              hint:
-                "Individual rewards can be claimed with a minimum of " +
-                calc2(apr1) +
-                " XLH",
+              hint: "Individual rewards can be claimed with a minimum of 10 XLH",
               disabled: disabledCR1,
             }}
             reinvest={{
               size: "sm",
               color: "success",
               label: "Reinvest",
-              hint:
-                "Individual rewards can be reinvested with a minimum of " +
-                calc2(apr1) +
-                " XLH",
               disabled: true,
             }}
             unstake={{
@@ -676,20 +660,13 @@ function Staking(props) {
               size: "sm",
               color: "primary",
               label: "Claim",
-              hint:
-                "Individual rewards can be claimed with a minimum of " +
-                calc2(apr2) +
-                " XLH",
+              hint: "Individual rewards can be claimed with a minimum of 10 XLH",
               disabled: disabledCR2,
             }}
             reinvest={{
               size: "sm",
               color: "success",
               label: "Reinvest",
-              hint:
-                "Individual rewards can be reinvested with a minimum of " +
-                calc2(apr2) +
-                " XLH",
               disabled: true,
             }}
             unstake={{
@@ -781,20 +758,13 @@ function Staking(props) {
               size: "sm",
               color: "primary",
               label: "Claim",
-              hint:
-                "Individual rewards can be claimed with a minimum of " +
-                calc2(apr3) +
-                " XLH",
+              hint: "Individual rewards can be claimed with a minimum of 10 XLH",
               disabled: disabledCR3,
             }}
             reinvest={{
               size: "sm",
               color: "success",
               label: "Reinvest",
-              hint:
-                "Individual rewards can be reinvested with a minimum of " +
-                calc2(apr3) +
-                " XLH",
               disabled: true,
             }}
             unstake={{
