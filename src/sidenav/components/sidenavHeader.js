@@ -37,13 +37,13 @@ export const SidenavHeader = () => {
 			<div className='light-divider' style={{marginBottom: '1px'}}></div>
 			<div className="d-flex justify-content-center">
 				<IconButton className="text-white" onClick={() => openInNewTab(config.website)}>
-					<WebsiteIcon fontSize="small"/>
+					<WebsiteIcon className="footer-links" fontSize="small"/>
 				</IconButton>
 				<IconButton className="float-right text-white" onClick={() => openInNewTab("https://twitter.com/XLauncher_")}>
-					<TwitterIcon fontSize="small"/>
+					<TwitterIcon className="footer-links" fontSize="small"/>
 				</IconButton>
 				<IconButton className="float-right text-white" onClick={() => openInNewTab("https://t.me/XLauncherChat")}>
-					<TelegramIcon fontSize="small"/>
+					<TelegramIcon className="footer-links" fontSize="small"/>
 				</IconButton>
 			</div>
 		</React.Fragment>

@@ -77,7 +77,7 @@ export function Sidenav() {
         >
             <div className='sidebar-container'>
                 <SidenavHeader/>
-                <div style={{ flex: 1}}>
+                <div style={{ flex: 1, marginTop: '-10px'}}>
                     <div className='sidebar-label-divider'>
                         <p> General </p>
                     </div>
