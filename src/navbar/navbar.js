@@ -27,7 +27,7 @@ import XLHLogo from "assets/images/logo.svg";
 import EGLDLogo from "assets/images/egld-logo.svg";
 import VEGLDLogo from "assets/images/vegld-logo.svg";
 import Image from "react-bootstrap/Image";
-import { multiplier, calc2 } from "utils/utilities";
+import { multiplier, calc2, intlNumberFormat } from "utils/utilities";
 import {
   allTokens,
   customConfig,
@@ -271,7 +271,7 @@ export function Navbar(props) {
                           style={{ marginTop: "-3px", marginRight: "5px" }}
                         />
                         <p className="font-size-sm d-inline" >
-                          XLH: {walletData.tokens.xlh}
+                          XLH: {intlNumberFormat(walletData.tokens.xlh)}
                         </p>
                       </Col>
                       <Col xs={{ offset: 1, span: 5 }} style={{whiteSpace: "nowrap"}}>
@@ -284,7 +284,7 @@ export function Navbar(props) {
 
                         />
                         <p className="font-size-sm d-inline" style={{whiteSpace: "nowrap"}}>
-                          EGLD: {accountBalance}
+                          EGLD: {intlNumberFormat(accountBalance)}
                         </p>
                       </Col>
                     </Row>
@@ -298,7 +298,7 @@ export function Navbar(props) {
                           style={{ marginRight: "5px" }}
                         />
                         <p className="font-size-sm d-inline" >
-                          VEGLD: {walletData.tokens.vegld}
+                          VEGLD: {intlNumberFormat(walletData.tokens.vegld)}
                         </p>
                       </Col>
                     </Row>
