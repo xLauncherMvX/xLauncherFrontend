@@ -1,7 +1,8 @@
-import React, { createContext } from "react";
+import React from "react";
 import { Outlet } from "react-router-dom";
 import { Sidenav } from "sidenav/sidenav";
 import { Navbar } from "navbar/navbar";
+import { Footer } from "footer/footer";
 import "assets/css/globals.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -14,7 +15,7 @@ function Layout(props) {
     <div className={`page-container ${bgClasses}`}>
       <Sidenav />
       <Container className="main-container">
-        <Row>
+        <Row style={{ minHeight: "calc(100vh - 107px)", display: "flex", flexDirection: "column" }}>
           <Col>
             <Navbar
               debugLog={props.debugLog}
@@ -27,6 +28,7 @@ function Layout(props) {
             <Outlet clientReportData={props.clientReportData} />
           </Col>
         </Row>
+        <Footer/>
       </Container>
     </div>
   );

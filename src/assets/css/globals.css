@@ -2218,3 +2218,14 @@ h6 {
 .shadow-blue-700 {
     box-shadow: inset 0 0 8px #0C72F7, inset 0 0 8px #0C72F7, inset 0 0 8px #0C72F7, inset 0 0 8px #0C72F7;
 }
+
+.footer-links{
+    color: white;
+    transition: all 250ms ease-in 0s !important;
+    cursor: pointer;
+}
+.footer-links:focus,
+.footer-links:hover{
+    color: #0075ff;
+    transform: scale(1.25);
+}
