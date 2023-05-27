@@ -25,6 +25,7 @@ import PlatinumLogo from "assets/images/rockets/platinum.png";
 import LegendaryLogo from "assets/images/rockets/legendary.png";
 import XLHLogo from "assets/images/logo.svg";
 import EGLDLogo from "assets/images/egld-logo.svg";
+import VEGLDLogo from "assets/images/vegld-logo.svg";
 import Image from "react-bootstrap/Image";
 import { multiplier, calc2 } from "utils/utilities";
 import {
@@ -47,14 +48,9 @@ export function Navbar(props) {
   const config = customConfig[networkId];
   const tokens = allTokens[networkId];
 
-  function setFakeAddress() {
-    console.log("setFakeAddress");
-  }
-
   //Get the user address
   //const debugAccountInfo = useGetAccountInfo();
   const { address, account } = useGetAccountInfo();
-  console.log(JSON.stringify(useGetAccountInfo(), null, 2));
   if (address) {
     setAddress(address);
   }
@@ -74,6 +70,7 @@ export function Navbar(props) {
       nfts: newNftsList,
     });
   };
+  console.log(JSON.stringify(walletData, null, 2));
 
   //Used for "my account" modal
   const [show, setShow] = useState(false);
@@ -265,22 +262,22 @@ export function Navbar(props) {
                     style={{ height: "100%" }}
                   >
                     <Row>
-                      <Col xs={{ offset: 1, span: 5 }}>
+                      <Col xs={{ offset: 1, span: 5 }} style={{whiteSpace: "nowrap"}}>
                         <Image
-                          width={20}
+                          width={30}
                           height={20}
                           alt="18x18"
                           src={XLHLogo}
                           style={{ marginTop: "-3px", marginRight: "5px" }}
                         />
-                        <p className="font-size-sm d-inline" style={{whiteSpace: "nowrap"}}>
+                        <p className="font-size-sm d-inline" >
                           XLH: {walletData.tokens.xlh}
                         </p>
                       </Col>
-                      <Col xs={{ offset: 1, span: 5 }}>
+                      <Col xs={{ offset: 1, span: 5 }} style={{whiteSpace: "nowrap"}}>
                         <Image
-                          width={25}
-                          height={25}
+                          width={30}
+                          height={30}
                           alt="16x16"
                           src={EGLDLogo}
                           style={{ marginTop: "-3px", marginRight: "5px" }}
@@ -288,6 +285,20 @@ export function Navbar(props) {
                         />
                         <p className="font-size-sm d-inline" style={{whiteSpace: "nowrap"}}>
                           EGLD: {accountBalance}
+                        </p>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={{ offset: 1, span: 5 }} style={{whiteSpace: "nowrap"}}>
+                        <Image
+                          width={30}
+                          height={30}
+                          alt="18x18"
+                          src={VEGLDLogo}
+                          style={{ marginRight: "5px" }}
+                        />
+                        <p className="font-size-sm d-inline" >
+                          VEGLD: {walletData.tokens.vegld}
                         </p>
                       </Col>
                     </Row>
