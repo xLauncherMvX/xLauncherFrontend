@@ -70,7 +70,6 @@ export function Navbar(props) {
       nfts: newNftsList,
     });
   };
-  console.log(JSON.stringify(walletData, null, 2));
 
   //Used for "my account" modal
   const [show, setShow] = useState(false);
