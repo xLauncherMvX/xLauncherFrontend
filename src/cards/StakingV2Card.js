@@ -193,6 +193,7 @@ export default function StakingV2Card({
 	//Change color of rewards to green when the reached amount is higher that set value
 	let myRewardsColor = 'white';
 	if (myRewards >= 100) {
+		myRewardsColor = 'lexaloffle-green';
 		claim.disabled = false;
 	}
 
@@ -256,7 +257,7 @@ export default function StakingV2Card({
 				</div>
 				<div className="d-flex justify-content-between align-items-end">
 					<p className="details-text-v2">My Earned XLH:</p>
-					<p className={`details-text-v2`}>{myRewards ? (intlNumberFormat(myRewards)): ('-')}</p>
+					<p className={`details-text-v2 text-${myRewardsColor}`}>{myRewards ? (intlNumberFormat(myRewards)): ('-')}</p>
 				</div>
 			</div>
 			<div className="light-divider" style={{width: '100%', marginLeft: 0, marginBottom: '5px'}}></div>
