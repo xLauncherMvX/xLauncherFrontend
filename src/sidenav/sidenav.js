@@ -136,14 +136,14 @@ export function Sidenav() {
                         {/*>*/}
                         {/*    Lottery with XLH*/}
                         {/*</MenuItem>*/}
-                        <MenuItem
-                          label="Bloodshed NFT Reveal"
-                          icon={<ShoppingCart />}
-                          component={<Link to="/lottery/bloodshed-reveal"/>}
-                          active={pathname === "/lottery/bloodshed-reveal"}
-                        >
-                            Bloodshed NFT Reveal
-                        </MenuItem>
+                        {/*<MenuItem*/}
+                        {/*  label="Bloodshed NFT Reveal"*/}
+                        {/*  icon={<ShoppingCart />}*/}
+                        {/*  component={<Link to="/lottery/bloodshed-reveal"/>}*/}
+                        {/*  active={pathname === "/lottery/bloodshed-reveal"}*/}
+                        {/*>*/}
+                        {/*    Bloodshed NFT Reveal*/}
+                        {/*</MenuItem>*/}
                     </Menu>
 
                     <div className='sidebar-label-divider'>
