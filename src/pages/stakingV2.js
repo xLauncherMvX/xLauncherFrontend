@@ -458,7 +458,12 @@ function StakingV2(props) {
 
 	return (
 		<div>
-			<p style={{fontSize: '50px', color: 'white'}}>Staking V2</p>
+			<p
+				className="text-white font-bold mt-4 ms-2"
+				style={{ fontSize: "40px" }}
+			>
+				Staking V2
+			</p>
 
 			<Row className="mt-2">
 				<Col xs={6} lg={2}>

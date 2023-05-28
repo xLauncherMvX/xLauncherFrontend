@@ -163,14 +163,14 @@ export function Sidenav() {
                         >
                             Blog
                         </MenuItem>
-                        {/*<MenuItem*/}
-                        {/*    label="Team"*/}
-                        {/*    icon={<Users />}*/}
-                        {/*    component={<Link to="/team"/>}*/}
-                        {/*    active={window.location.pathname === "/team"}*/}
-                        {/*>*/}
-                        {/*    Team*/}
-                        {/*</MenuItem>*/}
+                        <MenuItem
+                            label="Team"
+                            icon={<Users />}
+                            component={<Link to="/team"/>}
+                            active={pathname === "/team"}
+                        >
+                            Team
+                        </MenuItem>
                     </Menu>
                 </div>
                 <SidenavFooter/>
