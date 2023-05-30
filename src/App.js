@@ -124,7 +124,7 @@ function App() {
         />
       ),
       children: [
-        { path: "/", element: <Staking walletState={walletState}/> },
+        { path: "/", element: <Dashboard/> },
         { path: "/dashboard", element: <Dashboard /> },
         {
           path: "/staking",
@@ -142,7 +142,7 @@ function App() {
         { path: "/stakingV2", element: <StakingV2 walletState={walletState} /> },
         { path: "/snake-token-presale", element: <SnakeTokenPresale walletState={walletState} /> },
 
-        { path: "*", element: <Staking walletState={walletState}/> },
+        { path: "*", element: <Dashboard /> },
       ],
     },
   ]);

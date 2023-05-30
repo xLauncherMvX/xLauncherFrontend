@@ -83,10 +83,18 @@ export function Sidenav() {
                     </div>
                     <Menu menuItemStyles={menuItemStyles}>
                         <MenuItem
+                            label="Dashboard"
+                            icon={<BarChart />}
+                            component={<Link to="/dashboard"/>}
+                            active={pathname === "/dashboard" || pathname === "/"}
+                        >
+                            Dashboard
+                        </MenuItem>
+                        <MenuItem
                             label="Staking"
                             icon={<Stake />}
                             component={<Link to="/staking"/>}
-                            active={pathname === "/staking" || pathname === "/"}
+                            active={pathname === "/staking"}
                         >
                             Staking
                         </MenuItem>
