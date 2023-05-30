@@ -82,14 +82,6 @@ export function Sidenav() {
                         <p> General </p>
                     </div>
                     <Menu menuItemStyles={menuItemStyles}>
-                        {/*<MenuItem*/}
-                        {/*    label="Dashboard"*/}
-                        {/*    icon={<BarChart />}*/}
-                        {/*    component={<Link to="/dashboard"/>}*/}
-                        {/*    active={window.location.pathname === "/dashboard" || window.location.pathname === "/"}*/}
-                        {/*>*/}
-                        {/*    Dashboard*/}
-                        {/*</MenuItem>*/}
                         <MenuItem
                             label="Staking"
                             icon={<Stake />}
@@ -136,14 +128,14 @@ export function Sidenav() {
                         {/*>*/}
                         {/*    Lottery with XLH*/}
                         {/*</MenuItem>*/}
-                        {/*<MenuItem*/}
-                        {/*  label="Bloodshed NFT Reveal"*/}
-                        {/*  icon={<ShoppingCart />}*/}
-                        {/*  component={<Link to="/lottery/bloodshed-reveal"/>}*/}
-                        {/*  active={pathname === "/lottery/bloodshed-reveal"}*/}
-                        {/*>*/}
-                        {/*    Bloodshed NFT Reveal*/}
-                        {/*</MenuItem>*/}
+                        <MenuItem
+                            label="Presale"
+                            icon={<ShoppingCart />}
+                            component={<Link to="/snake-token-presale"/>}
+                            active={pathname === "/snake-token-presale"}
+                        >
+                            Presale
+                        </MenuItem>
                     </Menu>
 
                     <div className='sidebar-label-divider'>
