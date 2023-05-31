@@ -1,0 +1,195 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.70.0-nightly",
+            "commitHash": "f63ccaf25f74151a5d8ce057904cd944074b01d2",
+            "commitDate": "2023-03-06",
+            "channel": "Nightly",
+            "short": "rustc 1.70.0-nightly (f63ccaf25 2023-03-06)"
+        },
+        "contractCrate": {
+            "name": "snake-coil",
+            "version": "0.1.0"
+        },
+        "framework": {
+            "name": "multiversx-sc",
+            "version": "0.41.1"
+        }
+    },
+    "name": "SnakeCoil",
+    "constructor": {
+        "inputs": [],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "viewBaseContext",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BaseContext"
+                }
+            ]
+        },
+        {
+            "name": "getTokenSupply",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "token_tier",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "initConfig",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "ouro_token",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "issue",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "payableInTokens": [
+                "EGLD"
+            ],
+            "inputs": [
+                {
+                    "name": "tier",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setLocalRoles",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tier",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "createMetaEsdt",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tier",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "transferOwnership",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tier",
+                    "type": "u32"
+                },
+                {
+                    "name": "to",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "coil",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "EsdtTokenPayment"
+                }
+            ]
+        },
+        {
+            "name": "getTokenTier",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getToken",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "token_tier",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        }
+    ],
+    "events": [],
+    "hasCallback": true,
+    "types": {
+        "BaseContext": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "tokens",
+                    "type": "List<TokenIdentifier>"
+                },
+                {
+                    "name": "token_supplies",
+                    "type": "List<BigUint>"
+                }
+            ]
+        },
+        "EsdtTokenPayment": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "token_identifier",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "token_nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                }
+            ]
+        }
+    }
+}

@@ -44,6 +44,7 @@ import {
 import { networkId } from "config/customConfig";
 import { networkConfig } from "config/networks";
 import Layout from "layout/layout";
+import { Presale } from "pages/snake_presale/Presale";
 
 library.add(
   fab,
@@ -140,7 +141,7 @@ function App() {
         { path: "/projects/estar-games", element: <EstarGames /> },
         { path: "/projects/vestax-finance", element: <VestaXFinance /> },
         { path: "/stakingV2", element: <StakingV2 walletState={walletState} /> },
-        { path: "/snake-token-presale", element: <SnakeTokenPresale walletState={walletState} /> },
+        { path: "/snake-token-presale", element: <Presale /> },
 
         { path: "*", element: <Dashboard /> },
       ],
