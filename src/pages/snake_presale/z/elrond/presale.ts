@@ -11,7 +11,7 @@ import {
     TypedValue,
 } from "@multiversx/sdk-core/out";
 import { refreshAccount } from "@multiversx/sdk-dapp/utils";
-import abiVesting from '../../assets/abi/snake-vesting.abi.json';
+import abiVesting from 'pages/snake_presale/z/elrond/abi/snake-vesting.abi.json';
 import {
     EGLD_WRAPPER_ADDRESS,
     PRESALE_BUY_GAS_LIMIT,
@@ -139,7 +139,7 @@ export async function presaleBuy(
         const tx1 = {
             value: payment.amountAsBigInteger,
             data: 'wrapEgld',
-            receiver: EGLD_WRAPPER_ADDRESS[account.shard ?? 1],
+            receiver: EGLD_WRAPPER_ADDRESS[account.shard ? account.shard: 1],
             gasLimit: PRESALE_BUY_GAS_LIMIT,
             nonce: currentNonce++,
         };
