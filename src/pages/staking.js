@@ -543,7 +543,7 @@ function Staking(props) {
           <StakingCard
             title="Farm 1"
             lockedTime="0 days locked"
-            apr="9%"
+            apr="3%"
             myXLH={clientReportData["farm1Amount"]}
             unstakedAmount={clientReportData["farm1Amount"]}
             myRewards={clientReportData["farm1Rewards"]}
@@ -641,7 +641,7 @@ function Staking(props) {
           <StakingCard
             title="Farm 2"
             lockedTime="60 days locked"
-            apr="30%"
+            apr="8%"
             myXLH={clientReportData["farm2Amount"]}
             myRewards={clientReportData["farm2Rewards"]}
             myRewardsColor={earned1Color2}
@@ -739,7 +739,7 @@ function Staking(props) {
           <StakingCard
             title="Farm 3"
             lockedTime="180 days locked"
-            apr="50%"
+            apr="13%"
             myXLH={clientReportData["farm3Amount"]}
             myRewards={clientReportData["farm3Rewards"]}
             myRewardsColor={earned1Color3}
