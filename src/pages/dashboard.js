@@ -375,7 +375,7 @@ function Dashboard(props) {
 							/>
 						</div>
 					</Col>
-					<Col xs={12} lg={4} className="mt-4">
+					<Col xs={12} lg={8} className="mt-4">
 						<div className="farming-card">
 							<p className="text-white ms-3 h4 font-bold">Total Staked XLH</p>
 							<Chart
