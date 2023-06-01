@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import BigNumber from 'bignumber.js';
 import { Toaster } from 'react-hot-toast';
 import { InputBase, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
@@ -138,11 +139,11 @@ export const Presale = () => {
         : statsContext.current_round_id < 5 ? 'Current Round Ends In'
         : ''
         : '';
-    const salePercent = statsContext ?
-        statsContext.current_round_id < 5 && !parseBigNumber(statsContext.sale_amount_for_current_round).isZero() ?
-            applyPrecision(parseBigNumber(statsContext.sold_amounts[statsContext.current_round_id]).div(statsContext.sale_amount_for_current_round).multipliedBy(100).toNumber(), 2)
-            : 0 : 0;
-    const soldAmount = statsContext && statsContext.current_round_id < 5 ? convertWeiToEsdt(statsContext.sold_amounts[statsContext.current_round_id]).toNumber() : 0;
+    
+    const soldAmount = statsContext ? statsContext.current_round_id < 5 ? convertWeiToEsdt(statsContext.sold_amounts[statsContext.current_round_id]).toNumber() : convertWeiToEsdt(statsContext.sold_amounts.reduce((sum, cur) => sum.plus(cur), new BigNumber(0))).toNumber() : 0;
+    const saleAmount = statsContext ? statsContext.current_round_id < 5 ? convertWeiToEsdt(statsContext.sale_amount_for_current_round).toNumber() : convertWeiToEsdt(statsContext.total_sale_amount).toNumber() : 0;
+    const salePercent = soldAmount / saleAmount * 100;
+
     const requirementsText = statsContext ?
         statsContext.current_round_id == 0 ? '10+ Snake NFT Holders Only'
         : statsContext.current_round_id == 1 ? '1+ Snake NFT Holders Only'
@@ -351,8 +352,8 @@ export const Presale = () => {
                                 <BorderLinearProgress variant="determinate" value={salePercent} />
                             </div>
                             <div className='d-flex justify-content-between mt-2' style={{ fontSize: '.8rem', color: '#969696' }}>
-                                <span>{convertBigNumberToLocalString(soldAmount)} SNAKE {`(${salePercent}%)`}</span>
-                                <span>{statsContext ? convertBigNumberToLocalString(convertWeiToEsdt(statsContext.sale_amount_for_current_round)) : '-'} SNAKE</span>
+                                <span>{convertBigNumberToLocalString(soldAmount)} SNAKE {`(${convertBigNumberToLocalString(salePercent, 2)}%)`}</span>
+                                <span>{convertBigNumberToLocalString(saleAmount)} SNAKE</span>
                             </div>
 
                             <div className='presale-label-container mt-4'>
