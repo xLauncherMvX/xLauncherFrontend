@@ -136,10 +136,11 @@ export async function presaleBuy(
     const txs = [];
 
     if (payment.tokenIdentifier.startsWith('WEGLD')) {
+        const shard = account.shard === undefined ? 1 : account.shard;
         const tx1 = {
             value: payment.amountAsBigInteger,
             data: 'wrapEgld',
-            receiver: EGLD_WRAPPER_ADDRESS[account.shard ?? 1],
+            receiver: EGLD_WRAPPER_ADDRESS[shard],
             gasLimit: PRESALE_BUY_GAS_LIMIT,
             nonce: currentNonce++,
         };
