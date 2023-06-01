@@ -40,6 +40,12 @@
     padding-bottom: .7rem;
 }
 
+@media screen and (max-width: 568px) {
+    .presale-label-row {
+        flex-direction: column;
+    }
+}
+
 .presale-button {
     display: block;
     width: 180px;
