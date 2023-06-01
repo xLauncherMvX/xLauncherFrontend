@@ -238,7 +238,7 @@ export const Presale = () => {
     }, [selectedTokenId]);
 
     function onChangeBuyQuoteAmount(valueAsString: string) {
-        if (!isPositiveOrZeroBigNumber(valueAsString)) return;
+        // if (!isPositiveOrZeroBigNumber(valueAsString)) return;
         const value = Number(valueAsString);
         if (value > quoteTokenBalance) {
             toastError(ERROR_NOT_ENOUGH_BALANCE);
@@ -396,7 +396,6 @@ export const Presale = () => {
                                 <div className="cp-init-input-container w-100 me-1">
                                     <input
                                         className="cp-init-input text-right"
-                                        type="number"
                                         value={buyQuoteAmount}
                                         onChange={(e) => onChangeBuyQuoteAmount(e.target.value)}
                                     />

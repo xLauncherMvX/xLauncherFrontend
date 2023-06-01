@@ -8,7 +8,6 @@ import {
 	SmartContractAbi, U32Value, U8Value,
 } from "@multiversx/sdk-core/out";
 import {BigNumber} from "bignumber.js";
-import {TokenPayment} from "@multiversx/sdk-core/out/tokenPayment";
 import {sendTransactions} from "@multiversx/sdk-dapp/services/transactions/sendTransactions";
 import {Add} from "@mui/icons-material";
 import {refreshAccount} from "@multiversx/sdk-dapp/__commonjs/utils";

@@ -2,7 +2,7 @@ import {
     AbiRegistry,
     Address,
     SmartContract,
-    SmartContractAbi,
+    // SmartContractAbi,
 } from "@multiversx/sdk-core/out";
 import { ProxyNetworkProvider } from "@multiversx/sdk-network-providers/out";
 import abiCoil from 'pages/snake_presale/z/elrond/abi/snake-coil.abi.json';
@@ -22,10 +22,10 @@ export const elrondProvider = new ProxyNetworkProvider(ELROND_API_URL, { timeout
 
 function createSmartContract(abiJson: any, scAddress: string, scName: string): SmartContract {
     const abiRegistry = AbiRegistry.create(abiJson);
-    const abi = new SmartContractAbi(abiRegistry, [scName]);
+    // const abi = new SmartContractAbi(abiRegistry, [scName]);
     return new SmartContract({
         address: new Address(scAddress),
-        abi,
+        abi: abiRegistry,
     });
 }
 
