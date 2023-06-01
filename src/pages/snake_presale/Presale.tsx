@@ -156,7 +156,7 @@ export const Presale = () => {
         : statsContext.current_round_id < 5 ? new Date((baseContext.start_timestamp + baseContext.round_lengths.slice(0, statsContext.current_round_id + 1).reduce((sum, v) => sum + v, 0)) * 1000)
         : 0
         : Date.now() + 30_000;
-    console.log('roundEndDate', roundEndDate);
+    // console.log('roundEndDate', roundEndDate);
 
     let receiveText = '';
     if (statsContext && statsContext.current_round_id < 5 && Number(buyQuoteAmount) > 0 && parseBigNumber(priceRate).isPositive() && selectedTokenId) {
@@ -177,7 +177,7 @@ export const Presale = () => {
     useEffect(() => {
         (async () => {
             const _baseContext = await viewPresaleBaseContext();
-            console.log('_baseContext', _baseContext);
+            // console.log('_baseContext', _baseContext);
             setBaseContext(_baseContext);
 
             // selecte first token
@@ -192,7 +192,7 @@ export const Presale = () => {
 
         (async () => {
             const _statsContext = await viewPresaleStatsContext();
-            console.log('_statsContext', _statsContext);
+            // console.log('_statsContext', _statsContext);
             setStatsContext(_statsContext);
         })();
     }, [hasPendingTransactions]);
@@ -202,7 +202,7 @@ export const Presale = () => {
         
         (async () => {
             const _userContext = await viewPresaleUserContext(address);
-            console.log('_userContext', _userContext);
+            // console.log('_userContext', _userContext);
             setUserContext(_userContext);
         })();
     }, [address, hasPendingTransactions]);
@@ -216,7 +216,7 @@ export const Presale = () => {
             } else {
                 const _balance = await getTokenBalanceFromApi(address, selectedTokenId);
                 const _balanceAmount = _balance ? convertWeiToEsdt(_balance.balance, _balance.decimals, 2).toNumber() : 0;
-                console.log('_balanceAmount', _balanceAmount);
+                // console.log('_balanceAmount', _balanceAmount);
                 setQuoteTokenBalance(_balanceAmount);
             }
         })();
@@ -232,7 +232,7 @@ export const Presale = () => {
 
         (async () => {
             const _priceRate = await getCurrentQuotePrice(selectedTokenId);
-            console.log('_priceRate', _priceRate);
+            // console.log('_priceRate', _priceRate);
             setPriceRate(_priceRate);
         })();
     }, [selectedTokenId]);

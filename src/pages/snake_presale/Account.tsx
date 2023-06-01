@@ -115,19 +115,19 @@ export const Account = () => {
     useEffect(() => {
         (async () => {
             const _coilBaseContext = await viewCoilBaseContext();
-            console.log('_coilBaseContext', _coilBaseContext);
+            // console.log('_coilBaseContext', _coilBaseContext);
             setCoilBaseContext(_coilBaseContext);
         })();
 
         (async () => {
             const _vestingBaseContext = await viewVestingBaseContext();
-            console.log('_vestingBaseContext', _vestingBaseContext);
+            // console.log('_vestingBaseContext', _vestingBaseContext);
             setVestingBaseContext(_vestingBaseContext);
         })();
 
         (async () => {
             const _elrondStats = await getElrondStatsFromApi();
-            console.log('_elrondStats', _elrondStats);
+            // console.log('_elrondStats', _elrondStats);
             setElrondStats(_elrondStats);
         })();
     }, []);
@@ -138,17 +138,17 @@ export const Account = () => {
 
         (async () => {
             const _vouroTokens = await getAccountNftsByCollection(address, vestingBaseContext.tokens[0]);
-            console.log('_vouroTokens', _vouroTokens);
+            // console.log('_vouroTokens', _vouroTokens);
             setVouroTokens(_vouroTokens);
         })();
         (async () => {
             const _vaurynTokens = await getAccountNftsByCollection(address, vestingBaseContext.tokens[1]);
-            console.log('_vaurynTokens', _vaurynTokens);
+            // console.log('_vaurynTokens', _vaurynTokens);
             setVaurynTokens(_vaurynTokens);
         })();
         (async () => {
             const _vearuynTokens = await getAccountNftsByCollection(address, vestingBaseContext.tokens[2]);
-            console.log('_vearuynTokens', _vearuynTokens);
+            // console.log('_vearuynTokens', _vearuynTokens);
             setVeaurynTokens(_vearuynTokens);
         })();
 
