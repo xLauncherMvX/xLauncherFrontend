@@ -139,7 +139,7 @@ export async function presaleBuy(
         const tx1 = {
             value: payment.amountAsBigInteger,
             data: 'wrapEgld',
-            receiver: EGLD_WRAPPER_ADDRESS[account.shard ? account.shard: 1],
+            receiver: EGLD_WRAPPER_ADDRESS[account.shard ?? 1],
             gasLimit: PRESALE_BUY_GAS_LIMIT,
             nonce: currentNonce++,
         };
