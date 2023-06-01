@@ -2,7 +2,7 @@ import {
     AbiRegistry,
     Address, BigUIntValue, ContractFunction,
     SmartContract,
-    SmartContractAbi,
+    // SmartContractAbi,
     TokenPayment,
     TransactionPayload,
     U8Value
@@ -15,10 +15,10 @@ export const buyTickets = async (networkProvider, abiFile, scAddress, scName, ch
     if(!tokenMultiplier) tokenMultiplier = 1;
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, [scName]);
+        // let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
-            abi: abi
+            abi: abiRegistry
         });
 
         const transaction = contract.methodsExplicit
@@ -55,10 +55,10 @@ export const buyTickets = async (networkProvider, abiFile, scAddress, scName, ch
 export const claimResults = async (networkProvider, abiFile, scAddress, scName, chainID) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, [scName]);
+        // let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
-            abi: abi
+            abi: abiRegistry
         });
 
         const transaction = contract.methodsExplicit

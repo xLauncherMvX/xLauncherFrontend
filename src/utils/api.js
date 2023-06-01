@@ -5,7 +5,7 @@ import {
 	Interaction,
 	ResultsParser,
 	SmartContract,
-	SmartContractAbi, U32Value, U8Value,
+	// SmartContractAbi, U32Value, U8Value,
 } from "@multiversx/sdk-core/out";
 import {BigNumber} from "bignumber.js";
 import {sendTransactions} from "@multiversx/sdk-dapp/services/transactions/sendTransactions";
@@ -154,10 +154,10 @@ export const getAccountNFTS = async (nftAPI) => {
 export const contractQuery = async (networkProvider, abiFile, scAddress, scName, methodName, methodArgs) => {
 	try {
 		let abiRegistry = AbiRegistry.create(abiFile);
-		let abi = new SmartContractAbi(abiRegistry, [scName]);
+		// let abi = new SmartContractAbi(abiRegistry, [scName]);
 		let contract = new SmartContract({
 			address: new Address(scAddress),
-			abi: abi
+			abi: abiRegistry
 		});
 
 		let contractEndpoint = new ContractFunction(methodName);

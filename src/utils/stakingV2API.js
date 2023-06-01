@@ -2,7 +2,7 @@ import {
     AbiRegistry,
     Address, BigUIntValue, ContractFunction,
     SmartContract,
-    SmartContractAbi,
+    // SmartContractAbi,
     TokenPayment,
     TransactionPayload, U64Value,
     U8Value
@@ -16,10 +16,10 @@ import {BytesValue} from "@multiversx/sdk-core/out/smartcontracts/typesystem/byt
 export const stake = async (abiFile, scAddress, scName, chainID, token, amount, pool) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, [scName]);
+        // let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
-            abi: abi
+            abi: abiRegistry
         });
 
         const transaction = contract.methodsExplicit
@@ -55,10 +55,10 @@ export const stake = async (abiFile, scAddress, scName, chainID, token, amount, 
 export const unstake = async (abiFile, scAddress, scName, chainID, token, amount, pool) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, [scName]);
+        // let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
-            abi: abi
+            abi: abiRegistry
         });
 
         const transaction = contract.methodsExplicit
@@ -92,10 +92,10 @@ export const unstake = async (abiFile, scAddress, scName, chainID, token, amount
 export const claim = async (abiFile, scAddress, scName, chainID, pool) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, [scName]);
+        // let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
-            abi: abi
+            abi: abiRegistry
         });
 
         const transaction = contract.methodsExplicit
@@ -128,10 +128,10 @@ export const claim = async (abiFile, scAddress, scName, chainID, pool) => {
 export const stakeSFT = async (abiFile, scAddress, scName, chainID, token, address, amount) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, [scName]);
+        // let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
-            abi: abi
+            abi: abiRegistry
         });
 
         const transaction = contract.methodsExplicit
@@ -170,10 +170,10 @@ export const stakeSFT = async (abiFile, scAddress, scName, chainID, token, addre
 export const unstakeSFT = async (abiFile, scAddress, scName, chainID, amount) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, [scName]);
+        // let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
-            abi: abi
+            abi: abiRegistry
         });
 
         const transaction = contract.methodsExplicit
@@ -206,10 +206,10 @@ export const unstakeSFT = async (abiFile, scAddress, scName, chainID, amount) =>
 export const claimUnstakeXLH = async (abiFile, scAddress, scName, chainID) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, [scName]);
+        // let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
-            abi: abi
+            abi: abiRegistry
         });
 
         const transaction = contract.methodsExplicit
@@ -243,10 +243,10 @@ export const claimUnstakeXLH = async (abiFile, scAddress, scName, chainID) => {
 export const claimUnstakeSFT = async (abiFile, scAddress, scName, chainID) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, [scName]);
+        // let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
-            abi: abi
+            abi: abiRegistry
         });
 
         const transaction = contract.methodsExplicit
@@ -280,10 +280,10 @@ export const claimUnstakeSFT = async (abiFile, scAddress, scName, chainID) => {
 export const createFarm = async (abiFile, scAddress, scName, chainID, tier, title, token, amount) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, [scName]);
+        // let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
-            abi: abi
+            abi: abiRegistry
         });
 
         const transaction = contract.methodsExplicit
