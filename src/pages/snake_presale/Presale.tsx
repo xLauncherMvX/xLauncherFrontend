@@ -303,6 +303,15 @@ export const Presale = () => {
                 return;
             }
         }
+        if (statsContext && statsContext.current_round_id == 0 && Number(buyQuoteAmount) > 0 && parseBigNumber(priceRate).isPositive() && selectedTokenId) {
+            if (Date.now() < baseContext.start_timestamp * 1000 + 3600 * 1000) {
+                const buyAmount = Number(buyQuoteAmount) / convertWeiToEsdt(priceRate, getTokenDecimals(selectedTokenId)).toNumber();
+                if (buyAmount > 1000) {
+                    toastError('You can only buy $1000 OURO in the first 1 hour');
+                    return;
+                }
+            }
+        }
 
         const payment = TokenTransfer.fungibleFromAmount(
             selectedTokenId,
