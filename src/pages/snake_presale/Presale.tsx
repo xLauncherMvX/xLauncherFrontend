@@ -141,7 +141,7 @@ export const Presale = () => {
         : '';
     
     const soldAmount = statsContext ? statsContext.current_round_id < 5 ? convertWeiToEsdt(statsContext.sold_amounts[statsContext.current_round_id]).toNumber() : convertWeiToEsdt(statsContext.sold_amounts.reduce((sum, cur) => sum.plus(cur), new BigNumber(0))).toNumber() : 0;
-    const saleAmount = statsContext ? statsContext.current_round_id < 5 ? convertWeiToEsdt(statsContext.sale_amount_for_current_round).toNumber() : convertWeiToEsdt(statsContext.total_sale_amount).toNumber() : 0;
+    const saleAmount = statsContext ? statsContext.current_round_id < 5 ? convertWeiToEsdt(parseBigNumber(statsContext.sale_amount_for_current_round).plus(statsContext.sold_amounts[statsContext.current_round_id])).toNumber() : convertWeiToEsdt(statsContext.total_sale_amount).toNumber() : 0;
     const salePercent = soldAmount / saleAmount * 100;
 
     const requirementsText = statsContext ?
