@@ -286,7 +286,10 @@ export const Presale = () => {
             toastError('Presale is finished');
             return;
         }
-
+        if (!userContext.can_join_current_round) {
+            toastError('You do not meet NFT holding requirements');
+            return;
+        }
         if (!isPositiveOrZeroBigNumber(buyQuoteAmount)) {
             toastError(ERROR_INVALID_NUMBER);
             return;
