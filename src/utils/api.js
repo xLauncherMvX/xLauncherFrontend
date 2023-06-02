@@ -6,6 +6,7 @@ import {
 	ResultsParser,
 	SmartContract
 } from "@multiversx/sdk-core/out";
+import {networkId, customConfig} from "config/customConfig";
 
 //API to get the logged in account tokens
 export const getAccountTokens = async (tokensAPI, tokens) => {
@@ -48,6 +49,9 @@ export const getAccountTokens = async (tokensAPI, tokens) => {
 
 //API to get the xlh origins nfts of the logged in account
 export const getAccountNFTS = async (nftAPI) => {
+	const config = customConfig[networkId];
+	const nft = config.nft;
+	const sft = config.stakeV2SFT;
 	try {
 		const response = await fetch(
 			nftAPI,
@@ -67,10 +71,10 @@ export const getAccountNFTS = async (nftAPI) => {
 			json.forEach(item => {
 				let collectionSwitcher = item.collection;
 				switch (collectionSwitcher) {
-					case "XLHO-5135c9":
+					case nft:
 						collection.xlhOrigins.push(item);
 						break;
-					case "XLHB-4989e2":
+					case sft:
 						collection.v2StakeSFT.push(item);
 						break;
 					default:
