@@ -5,6 +5,7 @@ import {BigNumber} from "bignumber.js";
 import { refreshAccount } from "@multiversx/sdk-dapp/utils/account";
 import { sendTransactions} from "@multiversx/sdk-dapp/services";
 import { contractQuery} from "utils/api";
+import {ArgSerializer} from "@multiversx/sdk-core/out/smartcontracts/argSerializer";
 
 //Mint Function
 export const mintFunction = async (mintAmount, mintAddress, setTransactionSession) => {
