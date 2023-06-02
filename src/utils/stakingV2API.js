@@ -1,11 +1,9 @@
 import {
     AbiRegistry,
-    Address, BigUIntValue, ContractFunction,
+    Address, BigUIntValue,
     SmartContract,
-    SmartContractAbi,
-    TokenPayment,
-    TransactionPayload, U64Value,
-    U8Value
+    TokenTransfer,
+    U64Value
 } from "@multiversx/sdk-core/out";
 import {refreshAccount} from "@multiversx/sdk-dapp/__commonjs/utils";
 import {sendTransactions} from "@multiversx/sdk-dapp/services";
@@ -16,17 +14,16 @@ import {BytesValue} from "@multiversx/sdk-core/out/smartcontracts/typesystem/byt
 export const stake = async (abiFile, scAddress, scName, chainID, token, amount, pool) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
-            abi: abi
+            abi: abiRegistry
         });
 
         const transaction = contract.methodsExplicit
             .stakeXlh([new U64Value(pool)])
             .withChainID(chainID)
             .withSingleESDTTransfer(
-                TokenPayment.fungibleFromAmount(token, amount, 18)
+                TokenTransfer.fungibleFromAmount(token, amount, 18)
             )
             .buildTransaction();
         const stakeTransaction = {
@@ -37,7 +34,7 @@ export const stake = async (abiFile, scAddress, scName, chainID, token, amount, 
         };
         await refreshAccount();
 
-        const { sessionId /*, error*/ } = await sendTransactions({
+        const { sessionId } = await sendTransactions({
             transactions: stakeTransaction,
             transactionsDisplayInfo: {
                 processingMessage: 'Processing Stake transaction',
@@ -55,16 +52,15 @@ export const stake = async (abiFile, scAddress, scName, chainID, token, amount, 
 export const unstake = async (abiFile, scAddress, scName, chainID, token, amount, pool) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
-            abi: abi
+            abi: abiRegistry
         });
 
         const transaction = contract.methodsExplicit
-          .unstakeXlh([new U64Value(pool), new BigUIntValue(new BigNumber(amount * multiplier))])
-          .withChainID(chainID)
-          .buildTransaction();
+            .unstakeXlh([new U64Value(pool), new BigUIntValue(new BigNumber(amount * multiplier))])
+            .withChainID(chainID)
+            .buildTransaction();
         const stakeTransaction = {
             value: 0,
             data: Buffer.from(transaction.getData().valueOf()),
@@ -73,7 +69,7 @@ export const unstake = async (abiFile, scAddress, scName, chainID, token, amount
         };
         await refreshAccount();
 
-        const { sessionId /*, error*/ } = await sendTransactions({
+        const { sessionId } = await sendTransactions({
             transactions: stakeTransaction,
             transactionsDisplayInfo: {
                 processingMessage: 'Processing Unstake transaction',
@@ -92,16 +88,15 @@ export const unstake = async (abiFile, scAddress, scName, chainID, token, amount
 export const claim = async (abiFile, scAddress, scName, chainID, pool) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
-            abi: abi
+            abi: abiRegistry
         });
 
         const transaction = contract.methodsExplicit
-          .claimRewards([new U64Value(pool)])
-          .withChainID(chainID)
-          .buildTransaction();
+            .claimRewards([new U64Value(pool)])
+            .withChainID(chainID)
+            .buildTransaction();
         const stakeTransaction = {
             value: 0,
             data: Buffer.from(transaction.getData().valueOf()),
@@ -110,7 +105,7 @@ export const claim = async (abiFile, scAddress, scName, chainID, pool) => {
         };
         await refreshAccount();
 
-        const { sessionId /*, error*/ } = await sendTransactions({
+        const { sessionId } = await sendTransactions({
             transactions: stakeTransaction,
             transactionsDisplayInfo: {
                 processingMessage: 'Processing Claim transaction',
@@ -128,21 +123,20 @@ export const claim = async (abiFile, scAddress, scName, chainID, pool) => {
 export const stakeSFT = async (abiFile, scAddress, scName, chainID, token, address, amount) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
-            abi: abi
+            abi: abiRegistry
         });
 
         const transaction = contract.methodsExplicit
-          .stakeSft()
-          .withChainID(chainID)
-          .withSingleESDTNFTTransfer(
-            TokenPayment.semiFungible(token, 1, amount),
-            new Address(address)
-          )
+            .stakeSft()
+            .withChainID(chainID)
+            .withSingleESDTNFTTransfer(
+                TokenTransfer.semiFungible(token, 1, amount)
+            )
+            .withSender(new Address(address))
 
-          .buildTransaction();
+            .buildTransaction();
         const stakeSFTTransaction = {
             value: 0,
             data: Buffer.from(transaction.getData().valueOf()),
@@ -151,7 +145,7 @@ export const stakeSFT = async (abiFile, scAddress, scName, chainID, token, addre
         };
         await refreshAccount();
 
-        const { sessionId /*, error*/ } = await sendTransactions({
+        const { sessionId } = await sendTransactions({
             transactions: stakeSFTTransaction,
             transactionsDisplayInfo: {
                 processingMessage: 'Processing SFT Stake transaction',
@@ -170,16 +164,15 @@ export const stakeSFT = async (abiFile, scAddress, scName, chainID, token, addre
 export const unstakeSFT = async (abiFile, scAddress, scName, chainID, amount) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
-            abi: abi
+            abi: abiRegistry
         });
 
         const transaction = contract.methodsExplicit
-          .unstakeSft([new U64Value(amount)])
-          .withChainID(chainID)
-          .buildTransaction();
+            .unstakeSft([new U64Value(amount)])
+            .withChainID(chainID)
+            .buildTransaction();
         const stakeTransaction = {
             value: 0,
             data: Buffer.from(transaction.getData().valueOf()),
@@ -188,7 +181,7 @@ export const unstakeSFT = async (abiFile, scAddress, scName, chainID, amount) =>
         };
         await refreshAccount();
 
-        const { sessionId /*, error*/ } = await sendTransactions({
+        const { sessionId } = await sendTransactions({
             transactions: stakeTransaction,
             transactionsDisplayInfo: {
                 processingMessage: 'Processing Unstake transaction',
@@ -206,16 +199,15 @@ export const unstakeSFT = async (abiFile, scAddress, scName, chainID, amount) =>
 export const claimUnstakeXLH = async (abiFile, scAddress, scName, chainID) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
-            abi: abi
+            abi: abiRegistry
         });
 
         const transaction = contract.methodsExplicit
-          .claimUnstakedXlhValue()
-          .withChainID(chainID)
-          .buildTransaction();
+            .claimUnstakedXlhValue()
+            .withChainID(chainID)
+            .buildTransaction();
 
         const claimUnstakeTransaction = {
             value: 0,
@@ -225,7 +217,7 @@ export const claimUnstakeXLH = async (abiFile, scAddress, scName, chainID) => {
         };
         await refreshAccount();
 
-        const { sessionId /*, error*/ } = await sendTransactions({
+        const { sessionId } = await sendTransactions({
             transactions: claimUnstakeTransaction,
             transactionsDisplayInfo: {
                 processingMessage: 'Processing claim unstake transaction',
@@ -243,16 +235,15 @@ export const claimUnstakeXLH = async (abiFile, scAddress, scName, chainID) => {
 export const claimUnstakeSFT = async (abiFile, scAddress, scName, chainID) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
-            abi: abi
+            abi: abiRegistry
         });
 
         const transaction = contract.methodsExplicit
-          .claimUnstakedSftValue()
-          .withChainID(chainID)
-          .buildTransaction();
+            .claimUnstakedSftValue()
+            .withChainID(chainID)
+            .buildTransaction();
 
         const claimUnstakeTransaction = {
             value: 0,
@@ -262,7 +253,7 @@ export const claimUnstakeSFT = async (abiFile, scAddress, scName, chainID) => {
         };
         await refreshAccount();
 
-        const { sessionId /*, error*/ } = await sendTransactions({
+        const { sessionId } = await sendTransactions({
             transactions: claimUnstakeTransaction,
             transactionsDisplayInfo: {
                 processingMessage: 'Processing claim unstake transaction',
@@ -280,19 +271,18 @@ export const claimUnstakeSFT = async (abiFile, scAddress, scName, chainID) => {
 export const createFarm = async (abiFile, scAddress, scName, chainID, tier, title, token, amount) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
-            abi: abi
+            abi: abiRegistry
         });
 
         const transaction = contract.methodsExplicit
-          .createNewPool([new U64Value(tier),  BytesValue.fromUTF8(title)])
-          .withChainID(chainID)
-          .withSingleESDTTransfer(
-            TokenPayment.fungibleFromAmount(token, amount, 18)
-          )
-          .buildTransaction();
+            .createNewPool([new U64Value(tier),  BytesValue.fromUTF8(title)])
+            .withChainID(chainID)
+            .withSingleESDTTransfer(
+                TokenTransfer.fungibleFromAmount(token, amount, 18)
+            )
+            .buildTransaction();
         const stakeTransaction = {
             value: 0,
             data: Buffer.from(transaction.getData().valueOf()),
@@ -301,7 +291,7 @@ export const createFarm = async (abiFile, scAddress, scName, chainID, tier, titl
         };
         await refreshAccount();
 
-        const { sessionId /*, error*/ } = await sendTransactions({
+        const { sessionId } = await sendTransactions({
             transactions: stakeTransaction,
             transactionsDisplayInfo: {
                 processingMessage: 'Processing create farm transaction',
