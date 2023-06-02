@@ -3,7 +3,7 @@ import {
     Address, BigUIntValue, ContractFunction,
     SmartContract,
     // SmartContractAbi,
-    TokenPayment,
+    TokenTransfer,
     U64Value,
     U8Value
 } from "@multiversx/sdk-core/out";
@@ -26,7 +26,7 @@ export const stake = async (abiFile, scAddress, scName, chainID, token, amount, 
             .stakeXlh([new U64Value(pool)])
             .withChainID(chainID)
             .withSingleESDTTransfer(
-                TokenPayment.fungibleFromAmount(token, amount, 18)
+                TokenTransfer.fungibleFromAmount(token, amount, 18)
             )
             .buildTransaction();
         const stakeTransaction = {
@@ -138,7 +138,7 @@ export const stakeSFT = async (abiFile, scAddress, scName, chainID, token, addre
           .stakeSft()
           .withChainID(chainID)
           .withSingleESDTNFTTransfer(
-            TokenPayment.semiFungible(token, 1, amount),
+            TokenTransfer.semiFungible(token, 1, amount),
             new Address(address)
           )
 
@@ -290,7 +290,7 @@ export const createFarm = async (abiFile, scAddress, scName, chainID, tier, titl
           .createNewPool([new U64Value(tier),  BytesValue.fromUTF8(title)])
           .withChainID(chainID)
           .withSingleESDTTransfer(
-            TokenPayment.fungibleFromAmount(token, amount, 18)
+            TokenTransfer.fungibleFromAmount(token, amount, 18)
           )
           .buildTransaction();
         const stakeTransaction = {

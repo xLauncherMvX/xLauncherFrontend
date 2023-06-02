@@ -3,7 +3,7 @@ import {
     Address, BigUIntValue, ContractFunction,
     SmartContract,
     // SmartContractAbi,
-    TokenPayment,
+    TokenTransfer,
     U8Value
 } from "@multiversx/sdk-core/out";
 import {refreshAccount} from "@multiversx/sdk-dapp/__commonjs/utils";
@@ -24,7 +24,7 @@ export const buyTickets = async (networkProvider, abiFile, scAddress, scName, ch
             .confirmTickets([new U8Value(amount)])
             .withChainID(chainID)
             .withSingleESDTTransfer(
-                TokenPayment.fungibleFromAmount(token, amount * tokenMultiplier, 18)
+                TokenTransfer.fungibleFromAmount(token, amount * tokenMultiplier, 18)
             )
             .buildTransaction();
         const buyTicketsTransaction = {

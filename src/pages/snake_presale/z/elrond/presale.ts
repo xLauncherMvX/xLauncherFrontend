@@ -8,6 +8,7 @@ import {
     ResultsParser,
     StringValue,
     TokenIdentifierValue,
+    TokenTransfer,
     TypedValue,
 } from "@multiversx/sdk-core/out";
 import { refreshAccount } from "@multiversx/sdk-dapp/utils";
@@ -33,7 +34,6 @@ import {
     presaleSmartContract,
     vestingSmartContract,
 } from "./provider";
-import { TokenTransfer } from "./token-transfer";
 
 export async function viewPresaleBaseContext(): Promise<PresaleBaseContext | undefined> {
     try {

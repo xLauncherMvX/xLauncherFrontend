@@ -36,8 +36,8 @@ import {
     toastError,
     ZERO_STRING,
 } from './z/utils';
-import { TokenTransfer } from './z/elrond/token-transfer';
 import './vesta_x.css';
+import { TokenTransfer } from '@multiversx/sdk-core/out';
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 4,
