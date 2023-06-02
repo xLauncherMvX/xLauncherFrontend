@@ -7,6 +7,7 @@ import {BytesValue} from "@multiversx/sdk-core/out/smartcontracts/typesystem/byt
 import {BigNumber} from "bignumber.js";
 import { refreshAccount } from "@multiversx/sdk-dapp/utils/account";
 import { sendTransactions} from "@multiversx/sdk-dapp/services";
+import {ArgSerializer} from "@multiversx/sdk-core/out/smartcontracts/argSerializer";
 
 //Stake function
 export const stakeXLH = async (farmId, xlhAmount, token, scAddress, setOpen1, setOpen2, setOpen3, setTransactionSessionId) => {

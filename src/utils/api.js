@@ -75,7 +75,7 @@ export const getAccountNFTS = async (nftAPI) => {
 					case "XLHO-5135c9":
 						collection.xlhOrigins.push(item);
 						break;
-					case "SFT-8ff335":
+					case "XLHB-4989e2":
 						collection.v2StakeSFT.push(item);
 						break;
 					default:
