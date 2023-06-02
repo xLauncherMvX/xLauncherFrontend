@@ -1,10 +1,10 @@
 import { multiplier } from "utils/utilities";
-import {TransactionPayload} from "@multiversx/sdk-core/out/transactionPayload";
-import {BigUIntValue, ContractFunction} from "@multiversx/sdk-core/out";
+import { BigUIntValue } from "@multiversx/sdk-core/out";
 import {BytesValue} from "@multiversx/sdk-core/out/smartcontracts/typesystem/bytes";
 import {BigNumber} from "bignumber.js";
 import { refreshAccount } from "@multiversx/sdk-dapp/utils/account";
 import { sendTransactions} from "@multiversx/sdk-dapp/services";
+import {ArgSerializer} from "@multiversx/sdk-core/out/smartcontracts/argSerializer";
 
 //Stake function
 export const stakeXLH = async (farmId, xlhAmount, token, scAddress, setOpen1, setOpen2, setOpen3, setTransactionSessionId) => {
@@ -14,26 +14,26 @@ export const stakeXLH = async (farmId, xlhAmount, token, scAddress, setOpen1, se
     setOpen3(false);
 
     let finalXLHAmount = xlhAmount * multiplier;
-    let SData = TransactionPayload.contractCall()
-        .setFunction(new ContractFunction("ESDTTransfer"))
-        .setArgs([
-            BytesValue.fromUTF8(token),
-            new BigUIntValue(new BigNumber(finalXLHAmount)),
-            BytesValue.fromUTF8("stake"),
-            new BigUIntValue(new BigNumber(farmId)),
-        ])
-        .build().toString()
+    const args = [
+        BytesValue.fromUTF8(token),
+        new BigUIntValue(new BigNumber(finalXLHAmount)),
+        BytesValue.fromUTF8("stake"),
+        new BigUIntValue(new BigNumber(farmId)),
+    ];
+
+    const { argumentsString } = new ArgSerializer().valuesToString(args);
+    const data = `ESDTTransfer@${argumentsString}`;
 
     const createStakeTransaction = {
         value: "0",
-        data: SData,
+        data: data,
         receiver: scAddress,
         gasLimit: 30000000,
     };
 
     await refreshAccount();
 
-    const { sessionId /*, error*/ } = await sendTransactions({
+    const { sessionId } = await sendTransactions({
         transactions: [createStakeTransaction],
         transactionsDisplayInfo: {
             processingMessage: "Stake Transaction",
@@ -56,24 +56,24 @@ export const unstakeXLH = async (farmId, xlhAmount, gasLimit, scAddress, setOpen
     setOpen3(false);
 
     let finalXLHAmount = xlhAmount * multiplier;
-    let UData = TransactionPayload.contractCall()
-        .setFunction(new ContractFunction("unstake"))
-        .setArgs([
-            new BigUIntValue(new BigNumber(farmId)),
-            new BigUIntValue(new BigNumber(finalXLHAmount)),
-        ])
-        .build().toString()
+    const args = [
+        new BigUIntValue(new BigNumber(farmId)),
+        new BigUIntValue(new BigNumber(finalXLHAmount)),
+    ];
+
+    const { argumentsString } = new ArgSerializer().valuesToString(args);
+    const data = `unstake@${argumentsString}`;
 
     const createUnstakeTransaction = {
         value: "0",
-        data: UData,
+        data: data,
         receiver: scAddress,
         gasLimit: gasLimit,
     };
 
     await refreshAccount();
 
-    const { sessionId /*, error*/ } = await sendTransactions({
+    const { sessionId } = await sendTransactions({
         transactions: [createUnstakeTransaction],
         transactionsDisplayInfo: {
             processingMessage: "Unstake Transaction",
@@ -92,23 +92,23 @@ export const unstakeXLH = async (farmId, xlhAmount, gasLimit, scAddress, setOpen
 export const claimXLH = async (farmId, gasLimit, scAddress, setTransactionSessionId) => {
     console.log("Formatting claim transaction");
 
-    let CData = TransactionPayload.contractCall()
-        .setFunction(new ContractFunction("claim"))
-        .setArgs([
-            new BigUIntValue(new BigNumber(farmId))
-        ])
-        .build().toString()
+    const args = [
+        new BigUIntValue(new BigNumber(farmId))
+    ];
+
+    const { argumentsString } = new ArgSerializer().valuesToString(args);
+    const data = `claim@${argumentsString}`;
 
     const createClaimTransaction = {
         value: "0",
-        data: CData,
+        data: data,
         receiver: scAddress,
         gasLimit: gasLimit,
     };
 
     await refreshAccount();
 
-    const { sessionId /*, error*/ } = await sendTransactions({
+    const { sessionId } = await sendTransactions({
         transactions: [createClaimTransaction],
         transactionsDisplayInfo: {
             processingMessage: "Claim Transaction",
@@ -127,23 +127,23 @@ export const claimXLH = async (farmId, gasLimit, scAddress, setTransactionSessio
 export const reinvestXLH = async (farmId, gasLimit, scAddress, setTransactionSessionId) => {
     console.log("Formatting reinvest transaction");
 
-    let RData = TransactionPayload.contractCall()
-        .setFunction(new ContractFunction("reinvest"))
-        .setArgs([
-            new BigUIntValue(new BigNumber(farmId))
-        ])
-        .build().toString()
+    const args = [
+        new BigUIntValue(new BigNumber(farmId))
+    ];
+
+    const { argumentsString } = new ArgSerializer().valuesToString(args);
+    const data = `reinvest@${argumentsString}`;
 
     const createReinvestTransaction = {
         value: "0",
-        data: RData,
+        data: data,
         receiver: scAddress,
         gasLimit: gasLimit,
     };
 
     await refreshAccount();
 
-    const { sessionId /*, error*/ } = await sendTransactions({
+    const { sessionId } = await sendTransactions({
         transactions: [createReinvestTransaction],
         transactionsDisplayInfo: {
             processingMessage: "Reinvest Transaction",
@@ -162,20 +162,18 @@ export const reinvestXLH = async (farmId, gasLimit, scAddress, setTransactionSes
 export const claimUXLH = async (scAddress, setTransactionSessionId) => {
     console.log("Formatting claim unstake transaction");
 
-    let CUData = TransactionPayload.contractCall()
-        .setFunction(new ContractFunction("claimUnstakedValue"))
-        .build().toString();
+    const data = `claimUnstakedValue`;
 
     const createClaimUTransaction = {
         value: "0",
-        data: CUData,
+        data: data,
         receiver: scAddress,
         gasLimit: 30000000,
     };
 
     await refreshAccount();
 
-    const { sessionId /*, error*/ } = await sendTransactions({
+    const { sessionId } = await sendTransactions({
         transactions: [createClaimUTransaction],
         transactionsDisplayInfo: {
             processingMessage: "Claim Unstake Transaction",
