@@ -4,7 +4,7 @@ import {
     SmartContract,
     // SmartContractAbi,
     TokenPayment,
-    TransactionPayload, U64Value,
+    U64Value,
     U8Value
 } from "@multiversx/sdk-core/out";
 import {refreshAccount} from "@multiversx/sdk-dapp/__commonjs/utils";
