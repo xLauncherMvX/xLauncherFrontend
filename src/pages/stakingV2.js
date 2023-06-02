@@ -462,7 +462,7 @@ function StakingV2(props) {
 				className="text-white font-bold mt-4 ms-2"
 				style={{ fontSize: "40px" }}
 			>
-				Staking V2
+				Staking 2.0
 			</p>
 
 			<Row className="mt-2">
