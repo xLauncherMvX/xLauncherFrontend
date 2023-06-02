@@ -99,12 +99,12 @@ export function Sidenav() {
                             Staking
                         </MenuItem>
                         <MenuItem
-                          label="Staking V2"
+                          label="Staking20"
                           icon={<Stake />}
-                          component={<Link to="/stakingV2"/>}
-                          active={pathname === "/stakingV2"}
+                          component={<Link to="/staking2.0"/>}
+                          active={pathname === "/staking2.0"}
                         >
-                            Staking V2
+                            Staking 2.0
                         </MenuItem>
                         <MenuItem
                             label="Projects"
@@ -142,7 +142,7 @@ export function Sidenav() {
                             component={<Link to="/snake-token-presale"/>}
                             active={pathname === "/snake-token-presale"}
                         >
-                            Presale
+                            Snake Presale
                         </MenuItem>
                     </Menu>
 

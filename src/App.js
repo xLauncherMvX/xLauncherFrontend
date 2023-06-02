@@ -139,7 +139,7 @@ function App() {
         { path: "/projects/zero-2-infinity", element: <Zero2Infinity /> },
         { path: "/projects/estar-games", element: <EstarGames /> },
         { path: "/projects/vestax-finance", element: <VestaXFinance /> },
-        { path: "/stakingV2", element: <StakingV2 walletState={walletState} /> },
+        { path: "/staking2.0", element: <StakingV2 walletState={walletState} /> },
         { path: "/snake-token-presale", element: <SnakeTokenPresale walletState={walletState} /> },
 
         { path: "*", element: <Dashboard /> },
