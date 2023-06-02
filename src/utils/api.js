@@ -4,14 +4,8 @@ import {
 	Address, ContractFunction,
 	Interaction,
 	ResultsParser,
-	SmartContract,
-	SmartContractAbi, U32Value, U8Value,
+	SmartContract
 } from "@multiversx/sdk-core/out";
-import {BigNumber} from "bignumber.js";
-import {TokenPayment} from "@multiversx/sdk-core/out/tokenPayment";
-import {sendTransactions} from "@multiversx/sdk-dapp/services/transactions/sendTransactions";
-import {Add} from "@mui/icons-material";
-import {refreshAccount} from "@multiversx/sdk-dapp/__commonjs/utils";
 
 //API to get the logged in account tokens
 export const getAccountTokens = async (tokensAPI, tokens) => {
@@ -76,7 +70,7 @@ export const getAccountNFTS = async (nftAPI) => {
 					case "XLHO-5135c9":
 						collection.xlhOrigins.push(item);
 						break;
-					case "SFT-8ff335":
+					case "XLHB-4989e2":
 						collection.v2StakeSFT.push(item);
 						break;
 					default:
@@ -155,10 +149,9 @@ export const getAccountNFTS = async (nftAPI) => {
 export const contractQuery = async (networkProvider, abiFile, scAddress, scName, methodName, methodArgs) => {
 	try {
 		let abiRegistry = AbiRegistry.create(abiFile);
-		let abi = new SmartContractAbi(abiRegistry, [scName]);
 		let contract = new SmartContract({
 			address: new Address(scAddress),
-			abi: abi
+			abi: abiRegistry
 		});
 
 		let contractEndpoint = new ContractFunction(methodName);
