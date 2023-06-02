@@ -87,6 +87,7 @@ function BloodshedReveal() {
 
   useEffect(() => {
     fetchRevealSFTs().then((v) => setPendingRevealsRemaining(v));
+    // eslint-disable-next-line
   }, [address]);
 
   useEffect(() => {
