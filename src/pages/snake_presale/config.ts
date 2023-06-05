@@ -47,6 +47,7 @@ const DECIMALS_MAP: Record<string, number> = {
     'VEGLD': 18,
     'MEX': 18,
     'ASH': 18,
+    'CPA': 6,
 };
 export function getTokenDecimals(tokenId: string): number {
     const ticker = convertTokenIdentifierToTicker(tokenId);
