@@ -55,11 +55,11 @@ const componentsProps = {
 };
 
 export default function StakingV2Card({
-	stakeV2Abi, stakeScAddress, scName, chainID, stakeToken, poolId,
-	title, tier, sftNumber, myXLH, myRewards, xlhBalance, isLoggedIn,
-	maxXLH, capacityPercentage,
-	stake, unstake, claim, loadingTransactions
-}) {
+																				stakeV2Abi, stakeScAddress, scName, chainID, stakeToken, poolId,
+																				title, tier, sftNumber, myXLH, myRewards, xlhBalance, isLoggedIn,
+																				maxXLH, capacityPercentage,
+																				stake, unstake, claim, loadingTransactions
+																			}) {
 	const [visible, setVisible] = useState(false);
 
 	//Change the logo based on farm tier
@@ -115,11 +115,16 @@ export default function StakingV2Card({
 	};
 
 	let maxS;
-	if (xlhBalance > maxXLH) {
-		maxS = maxXLH;
+	if (xlhBalance > (maxXLH - myRewards)) {
+		maxS = maxXLH - myRewards;
 	} else {
 		maxS = xlhBalance;
 	}
+
+	if(maxS < 0 || !maxS){
+		maxS = 0;
+	}
+
 	const setMaxAmountS = () => {
 		let newAmount = parseFloat(maxS);
 		setXlhAmountS(calc2(newAmount));
@@ -346,6 +351,7 @@ export default function StakingV2Card({
 							<div id="transition-modal-description" className="mt-5">
 								<Row className="mb-2">
 									<Col xs={12}>
+										<p className="text-danger font-bold nav-justified small">Attention! If you have any unclaimed rewards, they will be added together with your current stake value</p>
 										<Input
 											value={xlhAmountS}
 											size="small"
