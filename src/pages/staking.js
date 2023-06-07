@@ -36,7 +36,7 @@ function Staking(props) {
     setIsLoggedInValue(isLoggedIn); // this line is needed to trigger the useEffect
   }
 
-   useEffect(() => {
+  useEffect(() => {
     if (isLoggedIn) {
       getClientReportData();
       getClientStateData();
@@ -50,7 +50,7 @@ function Staking(props) {
       return () => window.clearInterval(interval);
     }
     // eslint-disable-next-line
-  }, [isLoggedInValue]); 
+  }, [isLoggedInValue]);
 
 
   const networkProvider = new ProxyNetworkProvider(config.provider);
@@ -526,9 +526,11 @@ function Staking(props) {
   let disabledUnstakeButton3;
   disabledUnstakeButton3 = xlhAmountU === 0 || xlhAmountU > unstakedAmount3;
 
-  
-
-
+  if(claimUnstakedAmount){
+    unlockedUnstake1 = true;
+    unlockedUnstake2 = true;
+    unlockedUnstake3 = true;
+  }
 
   return (
     <div>
