@@ -526,9 +526,11 @@ function Staking(props) {
   let disabledUnstakeButton3;
   disabledUnstakeButton3 = xlhAmountU === 0 || xlhAmountU > unstakedAmount3;
 
-  
-
-
+  if(claimUnstakedAmount){
+    unlockedUnstake1 = true;
+    unlockedUnstake2 = true;
+    unlockedUnstake3 = true;
+  }
 
   return (
     <div>
