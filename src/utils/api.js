@@ -4,13 +4,9 @@ import {
 	Address, ContractFunction,
 	Interaction,
 	ResultsParser,
-	SmartContract,
-	// SmartContractAbi, U32Value, U8Value,
+	SmartContract
 } from "@multiversx/sdk-core/out";
-import {BigNumber} from "bignumber.js";
-import {sendTransactions} from "@multiversx/sdk-dapp/services/transactions/sendTransactions";
-import {Add} from "@mui/icons-material";
-import {refreshAccount} from "@multiversx/sdk-dapp/__commonjs/utils";
+import {networkId, customConfig} from "config/customConfig";
 
 //API to get the logged in account tokens
 export const getAccountTokens = async (tokensAPI, tokens) => {
@@ -53,6 +49,9 @@ export const getAccountTokens = async (tokensAPI, tokens) => {
 
 //API to get the xlh origins nfts of the logged in account
 export const getAccountNFTS = async (nftAPI) => {
+	const config = customConfig[networkId];
+	const nft = config.nft;
+	const sft = config.stakeV2SFT;
 	try {
 		const response = await fetch(
 			nftAPI,
@@ -72,10 +71,10 @@ export const getAccountNFTS = async (nftAPI) => {
 			json.forEach(item => {
 				let collectionSwitcher = item.collection;
 				switch (collectionSwitcher) {
-					case "XLHO-5135c9":
+					case nft:
 						collection.xlhOrigins.push(item);
 						break;
-					case "XLHB-4989e2":
+					case sft:
 						collection.v2StakeSFT.push(item);
 						break;
 					default:
@@ -154,7 +153,6 @@ export const getAccountNFTS = async (nftAPI) => {
 export const contractQuery = async (networkProvider, abiFile, scAddress, scName, methodName, methodArgs) => {
 	try {
 		let abiRegistry = AbiRegistry.create(abiFile);
-		// let abi = new SmartContractAbi(abiRegistry, [scName]);
 		let contract = new SmartContract({
 			address: new Address(scAddress),
 			abi: abiRegistry

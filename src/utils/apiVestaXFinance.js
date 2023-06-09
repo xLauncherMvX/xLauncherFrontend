@@ -1,10 +1,8 @@
 import { multiplier } from "utils/utilities";
-import {BigUIntValue, ContractFunction, U32Value} from "@multiversx/sdk-core/out";
-import {BytesValue} from "@multiversx/sdk-core/out/smartcontracts/typesystem/bytes";
+import {U32Value} from "@multiversx/sdk-core/out";
 import {BigNumber} from "bignumber.js";
 import { refreshAccount } from "@multiversx/sdk-dapp/utils/account";
 import { sendTransactions} from "@multiversx/sdk-dapp/services";
-import { contractQuery} from "utils/api";
 import {ArgSerializer} from "@multiversx/sdk-core/out/smartcontracts/argSerializer";
 
 //Mint Function
@@ -14,7 +12,7 @@ export const mintFunction = async (mintAmount, mintAddress, setTransactionSessio
     const args = [
         new U32Value(mintAmount),
     ];
-    
+
     const { argumentsString } = new ArgSerializer().valuesToString(args);
     const data = `mint@${argumentsString}`;
 
@@ -31,7 +29,7 @@ export const mintFunction = async (mintAmount, mintAddress, setTransactionSessio
         transactions: [createMintTransaction],
         transactionsDisplayInfo: {
             processingMessage: "Mint Transaction",
-            errorMessage: "An error has occured during Mint Transaction",
+            errorMessage: "An error has occurred during Mint Transaction",
             successMessage: "Mint Transaction successful",
         },
         redirectAfterSign: false,

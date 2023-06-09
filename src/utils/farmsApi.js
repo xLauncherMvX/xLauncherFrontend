@@ -1,8 +1,5 @@
 import { multiplier } from "utils/utilities";
-import {
-    BigUIntValue,
-    ContractFunction,
-} from "@multiversx/sdk-core/out";
+import { BigUIntValue } from "@multiversx/sdk-core/out";
 import {BytesValue} from "@multiversx/sdk-core/out/smartcontracts/typesystem/bytes";
 import {BigNumber} from "bignumber.js";
 import { refreshAccount } from "@multiversx/sdk-dapp/utils/account";
@@ -23,7 +20,7 @@ export const stakeXLH = async (farmId, xlhAmount, token, scAddress, setOpen1, se
         BytesValue.fromUTF8("stake"),
         new BigUIntValue(new BigNumber(farmId)),
     ];
-    
+
     const { argumentsString } = new ArgSerializer().valuesToString(args);
     const data = `ESDTTransfer@${argumentsString}`;
 
@@ -36,7 +33,7 @@ export const stakeXLH = async (farmId, xlhAmount, token, scAddress, setOpen1, se
 
     await refreshAccount();
 
-    const { sessionId /*, error*/ } = await sendTransactions({
+    const { sessionId } = await sendTransactions({
         transactions: [createStakeTransaction],
         transactionsDisplayInfo: {
             processingMessage: "Stake Transaction",
@@ -63,7 +60,7 @@ export const unstakeXLH = async (farmId, xlhAmount, gasLimit, scAddress, setOpen
         new BigUIntValue(new BigNumber(farmId)),
         new BigUIntValue(new BigNumber(finalXLHAmount)),
     ];
-    
+
     const { argumentsString } = new ArgSerializer().valuesToString(args);
     const data = `unstake@${argumentsString}`;
 
@@ -76,7 +73,7 @@ export const unstakeXLH = async (farmId, xlhAmount, gasLimit, scAddress, setOpen
 
     await refreshAccount();
 
-    const { sessionId /*, error*/ } = await sendTransactions({
+    const { sessionId } = await sendTransactions({
         transactions: [createUnstakeTransaction],
         transactionsDisplayInfo: {
             processingMessage: "Unstake Transaction",
@@ -98,7 +95,7 @@ export const claimXLH = async (farmId, gasLimit, scAddress, setTransactionSessio
     const args = [
         new BigUIntValue(new BigNumber(farmId))
     ];
-    
+
     const { argumentsString } = new ArgSerializer().valuesToString(args);
     const data = `claim@${argumentsString}`;
 
@@ -111,7 +108,7 @@ export const claimXLH = async (farmId, gasLimit, scAddress, setTransactionSessio
 
     await refreshAccount();
 
-    const { sessionId /*, error*/ } = await sendTransactions({
+    const { sessionId } = await sendTransactions({
         transactions: [createClaimTransaction],
         transactionsDisplayInfo: {
             processingMessage: "Claim Transaction",
@@ -133,7 +130,7 @@ export const reinvestXLH = async (farmId, gasLimit, scAddress, setTransactionSes
     const args = [
         new BigUIntValue(new BigNumber(farmId))
     ];
-    
+
     const { argumentsString } = new ArgSerializer().valuesToString(args);
     const data = `reinvest@${argumentsString}`;
 
@@ -146,7 +143,7 @@ export const reinvestXLH = async (farmId, gasLimit, scAddress, setTransactionSes
 
     await refreshAccount();
 
-    const { sessionId /*, error*/ } = await sendTransactions({
+    const { sessionId } = await sendTransactions({
         transactions: [createReinvestTransaction],
         transactionsDisplayInfo: {
             processingMessage: "Reinvest Transaction",
@@ -176,7 +173,7 @@ export const claimUXLH = async (scAddress, setTransactionSessionId) => {
 
     await refreshAccount();
 
-    const { sessionId /*, error*/ } = await sendTransactions({
+    const { sessionId } = await sendTransactions({
         transactions: [createClaimUTransaction],
         transactionsDisplayInfo: {
             processingMessage: "Claim Unstake Transaction",

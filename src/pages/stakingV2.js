@@ -26,7 +26,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSortAmountUp, faSortAmountDesc, faArrowUp, faArrowDown} from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp, faArrowDown} from '@fortawesome/free-solid-svg-icons';
 import { useGetPendingTransactions } from "@multiversx/sdk-dapp/hooks/transactions";
 
 const style = {
@@ -192,7 +192,7 @@ function StakingV2(props) {
 		let totalAux = 0;
 		if (newUserPoolData) {
 			if (Object.keys(newUserPoolData).length > 0) {
-				newUserPoolData.report_pool_vector.map((element) => {
+				newUserPoolData.report_pool_vector.forEach((element) => {
 					let myRewardsXlh = element.xlh_rewords ? (element.xlh_rewords / multiplier) : 0;
 					rewardsAux += myRewardsXlh;
 
@@ -394,7 +394,7 @@ function StakingV2(props) {
 			let availableStakeXLH = pool_total_xlh ? (1000000 - pool_total_xlh) : 1000000;
 			let percentage = pool_total_xlh ? ((pool_total_xlh / 1000000) * 100) : 0;
 			if (Object.keys(userFarmsDetails).length > 0 && isLoggedIn) {
-				userFarmsDetails.report_pool_vector.map((element) => {
+				userFarmsDetails.report_pool_vector.forEach((element) => {
 					if (farm.pool_id.toString() === element.pool_id.toString()) {
 						myStackedXlh = element.xlh_amount ? (element.xlh_amount / multiplier) : 0;
 						myRewardsXlh = element.xlh_rewords ? (element.xlh_rewords / multiplier) : 0;

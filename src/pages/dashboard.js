@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Col, Row, Card, Container} from 'react-bootstrap';
+import {Col, Row, Container} from 'react-bootstrap';
 import {MiniStatisticCard} from 'cards/miniStatisticCard';
 import {MiniNFTRankCard} from 'cards/miniNFTRankCard';
 import {MdOutlineDriveFileRenameOutline} from "react-icons/md";
@@ -152,6 +152,7 @@ function Dashboard(props) {
 		}, MINUTE_MS);
 
 		return () => window.clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+		// eslint-disable-next-line
 	}, []);
 
 

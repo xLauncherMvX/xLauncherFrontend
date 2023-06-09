@@ -1,20 +1,17 @@
 import {
     AbiRegistry,
-    Address, BigUIntValue, ContractFunction,
+    Address,
     SmartContract,
-    // SmartContractAbi,
     TokenTransfer,
     U8Value
 } from "@multiversx/sdk-core/out";
 import {refreshAccount} from "@multiversx/sdk-dapp/__commonjs/utils";
 import {sendTransactions} from "@multiversx/sdk-dapp/services";
-import {BigNumber} from "bignumber.js";
 
 export const buyTickets = async (networkProvider, abiFile, scAddress, scName, chainID, token, amount, tokenMultiplier) => {
     if(!tokenMultiplier) tokenMultiplier = 1;
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        // let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
             abi: abiRegistry
@@ -35,11 +32,11 @@ export const buyTickets = async (networkProvider, abiFile, scAddress, scName, ch
         };
         await refreshAccount();
 
-        const { sessionId /*, error*/ } = await sendTransactions({
+        const { sessionId } = await sendTransactions({
             transactions: buyTicketsTransaction,
             transactionsDisplayInfo: {
                 processingMessage: 'Processing Buy Tickets transaction',
-                errorMessage: 'An error has occured during Buy Tickets transaction',
+                errorMessage: 'An error has occurred during Buy Tickets transaction',
                 successMessage: 'Buy Tickets transaction successful'
             },
             redirectAfterSign: false
@@ -54,7 +51,6 @@ export const buyTickets = async (networkProvider, abiFile, scAddress, scName, ch
 export const claimResults = async (networkProvider, abiFile, scAddress, scName, chainID) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
-        // let abi = new SmartContractAbi(abiRegistry, [scName]);
         let contract = new SmartContract({
             address: new Address(scAddress),
             abi: abiRegistry
@@ -72,11 +68,11 @@ export const claimResults = async (networkProvider, abiFile, scAddress, scName, 
         };
         await refreshAccount();
 
-        const { sessionId /*, error*/ } = await sendTransactions({
+        const { sessionId } = await sendTransactions({
             transactions: claimResultsTransaction,
             transactionsDisplayInfo: {
                 processingMessage: 'Processing Claim Lottery Results transaction',
-                errorMessage: 'An error has occured during Claim Lottery Results transaction',
+                errorMessage: 'An error has occurred during Claim Lottery Results transaction',
                 successMessage: 'Claim Lottery Results transaction successful'
             },
             redirectAfterSign: false
