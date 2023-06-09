@@ -20,7 +20,6 @@ import StakingV2 from "pages/stakingV2";
 import Projects from "pages/projects";
 import Team from "pages/team";
 import Admin from "pages/admin";
-import SnakeTokenPresale from "pages/presale/snake_token_presale";
 import BloodshedReveal from "pages/presale/bloodshed_reveal";
 import Zero2Infinity from "pages/projects/Zero2Infinity";
 import EstarGames from "pages/projects/EstarGames";
@@ -125,7 +124,6 @@ function App() {
         { path: "/projects/estar-games", element: <EstarGames /> },
         { path: "/projects/vestax-finance", element: <VestaXFinance /> },
         { path: "/staking2.0", element: <StakingV2 walletState={walletState} /> },
-        { path: "/snake-token-presale", element: <SnakeTokenPresale walletState={walletState} /> },
 
         { path: "*", element: <Dashboard /> },
       ],
