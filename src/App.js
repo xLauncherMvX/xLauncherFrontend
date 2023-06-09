@@ -1,4 +1,3 @@
-import { useGetAccountInfo } from "@multiversx/sdk-dapp/hooks/account";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import {
@@ -13,28 +12,19 @@ import {
   faUserCircle,
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useEffect, useState } from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import React, { useState } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "pages/dashboard";
 import Staking from "pages/staking";
 import StakingV2 from "pages/stakingV2";
 import Projects from "pages/projects";
 import Team from "pages/team";
 import Admin from "pages/admin";
-import Bloodshed from "pages/presale/bloodshed";
-import XLHBloodshed from "pages/presale/xlh_bloodshed";
-import SnakeTokenPresale from "pages/presale/snake_token_presale";
 import BloodshedReveal from "pages/presale/bloodshed_reveal";
 import Zero2Infinity from "pages/projects/Zero2Infinity";
 import EstarGames from "pages/projects/EstarGames";
 import VestaXFinance from "pages/projects/VestaXFinance";
+import { Presale } from "pages/snake_presale/Presale";
 import { DappProvider } from "@multiversx/sdk-dapp/wrappers/DappProvider";
 import {
   NotificationModal,
@@ -44,7 +34,6 @@ import {
 import { networkId } from "config/customConfig";
 import { networkConfig } from "config/networks";
 import Layout from "layout/layout";
-import { Presale } from "pages/snake_presale/Presale";
 
 library.add(
   fab,
@@ -108,9 +97,6 @@ function App() {
   //Set the config network
   const customNetConfig = networkConfig[networkId];
 
-  //<Route path="/staking" element={<Staking />} />
-  //              <Route path="/projects" element={<Projects />} />
-
   const router = createBrowserRouter([
     {
       path: "/",
@@ -134,8 +120,6 @@ function App() {
         { path: "/projects", element: <Projects /> },
         { path: "/team", element: <Team /> },
         { path: "/admin", element: <Admin /> },
-        // { path: "/lottery/bloodshed", element: <Bloodshed walletState={walletState}/> },
-        // { path: "/lottery/xlh-bloodshed", element: <XLHBloodshed walletState={walletState}/> },
         { path: "/lottery/bloodshed-reveal", element: <BloodshedReveal walletState={walletState}/> },
         { path: "/projects/zero-2-infinity", element: <Zero2Infinity /> },
         { path: "/projects/estar-games", element: <EstarGames /> },
