@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Sidebar, Menu, MenuItem, menuClasses} from "react-pro-sidebar";
+import {Sidebar, Menu, MenuItem, menuClasses, useProSidebar} from "react-pro-sidebar";
 import {BarChart} from 'assets/svg/BarChart';
 import {Stake} from "assets/svg/Stake";
 import {Cubes} from "assets/svg/Cubes";
@@ -40,6 +40,7 @@ const sidenavColor = {
 export function Sidenav() {
 	const location = useLocation();
 	const {pathname} = location;
+	const {toggleSidebar} = useProSidebar();
 
 	const menuItemStyles = {
 		root: {
@@ -74,6 +75,7 @@ export function Sidenav() {
 				position: 'sticky',
 				top: '2.2%'
 			}}
+			closeOnClick={true}
 		>
 			<div className='sidebar-container'>
 				<SidenavHeader/>
@@ -87,6 +89,7 @@ export function Sidenav() {
 							icon={<BarChart/>}
 							component={<Link to="/dashboard"/>}
 							active={pathname === "/dashboard" || pathname === "/"}
+							onClick={() => toggleSidebar()}
 						>
 							Dashboard
 						</MenuItem>
@@ -95,6 +98,7 @@ export function Sidenav() {
 							icon={<Stake/>}
 							component={<Link to="/staking"/>}
 							active={pathname === "/staking"}
+							onClick={() => toggleSidebar()}
 						>
 							Staking
 						</MenuItem>
@@ -103,6 +107,7 @@ export function Sidenav() {
 							icon={<Stake/>}
 							component={<Link to="/staking2.0"/>}
 							active={pathname === "/staking2.0"}
+							onClick={() => toggleSidebar()}
 						>
 							Staking 2.0
 						</MenuItem>
@@ -111,6 +116,7 @@ export function Sidenav() {
 							icon={<Cubes/>}
 							component={<Link to="/projects"/>}
 							active={pathname === "/projects"}
+							onClick={() => toggleSidebar()}
 						>
 							Projects
 						</MenuItem>
@@ -119,6 +125,7 @@ export function Sidenav() {
 							component={<a
 								href="https://xoxno.com/collection/XLHO-5135c9?filters=%7B%22name%22%3A%22%22%2C%22order%22%3A%22Price%3A+Low+to+High%22%2C%22orderValue%22%3A%22saleInfoNft%2Fmin_bid_short+asc%22%2C%22tokens%22%3A%5B%5D%2C%22attributes%22%3A%5B%5D%2C%22saleType%22%3A%22Nft%22%2C%22tab%22%3A%22Staking%22%2C%22viewMode%22%3A%22cards%22%7D"
 								target="_blank" rel="noreferrer"> </a>}
+							onClick={() => toggleSidebar()}
 						>
 							Stake NFTS
 						</MenuItem>
@@ -158,12 +165,14 @@ export function Sidenav() {
 							component={<a
 								href="https://docs.google.com/forms/d/e/1FAIpQLSf69Ulfxxb6TErJJFpGIqtG0TG-ZM1o_CC0b4AR9GjyYA7T2Q/viewform"
 								target="_blank" rel="noreferrer"> </a>}
+							onClick={() => toggleSidebar()}
 						>
 							Apply to us
 						</MenuItem>
 						<MenuItem
 							icon={<MicroBlog/>}
 							component={<a href="https://medium.com/@xlauncher" target="_blank" rel="noreferrer"> </a>}
+							onClick={() => toggleSidebar()}
 						>
 							Blog
 						</MenuItem>
@@ -172,6 +181,7 @@ export function Sidenav() {
 							icon={<Users/>}
 							component={<Link to="/team"/>}
 							active={pathname === "/team"}
+							onClick={() => toggleSidebar()}
 						>
 							Team
 						</MenuItem>
