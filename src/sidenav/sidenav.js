@@ -138,14 +138,14 @@ export function Sidenav() {
 						{/*>*/}
 						{/*    Lottery with XLH*/}
 						{/*</MenuItem>*/}
-						<MenuItem
-							label="Presale"
-							icon={<ShoppingCart />}
-							component={<Link to="/snake-token-presale"/>}
-							active={pathname === "/snake-token-presale"}
-						>
-							Presale
-						</MenuItem>
+						{/*<MenuItem*/}
+						{/*	label="Presale"*/}
+						{/*	icon={<ShoppingCart />}*/}
+						{/*	component={<Link to="/snake-token-presale"/>}*/}
+						{/*	active={pathname === "/snake-token-presale"}*/}
+						{/*>*/}
+						{/*	Presale*/}
+						{/*</MenuItem>*/}
 					</Menu>
 
 					<div className='sidebar-label-divider'>
