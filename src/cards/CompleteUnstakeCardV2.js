@@ -61,10 +61,13 @@ export default function CompleteUnstakeCardV2({stakeV2Abi, stakeScAddress, scNam
     month: "short",
     day: "numeric",
   };
-  let timestampF = new Date(timestamp).toLocaleDateString(
-    "en-GB",
-    options
-  );
+	let timestampF = '';
+	if(timestamp) {
+		timestampF = new Date(timestamp).toLocaleDateString(
+			"en-GB",
+			options
+		);
+	}
 
   //Format the timestamp to human format for hint
   const optionsH = {
@@ -76,10 +79,13 @@ export default function CompleteUnstakeCardV2({stakeV2Abi, stakeScAddress, scNam
     minute: "numeric",
     second: "numeric",
   };
-  const timestampFH = new Date(timestamp).toLocaleDateString(
-    "en-GB",
-    optionsH
-  );
+	let timestampFH = '';
+	if(timestamp) {
+		timestampFH = new Date(timestamp).toLocaleDateString(
+			"en-GB",
+			optionsH
+		);
+	}
   let hint = "Unlocking Full Date: " + timestampFH;
 
   //Show a timer if timestamp is not reached
@@ -103,7 +109,7 @@ export default function CompleteUnstakeCardV2({stakeV2Abi, stakeScAddress, scNam
   }
 
   if(amount <= 0){
-    label = `Claim Unstake ${isSftCard ? 'SFT' : 'XLH'}`;
+    label = `Claim Unstaked ${isSftCard ? 'SFT' : 'XLH'}`;
     disabled = true;
   }
 
