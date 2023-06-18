@@ -151,25 +151,8 @@ export default function StakingV2UserCard({
 		disabledU = true;
 	}
 
-	const [visible, setVisible] = useState(false);
-
 	return (
 		<div className="farming-card" id={"user_panel"}>
-			<div className="float-end">
-				{!visible ? (
-					<Tooltip key="show" title="Show Extra" arrow placement="bottom" componentsProps={componentsProps}>
-						<Button variant="text" className={`float-right text-white`} onClick={() => setVisible(!visible)}>
-							<FontAwesomeIcon fontSize={"medium"} icon={faAnglesDown}/>
-						</Button>
-					</Tooltip>
-				) : (
-					<Tooltip key="hide" title="Hide extra" arrow placement="bottom" componentsProps={componentsProps}>
-						<Button variant="text" className={`float-right  text-white`} onClick={() => setVisible(!visible)}>
-							<FontAwesomeIcon fontSize={"medium"} icon={faAnglesUp}/>
-						</Button>
-					</Tooltip>
-				)}
-			</div>
 			<div className="d-flex align-items-center justify-content-between">
 				<div className="text-center">
 					<Image
@@ -181,11 +164,11 @@ export default function StakingV2UserCard({
 					/>
 				</div>
 				<div className="mx-auto">
-					<p className="farm-title" style={{fontSize: '18px'}}>{title}</p>
+					<p className="farm-title" style={{fontSize: '18px', marginLeft: '-30px'}}>{title}</p>
 				</div>
 			</div>
 			<div className="light-divider" style={{width: '100%', marginLeft: 0, marginBottom: '5px'}}></div>
-			<div className="mt-2" style={{minHeight: '159px'}}>
+			<div className="mt-2" style={{minHeight: '139px'}}>
 				<div className="d-flex justify-content-between align-items-end">
 					<p className="details-text">My APR:</p>
 					<p className="details-text text-white">{apr}%</p>
@@ -224,39 +207,21 @@ export default function StakingV2UserCard({
 					</Button>
 				</Col>
 				<Col xs={12} md={6} lg={6} className="mt-2">
-					<Tooltip key="buy" title="" arrow placement="bottom" componentsProps={componentsProps}>
+					<Tooltip key="unstake" title={unstake.hint} arrow placement="bottom" componentsProps={componentsProps}>
 						<div>
 							<Button
-								variant="primary"
-								size="sm"
+								variant={unstake.color}
+								size={unstake.size}
 								className="btn btn-block farms-button"
 								style={{minWidth: "90px", width: '100%'}}
-								onClick={() => openInNewTab("https://www.frameit.gg/marketplace/XLHB-4989e2/mint?sp=true")}
-								disabled={stake.disabled}
+								onClick={handleOpenU}
+								disabled={unstake.disabled}
 							>
-                  Buy Boost SFT
+								{unstake.label}
 							</Button>
 						</div>
 					</Tooltip>
 				</Col>
-        {visible ? (
-          <Col xs={12} md={6} lg={6} className="mt-2">
-              <Tooltip key="unstake" title={unstake.hint} arrow placement="bottom" componentsProps={componentsProps}>
-                  <div>
-                      <Button
-                        variant={unstake.color}
-                        size={unstake.size}
-                        className="btn btn-block farms-button"
-                        style={{minWidth: "90px", width: '100%'}}
-                        onClick={handleOpenU}
-                        disabled={unstake.disabled}
-                      >
-                          {unstake.label}
-                      </Button>
-                  </div>
-              </Tooltip>
-          </Col>
-        ):('')}
 			</Row>
 
 			{/*Stake Modal*/}
