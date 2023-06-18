@@ -453,11 +453,11 @@ export default function Farm(props) {
 						/>
 					</Col>
 					<Col lg={7}>
-						<div className="farming-card-v2 text-white">
+						<div className="farming-card-v2 text-white" style={{minHeight: '309px'}}>
 							{poolInfo.name ? (
 								<div dangerouslySetInnerHTML={{__html: poolInfo.name}}/>
 							) : (
-								''
+								<p className="h3 text-center">Farm Offer</p>
 							)}
 						</div>
 					</Col>
