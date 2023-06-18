@@ -159,7 +159,7 @@ export default function CompleteUnstakeCardV2({stakeV2Abi, stakeScAddress, scNam
                 size="small"
                 className="btn btn-block farms-button"
                 style={{minWidth: "90px"}}
-                onClick={getMethod}
+                onClick={getMethod()}
                 disabled={disabled}
               >
                 {label}
