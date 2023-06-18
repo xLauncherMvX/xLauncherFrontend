@@ -13,15 +13,15 @@ export default function DefaultProjectCard({image, label, title, description, to
 			<div style={{minHeight: "200px", backgroundColor: 'transparent', textAlign: 'justify'}}>
 				<p className="font-size-xxs mb-2 mt-3 text-white opacity-50 text-capitalize">{label}</p>
 				<h5>{title}</h5>
-				<p className="text-justify opacity-50 font-size-sm mt-3" style={{minHeight: "105px"}}>
+				<p className="text-justify opacity-50 font-size-sm mt-3" style={{minHeight: "110px"}}>
 					{description}
 				</p>
 				<div className="light-divider" style={{width: "100%", marginLeft: 0}}></div>
-        <div className="d-flex align-items-center justify-content-between">
+        <div className="d-flex align-items-center justify-content-between mb-2">
           <p className="font-size-sm">Total Raised Value:</p>
           <p className="font-size-sm">{totalRaised.toString()}</p>
         </div>
-        <div className="light-divider" style={{width: "100%", marginLeft: 0, marginTop: 0}}></div>
+        <div className="light-divider" style={{width: "100%", marginLeft: 0}}></div>
         <Row>
           <Col xs={6}>
             {action.type === "internal" ? (
