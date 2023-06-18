@@ -465,14 +465,14 @@ function StakingV2(props) {
 				Staking 2.0
 			</p>
 
-			<Row className="mt-2">
-				<Col xs={6} lg={2}>
+			<Row>
+				<Col xs={6} lg={2} className="mt-2">
 					<Button className="btn btn-success btn-block" onClick={() => openInNewTab("https://www.frameit.gg/marketplace/XLHB-4989e2/mint?sp=true")} disabled={disabledCreate}>Buy Boost SFT</Button>
 				</Col>
-				<Col xs={6} lg={2}>
+				<Col xs={6} lg={2} className="mt-2">
 					<Button className="btn  btn-success btn-block" onClick={handleOpenN} disabled={disabledCreate}>New Farm</Button>
 				</Col>
-				<Col xs={6} lg={2}>
+				<Col xs={6} lg={2} className="mt-2">
 					<Dropdown>
 						<Dropdown.Toggle variant="success" id="options-dropdown" style={{width: "100%"}}>
 							Options
