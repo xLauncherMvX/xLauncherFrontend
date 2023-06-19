@@ -8,7 +8,7 @@ import Image from "react-bootstrap/Image";
 import {Col, Row} from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faAnglesUp, faAnglesDown, faCircleInfo} from '@fortawesome/free-solid-svg-icons';
+import {faAnglesUp, faAnglesDown, faCircleInfo, faLink} from '@fortawesome/free-solid-svg-icons';
 import Tooltip from "@mui/material/Tooltip";
 import Fade from "@mui/material/Fade";
 import Backdrop from "@mui/material/Backdrop";
@@ -19,6 +19,7 @@ import {calc2, intlNumberFormat} from "utils/utilities";
 import Modal from "@mui/material/Modal";
 import {stake as stakeMethod, unstake as unstakeMethod, claim as claimMethod} from "utils/stakingV2API";
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import {openInSameTab} from "utils/utilities";
 
 const style = {
 	position: 'absolute',
@@ -215,6 +216,11 @@ export default function StakingV2Card({
 	return (
 		<div className={`farming-card-v2 ${customBorder} text-white`} id={"id" + title.toString()}>
 			<div className="float-end">
+				<Tooltip key="show" title="View Details" arrow placement="bottom" componentsProps={componentsProps}>
+					<Button variant="text" className={`float-right ${tierText}`} onClick={() => openInSameTab(`/view-farm/${poolId}`)}>
+						<FontAwesomeIcon fontSize={"medium"} icon={faLink}/>
+					</Button>
+				</Tooltip>
 				{!visible ? (
 					<Tooltip key="show" title="Show Extra" arrow placement="bottom" componentsProps={componentsProps}>
 						<Button variant="text" className={`float-right ${tierText}`} onClick={() => setVisible(!visible)}>
@@ -239,7 +245,7 @@ export default function StakingV2Card({
 					/>
 				</div>
 				<div className="mx-auto text-center">
-					<p className="farm-title-v2" style={{fontSize: '18px'}}>{title}</p>
+					<p className="farm-title-v2" style={{fontSize: '18px', marginLeft: '15px'}}>{title}</p>
 				</div>
 			</div>
 			<p className={`rank-text mt-1 ms-3 ${tierText}`}>Tier</p>

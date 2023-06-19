@@ -1,0 +1,27 @@
+.ql-editor{
+	line-height: 1.25 !important;
+	min-height: 125px;
+}
+p{
+	margin-bottom: 0.25rem !important;
+	line-height: 1.2 !important;
+}
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+	margin-bottom: 0.5rem !important;
+}
+dl, ol, ul {
+	margin-top: 0;
+	margin-bottom: 0.5rem !important;
+}
+.ql-align-center{
+	text-align: center;
+}
+.ql-align-left{
+	text-align: left;
+}
+.ql-align-right{
+	text-align: right;
+}
+.ql-align-justify{
+	text-align: justify;
+}

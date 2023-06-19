@@ -24,7 +24,7 @@ import BloodshedReveal from "pages/presale/bloodshed_reveal";
 import Zero2Infinity from "pages/projects/Zero2Infinity";
 import EstarGames from "pages/projects/EstarGames";
 import VestaXFinance from "pages/projects/VestaXFinance";
-import { Presale } from "pages/snake_presale/Presale";
+import Farm from "pages/farm";
 import { DappProvider } from "@multiversx/sdk-dapp/wrappers/DappProvider";
 import {
   NotificationModal,
@@ -125,7 +125,7 @@ function App() {
         { path: "/projects/estar-games", element: <EstarGames /> },
         { path: "/projects/vestax-finance", element: <VestaXFinance /> },
         { path: "/staking2.0", element: <StakingV2 walletState={walletState} /> },
-        { path: "/snake-token-presale", element: <Presale /> },
+        { path: "/view-farm/:farmId", element: <Farm walletState={walletState} /> },
 
         { path: "*", element: <Dashboard /> },
       ],

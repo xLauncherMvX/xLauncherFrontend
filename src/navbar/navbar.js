@@ -270,7 +270,7 @@ export function Navbar(props) {
                           style={{ marginTop: "-3px", marginRight: "5px" }}
                         />
                         <p className="font-size-sm d-inline" >
-                          XLH: {intlNumberFormat(walletData.tokens.xlh)}
+                          XLH: {walletData.tokens.xlh ? intlNumberFormat(walletData.tokens.xlh) : '0.00'}
                         </p>
                       </Col>
                       <Col xs={{ offset: 1, span: 5 }} style={{whiteSpace: "nowrap"}}>
@@ -283,7 +283,7 @@ export function Navbar(props) {
 
                         />
                         <p className="font-size-sm d-inline" style={{whiteSpace: "nowrap"}}>
-                          EGLD: {intlNumberFormat(accountBalance)}
+                          EGLD: {accountBalance ? intlNumberFormat(accountBalance) : '0.00'}
                         </p>
                       </Col>
                     </Row>
@@ -297,7 +297,7 @@ export function Navbar(props) {
                           style={{ marginRight: "5px" }}
                         />
                         <p className="font-size-sm d-inline" >
-                          VEGLD: {intlNumberFormat(walletData.tokens.vegld)}
+                          VEGLD: {walletData.tokens.vegld ? intlNumberFormat(walletData.tokens.vegld) : '0.00'}
                         </p>
                       </Col>
                     </Row>

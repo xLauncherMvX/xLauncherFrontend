@@ -21,7 +21,7 @@ import Image from "react-bootstrap/Image";
 import XLHLogo from "assets/images/logo.svg";
 import Input from "@mui/material/Input";
 import Modal from "@mui/material/Modal";
-import {intlNumberFormat} from "../utils/utilities";
+import {intlNumberFormat, openInNewTab} from "../utils/utilities";
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -465,13 +465,16 @@ function StakingV2(props) {
 				Staking 2.0
 			</p>
 
-			<Row className="mt-2">
-				<Col xs={6} lg={2}>
-					<Button className="btn btn-block" onClick={handleOpenN} disabled={disabledCreate}>New Farm</Button>
+			<Row>
+				<Col xs={6} lg={2} className="mt-2">
+					<Button className="btn btn-success btn-block" onClick={() => openInNewTab("https://www.frameit.gg/marketplace/XLHB-4989e2/mint?sp=true")} disabled={disabledCreate}>Buy Boost SFT</Button>
 				</Col>
-				<Col xs={6} lg={2}>
+				<Col xs={6} lg={2} className="mt-2">
+					<Button className="btn  btn-success btn-block" onClick={handleOpenN} disabled={disabledCreate}>New Farm</Button>
+				</Col>
+				<Col xs={6} lg={2} className="mt-2">
 					<Dropdown>
-						<Dropdown.Toggle variant="primary" id="options-dropdown" style={{width: "100%"}}>
+						<Dropdown.Toggle variant="success" id="options-dropdown" style={{width: "100%"}}>
 							Options
 						</Dropdown.Toggle>
 						<Dropdown.Menu variant="dark">
