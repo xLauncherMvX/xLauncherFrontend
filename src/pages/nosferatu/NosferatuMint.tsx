@@ -337,36 +337,31 @@ export const NosferatuMint = () => {
                 <div className='row'>
                     <div className='col-lg-6 col-12 px-2'>
                         <div className="vesta_x_swap_card mb-4">
-                            <div className="d-flex justify-content-center align-items-center">
+                            <div className="d-flex justify-content-center align-items-center mt-3">
                                 <div
                                     style={{
                                         color: '#F1DC46',
                                         fontSize: '1.5rem',
                                     }}
                                 >
-                                    {presaleRoundTitle}
+                                    Nosferatu NFT Mint
                                 </div>
                             </div>
 
-                            <div className='mt-4 text-center' style={{ fontSize: '.9rem', color: '#969696' }}>
-                                {timerTitle}
+                            <div className='mt-4 text-center px-4' style={{ fontSize: '.9rem', color: '#969696' }}>
+                                {"An NFT collection that possesses a 50% stake in the movie titled 'Origins of Terror' featuring Nosferatu."}
                             </div>
-                            <Countdown renderer={countdownRenderer} date={roundEndDate} onComplete={onCompleteCountDown} autoStart />
-                            {/* <div className="presale-timer-container text-center mt-3">
-                                <strong>
-                                    <span className="presale-timer-box p-2 me-2">04</span>
-                                    <span className="presale-timer-box p-2 me-2">10</span>
-                                    <span className="presale-timer-box p-2 me-2">33</span>
-                                    <span className="presale-timer-box p-2 me-2">03</span>
-                                </strong>
-                            </div> */}
 
                             <div style={{ marginTop: '2rem' }}>
                                 <BorderLinearProgress variant="determinate" value={salePercent} />
                             </div>
                             <div className='d-flex justify-content-between mt-2' style={{ fontSize: '.8rem', color: '#969696' }}>
-                                <span>{convertBigNumberToLocalString(soldAmount)} SNAKE {`(${convertBigNumberToLocalString(salePercent, 2)}%)`}</span>
-                                <span>{convertBigNumberToLocalString(saleAmount)} SNAKE</span>
+                                <span>{convertBigNumberToLocalString(soldAmount)} {`(${convertBigNumberToLocalString(salePercent, 2)}%)`}</span>
+                                <span>{convertBigNumberToLocalString(saleAmount)}</span>
+                            </div>
+
+                            <div className='mt-4 text-center px-4' style={{ fontSize: '1rem', color: '#c0b038' }}>
+                                {"1400 NFTs of Common, Rare, Epic"}
                             </div>
 
                             <div className='d-flex justify-content-center mt-3'>
@@ -425,48 +420,57 @@ export const NosferatuMint = () => {
                     </div>
                     <div className='col-lg-6 col-12 px-2'>
                         <div className="vesta_x_swap_card mb-4">
-                            <div className='mt-3' style={{ color: '#F1DC46', fontSize: '1.2rem' }}>SNAKE Token Presale</div>
+                            <div className='mt-3' style={{ color: '#F1DC46', fontSize: '1.2rem' }}>Nosferatu NFT</div>
                             <div className="mt-2" style={{ color: '#939da7', fontSize: '.9rem' }}>
                                 <div className='mb-2'>
-                                    The mother company SC Demiourgos Holdings SA is a shareholder company with 1 million shares at the founding. A mint of 600 snakes holds 30% of the shares and 400 more Snakes are to be released in 2023 for the remaining 20%. Each Snake owns 500 shares right at this moment. <br />
+                                    Introducing a remarkable NFT collection, meticulously curated by Demiourgos Holdings, known as &apos;Nosferatu: Origins of Terror.&apos; <br />
                                 </div>
                                 <div className='mb-2'>
-                                    The Capitalization Stock Market mechanism. <br />
+                                    This extraordinary collection comprises a total of 100 Legendaries, 200 Epics, 400 Rares, and 800 Uniques, all of which symbolize a tangible piece of ownership in the movie venture.<br />
                                 </div>
-                                <div>
-                                    There will be 5 rounds of presale:
+                                <div className='mb-2'>
+                                    As an exceptional characteristic, each category holds a significant share, contributing one-fourth of the overall 50% stake in the film. <br />
+                                </div>
+                                <div className='mb-2'>
+                                    This groundbreaking endeavor marks Demiourgos Holdings&apos; inaugural cinematic creation, establishing a captivating synergy between NFT artistry and the mesmerizing world of Nosferatu. <br />
                                 </div>
                             </div>
 
-                            <div className='mt-5' style={{ color: '#F1DC46', fontSize: '1.2rem' }}>Round 1 (Seed Round)</div>
+                            <div className='mt-5' style={{ color: '#F1DC46', fontSize: '1.1rem' }}>Nosferatu NFTs revenue-sharing structure:</div>
                             <div className="mt-2" style={{ color: '#939da7', fontSize: '.9rem' }}>
-                                Only Wallets with at least 10 Snakes are eligible to purchase at 2 USD per Token. <br />
-                                Bought Tokens are distributed as Elite AURYN and Vested Elite AURYN.
+                                We offer 50% of all profits generated by the &quot;Origins of Terror&quot; movie, to be allocated to the 1500 NFTs in the collection as follows:
+
+                                <ul>
+                                    <li>
+                                        100 Legendary NFTs: 12.5% (only via $ouro lottery)
+                                    </li>
+                                    <li>
+                                        200 Epic NFTs: 12.5% 
+                                    </li>
+                                    <li>
+                                        400 Rare NFTs: 12.5% 
+                                    </li>
+                                    <li>
+                                        800 Common NFTs: 12.5%
+                                    </li>
+                                </ul>
+
+                                These profits are made from: 
+                                <ul>
+                                    <li>
+                                        shared cinema box office profits worldwide
+                                    </li>
+                                    <li>
+                                        shared streaming/TV platform profits worldwide 
+                                    </li>
+                                    <li>
+                                        shared merchandise profits worldwide for Nosferatu cans, t-shirts, hoods, books, posters, drinks, and more. - franchising &quot;Origins of Terror&quot;
+                                    </li>
+                                </ul>
                             </div>
 
-                            <div className='mt-3' style={{ color: '#F1DC46', fontSize: '1.2rem' }}>Round 2 (Private Round I)</div>
-                            <div className="mt-2" style={{ color: '#939da7', fontSize: '.9rem' }}>
-                                Everyone who owns at least 1 Snake is eligible to purchase at 4 USD per Token. <br />
-                                Bought Tokens are distributed as Elite AURYN and Vested Elite AURYN.
-                            </div>
-
-                            <div className='mt-3' style={{ color: '#F1DC46', fontSize: '1.2rem' }}>Round 3 (Private Round II)</div>
-                            <div className="mt-2" style={{ color: '#939da7', fontSize: '.9rem' }}>
-                                Everyone who owns at least 1 Coding Division SFT is eligible to purchase at 5.6 USD per Token. <br />
-                                Bought Tokens are distributed as AURYN and Vested AURYN.
-                            </div>
-
-                            <div className='mt-3' style={{ color: '#F1DC46', fontSize: '1.2rem' }}>Round 4 (Private Round III)</div>
-                            <div className="mt-2" style={{ color: '#939da7', fontSize: '.9rem' }}>
-                                This round is designed for all those holding Demiourgos.Holding™ Assets at 6.8 USD per Token. <br />
-                                Acquisition Price 6.4 USD per Token. Tokens are distributed as AURYN, Vested AURYN, OUROBOROS and Vested OUROBOROS.
-
-                            </div>
-
-                            <div className='mt-3' style={{ color: '#F1DC46', fontSize: '1.2rem' }}>Round 5 (Public Round)</div>
-                            <div className="mt-2" style={{ color: '#939da7', fontSize: '.9rem' }}>
-                                This Round is free for all. Everyone can participate. No purchase Limit per Wallet. 8 USD per Token. <br />
-                                Tokens are distributed as OUROBOROS and Vested OUROBOROS.
+                            <div className='mt-4 mb-3 text-center' style={{ fontSize: '.95rem', color: '#F1DC46' }}>
+                                Embark on an exciting journey as a film investor, a Snake token holder, and an exclusive Nosferatu NFT holder!  Become a part of us!
                             </div>
                         </div>
                     </div>
