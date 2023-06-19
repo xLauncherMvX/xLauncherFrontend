@@ -12,7 +12,7 @@ import {
     TypedValue,
 } from "@multiversx/sdk-core/out";
 import { refreshAccount } from "@multiversx/sdk-dapp/utils";
-import abiVesting from 'pages/snake_presale/z/elrond/abi/snake-vesting.abi.json';
+import abiVesting from './abi/snake-vesting.abi.json';
 import {
     EGLD_WRAPPER_ADDRESS,
     PRESALE_BUY_GAS_LIMIT,

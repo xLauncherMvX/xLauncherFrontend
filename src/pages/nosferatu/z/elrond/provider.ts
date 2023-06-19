@@ -5,9 +5,9 @@ import {
     // SmartContractAbi,
 } from "@multiversx/sdk-core/out";
 import { ProxyNetworkProvider } from "@multiversx/sdk-network-providers/out";
-import abiCoil from 'pages/snake_presale/z/elrond/abi/snake-coil.abi.json';
-import abiPresale from 'pages/snake_presale/z/elrond/abi/snake-presale.abi.json';
-import abiVesting from 'pages/snake_presale/z/elrond/abi/snake-vesting.abi.json';
+import abiCoil from './abi/snake-coil.abi.json';
+import abiPresale from './abi/snake-presale.abi.json';
+import abiVesting from './abi/snake-vesting.abi.json';
 import {
     COIL_SC_ADDRESS,
     ELROND_ACCESS_TIMEOUT,

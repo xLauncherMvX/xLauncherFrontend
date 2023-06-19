@@ -129,6 +129,14 @@ export function Sidenav() {
 						>
 							Stake NFTS
 						</MenuItem>
+						<MenuItem
+							icon={<FilterIcon/>}
+							component={<Link to="/nosferatu-mint"/>}
+							active={pathname === "/nosferatu-mint"}
+							onClick={() => toggleSidebar()}
+						>
+							Nosferatu Mint
+						</MenuItem>
 						{/*<MenuItem*/}
 						{/*    label="Lottery"*/}
 						{/*    icon={<ShoppingCart />}*/}

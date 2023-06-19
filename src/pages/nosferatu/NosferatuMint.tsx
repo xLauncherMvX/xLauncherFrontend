@@ -38,6 +38,7 @@ import {
 } from './z/utils';
 import './vesta_x.css';
 import { TokenTransfer } from '@multiversx/sdk-core/out';
+import imgNosferatu from './nosferatu.png';
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 4,
@@ -116,7 +117,7 @@ const countdownRenderer = ({
     );
 };
 
-export const Presale = () => {
+export const NosferatuMint = () => {
     const { address, balance: egldBalance } = useGetAccount();
     const { hasPendingTransactions } = useGetPendingTransactions();
 
@@ -366,6 +367,19 @@ export const Presale = () => {
                             <div className='d-flex justify-content-between mt-2' style={{ fontSize: '.8rem', color: '#969696' }}>
                                 <span>{convertBigNumberToLocalString(soldAmount)} SNAKE {`(${convertBigNumberToLocalString(salePercent, 2)}%)`}</span>
                                 <span>{convertBigNumberToLocalString(saleAmount)} SNAKE</span>
+                            </div>
+
+                            <div className='d-flex justify-content-center mt-3'>
+                                <img
+                                    src={imgNosferatu}
+                                    style={{
+                                        width: '80%',
+                                        height: 'auto',
+                                        borderRadius: '5px',
+                                        border: '1px solid #ffffff2f',
+                                        padding: '4px',
+                                    }}
+                                />
                             </div>
 
                             <div className='presale-label-container mt-4'>
