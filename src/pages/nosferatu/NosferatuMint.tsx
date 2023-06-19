@@ -373,7 +373,7 @@ export const NosferatuMint = () => {
                                 <img
                                     src={imgNosferatu}
                                     style={{
-                                        width: '80%',
+                                        width: '90%',
                                         height: 'auto',
                                         borderRadius: '5px',
                                         border: '1px solid #ffffff2f',
@@ -384,80 +384,41 @@ export const NosferatuMint = () => {
 
                             <div className='presale-label-container mt-4'>
                                 <div className="presale-label-row presale-label-border">
-                                    <span>Presale Price</span>
-                                    <span>{priceRate == ZERO_STRING || !selectedTokenId ? '-' : `1 SNAKE = ${convertBigNumberToLocalString(convertWeiToEsdt(priceRate, getTokenDecimals(selectedTokenId)))} ${tokenTicker}`}</span>
+                                    <span>Price</span>
+                                    <span>13 OURO</span>
+                                </div>
+                                <div className="presale-label-row presale-label-border">
+                                    <span>Balance</span>
+                                    <span>{convertBigNumberToLocalString(quoteTokenBalance)} {tokenTicker}</span>
                                 </div>
                                 <div className="presale-label-row">
-                                    <span>Requirements</span>
-                                    <span>{requirementsText}</span>
+                                    <span>You minted</span>
+                                    <span>5 NFT(s)</span>
                                 </div>
                             </div>
 
-                            {
-                                userContext && (<div className='presale-label-container mt-4'>
-                                    <div className="presale-label-row presale-label-border">
-                                        <span>You are holding</span>
-                                        <span>{`${userContext.nft_holdings[0]} Snake, ${userContext.nft_holdings[1]} DHCD, ${userContext.nft_holdings[2]} Vesta NFT(s)`}</span>
-                                    </div>
-                                    <div className="presale-label-row">
-                                        <span>Availability</span>
-                                        <span>{userContext.can_join_current_round ? 'Can Join Current Round' : 'Not Available For Current Round'}</span>
-                                    </div>
-                                </div>)
-                            }
-
-                            <div className='d-flex justify-content-between mt-4'>
-                                <div className="cp-init-input-container w-100 me-1">
-                                    <input
-                                        className="cp-init-input text-right"
-                                        value={buyQuoteAmount}
-                                        onChange={(e) => onChangeBuyQuoteAmount(e.target.value)}
-                                    />
-                                    {/* <span style={{ display: 'inline-block', color: 'white', fontSize: '1.2rem' }}>USDC</span> */}
-                                    
-                                </div>
-
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={selectedTokenId}
-                                    label="Age"
-                                    onChange={(event: SelectChangeEvent) => setSelectedTokenId(event.target.value)}
-                                    input={<BootstrapInput />}
-                                >
-                                    {
-                                        baseContext && baseContext.quote_tokens.length > 0 && baseContext.quote_tokens.map((tokenId, index) => (
-                                            <MenuItem key={index} value={tokenId}>{tokenId.startsWith('WEGLD') ? 'EGLD' : convertTokenIdentifierToTicker(tokenId)}</MenuItem>
-                                        ))
-                                    }
-                                </Select>
-
+                            <div className='d-flex justify-content-center align-items-center mt-4'>
                                 <button
-                                    className="presale-max-button"
+                                    className="mint-number-button"
                                     style={{ marginLeft: '0.1rem' }}
-                                    onClick={onClickMaxButton}
                                 >
-                                    MAX
+                                    -
+                                </button>
+                                <div className='mx-3' style={{ color: '#f0f0f0', fontSize: '1.3rem', fontWeight: 'bold' }}>9</div>
+                                <button
+                                    className="mint-number-button"
+                                    style={{ marginLeft: '0.1rem' }}
+                                >
+                                    +
                                 </button>
                             </div>
 
-                            <div className="d-flex justify-content-end mt-1">
-                                <div className="add-liquidity-input-token-balance-box">
-                                    <div> Balance:&nbsp;&nbsp; </div>
-                                    <div style={{ color: 'white', marginRight: '42px' }}>{convertBigNumberToLocalString(quoteTokenBalance)} {tokenTicker}</div>
-                                </div>
-                            </div>
-
-                            <div className='ms-1 mt-3 text-center' style={{ color: '#939da7', fontSize: '1rem' }}>
-                                {receiveText}
-                            </div>
-
-                            <div className="d-flex justify-content-center mt-4">
+                            <div className="d-flex justify-content-center mt-4 mb-2">
                                 <button
                                     className="presale-button"
                                     onClick={onClickBuy}
                                 >
-                                    Buy SNAKE
+                                    Mint
                                 </button>
                             </div>
                         </div>

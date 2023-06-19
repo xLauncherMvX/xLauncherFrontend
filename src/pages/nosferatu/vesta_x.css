@@ -11,7 +11,7 @@
 }
 
 .presale-timer-container {
-    color: white;
+    color: #f0f0f0;
     font-size: 1.2rem;
 }
 .presale-timer-box {
@@ -29,7 +29,7 @@
 }
 
 .presale-label-row {
-    color: white;
+    color: #f0f0f0;
     font-size: 1rem;
     display: flex;
     justify-content: space-between;
@@ -38,6 +38,10 @@
     padding-right: 1rem;
     padding-top: .7rem;
     padding-bottom: .7rem;
+}
+.presale-label-row span:first-child {
+    color: #98A1C0;
+    font-size: .95rem;
 }
 
 @media screen and (max-width: 568px) {
@@ -58,7 +62,7 @@
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 100px;
     cursor: pointer;
-    color: white;
+    color: #f0f0f0;
     text-align: center;
     transition: .3s all ease-in-out;
 
@@ -68,8 +72,25 @@
     background: #627EEA;
 }
 
+.mint-number-button {
+    color: #f0f0f0;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .3s all ease-in-out;
+    font-size: 1rem;
+    /* padding: .3rem .3rem; */
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50px;
+}
+.mint-number-button:hover {
+    background: #627EEA;
+}
+
 .presale-max-button {
-    color: white;
+    color: #f0f0f0;
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 5px;
@@ -94,7 +115,7 @@
 .vested-token {
     display: flex;
     flex-direction: column;
-    color: white;
+    color: #f0f0f0;
     font-size: 1.1rem;
     justify-content: center;
     text-align: center;
@@ -108,7 +129,7 @@
     background: transparent;
     border-radius: 5px;
     border: 1px solid rgba(255, 255, 255, 0.06);
-    color: white;
+    color: #f0f0f0;
 
     display: flex;
     justify-content: space-between;
@@ -124,7 +145,7 @@
     font-weight: 400;
     padding-right: 10px;
     width: 100%;
-    color: white;
+    color: #f0f0f0;
 }
 
 .add-liquidity-input-token-balance-box {
