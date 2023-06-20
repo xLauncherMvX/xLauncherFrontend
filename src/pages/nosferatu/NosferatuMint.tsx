@@ -319,7 +319,7 @@ export const NosferatuMint = () => {
                                 {"An NFT collection that possesses a 50% stake in the movie titled 'Origins of Terror' featuring Nosferatu."}
                             </div>
 
-                            <Countdown renderer={countdownRenderer} date={mintStartTimestamp} onComplete={onCompleteCountDown} autoStart />
+                            {/* <Countdown renderer={countdownRenderer} date={mintStartTimestamp} onComplete={onCompleteCountDown} autoStart /> */}
 
                             <div style={{ marginTop: '2rem' }}>
                                 <BorderLinearProgress variant="determinate" value={(totalCount - leftCount) / totalCount * 100} />
