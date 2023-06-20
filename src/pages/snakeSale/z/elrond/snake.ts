@@ -81,7 +81,10 @@ export async function getMintedSnakes(address: string): Promise<number> {
     address,
     SNAKE_NFT_COLLECTION,
   )
-  return parseInt(nft_info[0].balance)
+  if (nft_info.length === 0 || nft_info[0].balance === undefined) {
+    return 0
+  }
+  return parseInt(nft_info[0]?.balance)
 }
 
 export async function getSnakePriceMap(): Promise<PriceType[]> {
