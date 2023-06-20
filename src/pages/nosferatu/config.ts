@@ -29,7 +29,7 @@ export const EGLD_WRAPPER_ADDRESS = [
     IS_DEV ? 'erd1qqqqqqqqqqqqqpgqfj3z3k4vlq7dc2928rxez0uhhlq46s6p4mtqerlxhc' : 'erd1qqqqqqqqqqqqqpgqmuk0q2saj0mgutxm4teywre6dl8wqf58xamqdrukln', // shard 2
 ];
 
-export const NOSFERATU_SC_ADDRESS = IS_DEV ? 'erd1qqqqqqqqqqqqqpgqsgn8hs6vrm75ptn6kkz5nlxhd6y3kxmt03asmzn4n7' : '';
+export const NOSFERATU_SC_ADDRESS = IS_DEV ? 'erd1qqqqqqqqqqqqqpgq39jdcnps6gmy938vm5ul7hkppm5xmjd503asd6u3xh' : '';
 
 export const FEE_DENOMINATOR = 10000;
 
