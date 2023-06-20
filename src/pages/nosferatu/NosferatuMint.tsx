@@ -106,16 +106,20 @@ const countdownRenderer = ({
     seconds: number,
     completed: boolean,
 }) => {
-    return (
-        <div className="presale-timer-container text-center mt-3">
-            <strong>
-                <span className="presale-timer-box p-2 me-2">{String(days).padStart(2, '0')}</span>
-                <span className="presale-timer-box p-2 me-2">{String(hours).padStart(2, '0')}</span>
-                <span className="presale-timer-box p-2 me-2">{String(minutes).padStart(2, '0')}</span>
-                <span className="presale-timer-box p-2 me-2">{String(seconds).padStart(2, '0')}</span>
-            </strong>
-        </div>
-    );
+    if (completed) {
+        return (<></>);
+    } else {
+        return (
+            <div className="presale-timer-container text-center mt-4">
+                <strong>
+                    <span className="presale-timer-box p-2 me-2">{String(days).padStart(2, '0')}</span>
+                    <span className="presale-timer-box p-2 me-2">{String(hours).padStart(2, '0')}</span>
+                    <span className="presale-timer-box p-2 me-2">{String(minutes).padStart(2, '0')}</span>
+                    <span className="presale-timer-box p-2 me-2">{String(seconds).padStart(2, '0')}</span>
+                </strong>
+            </div>
+        );
+    }
 };
 
 export const NosferatuMint = () => {
@@ -134,6 +138,7 @@ export const NosferatuMint = () => {
     const [nftBalance, setNftBalance] = useState<number>(0);
     // console.log('selectedPrice', selectedPrice);
     // console.log('quoteTokenBalance', quoteTokenBalance);
+    const mintStartTimestamp = 1687280400000;
 
     const tokenTicker = selectedTokenId.startsWith('WEGLD') ? 'EGLD' : convertTokenIdentifierToTicker(selectedTokenId);
     const totalCount = 1400;
@@ -289,11 +294,9 @@ export const NosferatuMint = () => {
         await nosferatuBuy(payment);
     }
 
-    // function onCompleteCountDown() {
-    //     if (statsContext && statsContext.current_round_id <= 5) {
-    //         location.reload();
-    //     }
-    // }
+    function onCompleteCountDown() {
+        location.reload();
+    }
 
     return (
         <>
@@ -315,6 +318,8 @@ export const NosferatuMint = () => {
                             <div className='mt-4 text-center px-4' style={{ fontSize: '.9rem', color: '#969696' }}>
                                 {"An NFT collection that possesses a 50% stake in the movie titled 'Origins of Terror' featuring Nosferatu."}
                             </div>
+
+                            <Countdown renderer={countdownRenderer} date={mintStartTimestamp} onComplete={onCompleteCountDown} autoStart />
 
                             <div style={{ marginTop: '2rem' }}>
                                 <BorderLinearProgress variant="determinate" value={(totalCount - leftCount) / totalCount * 100} />
@@ -396,6 +401,7 @@ export const NosferatuMint = () => {
                                 <button
                                     className="presale-button"
                                     onClick={onClickBuy}
+                                    disabled={Date.now() < mintStartTimestamp}
                                 >
                                     Mint
                                 </button>
