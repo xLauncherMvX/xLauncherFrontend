@@ -337,7 +337,7 @@ export const SnakeMint = () => {
   //     }
   // }
   function onCompleteCountDown() {
-    location.reload();
+    // location.reload();
   }
   const mintStartTimestamp = 1687280400000;
   return (
