@@ -8,24 +8,19 @@ import { useGetAccount, useGetPendingTransactions } from '@multiversx/sdk-dapp/h
 import Countdown from 'react-countdown';
 import { getTokenDecimals } from './config';
 import {
-    getCurrentQuotePrice,
+    getCollection,
+    getLeftCount,
+    getPriceMap,
     getTokenBalanceFromApi,
-    presaleBuy,
-    viewPresaleBaseContext,
-    viewPresaleStatsContext,
-    viewPresaleUserContext,
+    nosferatuBuy,
 } from './z/elrond';
-import {
-    PresaleBaseContext,
-    PresaleStatsContext,
-    PresaleUserContext,
-} from './z/types';
 import {
     applyPrecision,
     convertBigNumberToLocalString,
     convertEsdtToWei,
     convertTokenIdentifierToTicker,
     convertWeiToEsdt,
+    DEFAULT_DECIMALS,
     ERROR_CONNECT_WALLET,
     ERROR_INVALID_NUMBER,
     ERROR_NOT_ENOUGH_BALANCE,
@@ -33,12 +28,16 @@ import {
     ERROR_TRANSACTION_ONGOING,
     isPositiveOrZeroBigNumber,
     parseBigNumber,
+    sleep,
     toastError,
     ZERO_STRING,
 } from './z/utils';
 import './vesta_x.css';
 import { TokenTransfer } from '@multiversx/sdk-core/out';
 import imgNosferatu from './nosferatu.png';
+import { PriceType } from './z/types';
+import SelectInput from '@mui/material/Select/SelectInput';
+import { setTokenLogin } from '@multiversx/sdk-dapp/reduxStore/slices';
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 4,
@@ -121,150 +120,131 @@ export const NosferatuMint = () => {
     const { address, balance: egldBalance } = useGetAccount();
     const { hasPendingTransactions } = useGetPendingTransactions();
 
-    const [baseContext, setBaseContext] = useState<PresaleBaseContext>();
-    const [statsContext, setStatsContext] = useState<PresaleStatsContext>();
-    const [userContext, setUserContext] = useState<PresaleUserContext>();
+    const [collection, setCollection] = useState<string>('');
+    const [leftCount, setLeftCount] = useState<number>(0);
+    const [prices, setPrices] = useState<PriceType[]>([]);
+
     const [quoteTokenBalance, setQuoteTokenBalance] = useState<number>(0);
-    const [buyQuoteAmount, setBuyQuoteAmount] = useState<string>(ZERO_STRING);
 
     const [selectedTokenId, setSelectedTokenId] = useState<string>('');
-    const [priceRate, setPriceRate] = useState<string>(ZERO_STRING);
+    const [selectedPrice, setSelectedPrice] = useState<number>(0);
+    const [mintCount, setMintCount] = useState<number>(1);
+    console.log('selectedPrice', selectedPrice);
+    console.log('quoteTokenBalance', quoteTokenBalance);
 
     const tokenTicker = selectedTokenId.startsWith('WEGLD') ? 'EGLD' : convertTokenIdentifierToTicker(selectedTokenId);
+    const totalCount = 1400;
 
-    const presaleRoundTitle = statsContext ? statsContext.current_round_id == 5 ? 'Presale Is Coming'
-        : statsContext.current_round_id < 5 ? `Round ${statsContext.current_round_id + 1}`
-        : 'Presale Is Finished'
-        : 'Presale Is Finished';
-    const timerTitle = statsContext ? statsContext.current_round_id == 5 ? 'Presale Starts In'
-        : statsContext.current_round_id < 5 ? 'Current Round Ends In'
-        : ''
-        : '';
-    
-    const soldAmount = statsContext ? statsContext.current_round_id < 5 ? convertWeiToEsdt(statsContext.sold_amounts[statsContext.current_round_id]).toNumber() : convertWeiToEsdt(statsContext.sold_amounts.reduce((sum, cur) => sum.plus(cur), new BigNumber(0))).toNumber() : 0;
-    const saleAmount = statsContext ? statsContext.current_round_id < 5 ? convertWeiToEsdt(parseBigNumber(statsContext.sale_amount_for_current_round).plus(statsContext.sold_amounts[statsContext.current_round_id])).toNumber() : convertWeiToEsdt(statsContext.total_sale_amount).toNumber() : 0;
-    const salePercent = soldAmount / saleAmount * 100;
-
-    const requirementsText = statsContext ?
-        statsContext.current_round_id == 0 ? '10+ Snake NFT Holders Only'
-        : statsContext.current_round_id == 1 ? '1+ Snake NFT Holders Only'
-        : statsContext.current_round_id == 2 ? 'DHCD Holders Only'
-        : statsContext.current_round_id == 3 ? 'Any Demiourgos Assets Holders'
-        : statsContext.current_round_id == 4 ? 'Everyone'
-        : '-'
-        : '-';
-    const roundEndDate = baseContext && statsContext ? statsContext.current_round_id == 5 ? new Date(baseContext.start_timestamp * 1000)
-        : statsContext.current_round_id < 5 ? new Date((baseContext.start_timestamp + baseContext.round_lengths.slice(0, statsContext.current_round_id + 1).reduce((sum, v) => sum + v, 0)) * 1000)
-        : 0
-        : Date.now() + 30_000;
-    // console.log('roundEndDate', roundEndDate);
-
-    let receiveText = '';
-    if (statsContext && statsContext.current_round_id < 5 && Number(buyQuoteAmount) > 0 && parseBigNumber(priceRate).isPositive() && selectedTokenId) {
-        const buyAmount = Number(buyQuoteAmount) / convertWeiToEsdt(priceRate, getTokenDecimals(selectedTokenId)).toNumber();
-        if (statsContext.current_round_id == 0) {
-            receiveText = `(You will receive ${convertBigNumberToLocalString(buyAmount * 0.025)} EAURYN and ${convertBigNumberToLocalString(buyAmount * 0.975)} Vested EAURYN)`;
-        } else if (statsContext.current_round_id == 1) {
-            receiveText = `(You will receive ${convertBigNumberToLocalString(buyAmount * 0.05)} EAURYN and ${convertBigNumberToLocalString(buyAmount * 0.95)} Vested EAURYN)`;
-        } else if (statsContext.current_round_id == 2) {
-            receiveText = `(You will receive ${convertBigNumberToLocalString(buyAmount * 0.07)} EAURYN and ${convertBigNumberToLocalString(buyAmount * 0.93)} Vested EAURYN)`;
-        } else if (statsContext.current_round_id == 3) {
-            receiveText = `(You will receive ${convertBigNumberToLocalString(buyAmount * 0.04)} AURYN, ${convertBigNumberToLocalString(buyAmount * 0.46)} Vested AURYN), ${convertBigNumberToLocalString(buyAmount * 0.04)} OURO and ${convertBigNumberToLocalString(buyAmount * 0.46)} Vested OURO`;
-        } else if (statsContext.current_round_id == 4) {
-            receiveText = `(You will receive ${convertBigNumberToLocalString(buyAmount * 0.2)} OURO and ${convertBigNumberToLocalString(buyAmount * 0.8)} Vested OURO)`;
-        }
+    function onChangeMintCount(value: number) {
+        if (value <= 0) return;
+        if (value > leftCount) return;
+        setMintCount(value);
     }
 
     useEffect(() => {
         (async () => {
-            const _baseContext = await viewPresaleBaseContext();
-            // console.log('_baseContext', _baseContext);
-            setBaseContext(_baseContext);
+            const _collection = await getCollection();
+            console.log('_collection', _collection);
+            setCollection(_collection);
+        })();
 
-            // selecte first token
-            if (_baseContext) {
-                setSelectedTokenId(_baseContext.quote_tokens[0]);
-            }
+        (async () => {
+            const _prices = await getPriceMap();
+            console.log('_prices', _prices);
+            setPrices(_prices);
         })();
     }, []);
+
+    useEffect(() => {
+        if (prices.length > 0) {
+            setSelectedTokenId(prices[0].identifier);
+        }
+    }, [prices]);
+    useEffect(() => {
+        if (selectedTokenId && prices.length > 0) {
+            for (const price of prices) {
+                if (price.identifier == selectedTokenId) {
+                    setSelectedPrice(convertWeiToEsdt(price.price).toNumber());
+                    return;
+                }
+            }
+        }
+        setSelectedPrice(0);
+    }, [selectedTokenId]);
 
     useEffect(() => {
         if (hasPendingTransactions) return;
 
         (async () => {
-            const _statsContext = await viewPresaleStatsContext();
-            // console.log('_statsContext', _statsContext);
-            setStatsContext(_statsContext);
+            const _leftCount = await getLeftCount();
+            console.log('_leftCount', _leftCount);
+            setLeftCount(_leftCount);
         })();
     }, [hasPendingTransactions]);
 
-    useEffect(() => {
-        if (!address || hasPendingTransactions) return;
+    // useEffect(() => {
+    //     if (!address || hasPendingTransactions) return;
         
-        (async () => {
-            const _userContext = await viewPresaleUserContext(address);
-            // console.log('_userContext', _userContext);
-            setUserContext(_userContext);
-        })();
-    }, [address, hasPendingTransactions]);
+    //     (async () => {
+    //         const _userContext = await viewPresaleUserContext(address);
+    //         // console.log('_userContext', _userContext);
+    //         setUserContext(_userContext);
+    //     })();
+    // }, [address, hasPendingTransactions]);
 
     useEffect(() => {
         if (!selectedTokenId || !address || hasPendingTransactions) return;
 
         (async () => {
-            if (tokenTicker == 'EGLD') {
-                setQuoteTokenBalance(convertWeiToEsdt(egldBalance, getTokenDecimals(selectedTokenId), 2).toNumber());
-            } else {
-                const _balance = await getTokenBalanceFromApi(address, selectedTokenId);
-                const _balanceAmount = _balance ? convertWeiToEsdt(_balance.balance, _balance.decimals, 2).toNumber() : 0;
-                // console.log('_balanceAmount', _balanceAmount);
-                setQuoteTokenBalance(_balanceAmount);
-            }
+            const _balance = await getTokenBalanceFromApi(address, selectedTokenId);
+            const _balanceAmount = _balance ? convertWeiToEsdt(_balance.balance, _balance.decimals, 2).toNumber() : 0;
+            // console.log('_balanceAmount', _balanceAmount);
+            setQuoteTokenBalance(_balanceAmount);
         })();
     }, [selectedTokenId, address, hasPendingTransactions]);
 
-    useEffect(() => {
-        if (hasPendingTransactions) return;
-        onChangeBuyQuoteAmount(ZERO_STRING);
-    }, [hasPendingTransactions]);
+    // useEffect(() => {
+    //     if (hasPendingTransactions) return;
+    //     onChangeBuyQuoteAmount(ZERO_STRING);
+    // }, [hasPendingTransactions]);
 
-    useEffect(() => {
-        if (!selectedTokenId) return;
+    // useEffect(() => {
+    //     if (!selectedTokenId) return;
 
-        (async () => {
-            const _priceRate = await getCurrentQuotePrice(selectedTokenId);
-            // console.log('_priceRate', _priceRate);
-            setPriceRate(_priceRate);
-        })();
-    }, [selectedTokenId]);
+    //     (async () => {
+    //         const _priceRate = await getCurrentQuotePrice(selectedTokenId);
+    //         // console.log('_priceRate', _priceRate);
+    //         setPriceRate(_priceRate);
+    //     })();
+    // }, [selectedTokenId]);
 
-    function onChangeBuyQuoteAmount(valueAsString: string) {
-        // if (!isPositiveOrZeroBigNumber(valueAsString)) return;
-        const value = Number(valueAsString);
-        if (value > quoteTokenBalance) {
-            toastError(ERROR_NOT_ENOUGH_BALANCE);
-            return;
-        }
-        if (parseBigNumber(priceRate).isPositive() && statsContext && selectedTokenId) {
-            const buyAmount = value / convertWeiToEsdt(priceRate, getTokenDecimals(selectedTokenId)).toNumber();
-            if (convertEsdtToWei(buyAmount).comparedTo(statsContext.sale_amount_for_current_round) > 0) {
-                toastError('Not enough token left for current round');
-                return;
-            }
-        }
+    // function onChangeBuyQuoteAmount(valueAsString: string) {
+    //     // if (!isPositiveOrZeroBigNumber(valueAsString)) return;
+    //     const value = Number(valueAsString);
+    //     if (value > quoteTokenBalance) {
+    //         toastError(ERROR_NOT_ENOUGH_BALANCE);
+    //         return;
+    //     }
+    //     if (parseBigNumber(priceRate).isPositive() && statsContext && selectedTokenId) {
+    //         const buyAmount = value / convertWeiToEsdt(priceRate, getTokenDecimals(selectedTokenId)).toNumber();
+    //         if (convertEsdtToWei(buyAmount).comparedTo(statsContext.sale_amount_for_current_round) > 0) {
+    //             toastError('Not enough token left for current round');
+    //             return;
+    //         }
+    //     }
 
-        setBuyQuoteAmount(valueAsString);
-    }
+    //     setBuyQuoteAmount(valueAsString);
+    // }
 
-    function onClickMaxButton() {
-        let value = quoteTokenBalance;
-        if (parseBigNumber(priceRate).isPositive() && statsContext && selectedTokenId) {
-            const v2 = convertWeiToEsdt(statsContext.sale_amount_for_current_round).multipliedBy(convertWeiToEsdt(priceRate, getTokenDecimals(selectedTokenId))).toNumber();
-            value = Math.min(value, v2);
-        }
+    // function onClickMaxButton() {
+    //     let value = quoteTokenBalance;
+    //     if (parseBigNumber(priceRate).isPositive() && statsContext && selectedTokenId) {
+    //         const v2 = convertWeiToEsdt(statsContext.sale_amount_for_current_round).multipliedBy(convertWeiToEsdt(priceRate, getTokenDecimals(selectedTokenId))).toNumber();
+    //         value = Math.min(value, v2);
+    //     }
         
-        onChangeBuyQuoteAmount(value.toString());
-    }
+    //     onChangeBuyQuoteAmount(value.toString());
+    // }
 
     async function onClickBuy() {
         if (!address) {
@@ -275,61 +255,38 @@ export const NosferatuMint = () => {
             toastError(ERROR_TRANSACTION_ONGOING);
             return;
         }
-        if (!(baseContext && statsContext && userContext && selectedTokenId)) {
+        if (!(selectedTokenId)) {
             toastError(ERROR_SC_DATA_NOT_LOADED);
             return;
         }
-        if (statsContext.current_round_id == 5) {
-            toastError('Presale is not started');
-            return;
-        }
-        if (statsContext.current_round_id > 5) {
-            toastError('Presale is finished');
-            return;
-        }
-        if (!userContext.can_join_current_round) {
-            toastError('You do not meet NFT holding requirements');
-            return;
-        }
-        if (!isPositiveOrZeroBigNumber(buyQuoteAmount)) {
+        if (mintCount <= 0) {
             toastError(ERROR_INVALID_NUMBER);
             return;
         }
-        const value = Number(buyQuoteAmount);
-        if (value > quoteTokenBalance) {
-            toastError(ERROR_NOT_ENOUGH_BALANCE);
+        if (mintCount > leftCount) {
+            toastError('Not enough NFTs left');
             return;
         }
-        if (parseBigNumber(priceRate).isPositive() && statsContext && selectedTokenId) {
-            const buyAmount = value / convertWeiToEsdt(priceRate, getTokenDecimals(selectedTokenId)).toNumber();
-            if (convertEsdtToWei(buyAmount).comparedTo(statsContext.sale_amount_for_current_round) > 0) {
-                toastError('Not enough token left for current round');
-                return;
-            }
-        }
-        if (statsContext && statsContext.current_round_id == 0 && Number(buyQuoteAmount) > 0 && parseBigNumber(priceRate).isPositive() && selectedTokenId) {
-            if (Date.now() < baseContext.start_timestamp * 1000 + 3600 * 1000) {
-                const buyAmount = Number(buyQuoteAmount) / convertWeiToEsdt(priceRate, getTokenDecimals(selectedTokenId)).toNumber();
-                if (buyAmount > 1000) {
-                    toastError('You can only buy $1000 OURO in the first 1 hour');
-                    return;
-                }
-            }
+
+        if (mintCount * selectedPrice > quoteTokenBalance) {
+            toastError(ERROR_NOT_ENOUGH_BALANCE);
+            return;
         }
 
         const payment = TokenTransfer.fungibleFromAmount(
             selectedTokenId,
-            value,
-            getTokenDecimals(selectedTokenId),
+            mintCount * selectedPrice,
+            DEFAULT_DECIMALS,
         );
-        await presaleBuy(payment);
+
+        await nosferatuBuy(payment);
     }
 
-    function onCompleteCountDown() {
-        if (statsContext && statsContext.current_round_id <= 5) {
-            location.reload();
-        }
-    }
+    // function onCompleteCountDown() {
+    //     if (statsContext && statsContext.current_round_id <= 5) {
+    //         location.reload();
+    //     }
+    // }
 
     return (
         <>
@@ -353,11 +310,11 @@ export const NosferatuMint = () => {
                             </div>
 
                             <div style={{ marginTop: '2rem' }}>
-                                <BorderLinearProgress variant="determinate" value={salePercent} />
+                                <BorderLinearProgress variant="determinate" value={(totalCount - leftCount) / totalCount * 100} />
                             </div>
                             <div className='d-flex justify-content-between mt-2' style={{ fontSize: '.8rem', color: '#969696' }}>
-                                <span>{convertBigNumberToLocalString(soldAmount)} {`(${convertBigNumberToLocalString(salePercent, 2)}%)`}</span>
-                                <span>{convertBigNumberToLocalString(saleAmount)}</span>
+                                <span>{convertBigNumberToLocalString((totalCount - leftCount))} {`(${convertBigNumberToLocalString((totalCount - leftCount) / totalCount * 100, 2)}%)`}</span>
+                                <span>{convertBigNumberToLocalString(totalCount)}</span>
                             </div>
 
                             <div className='mt-4 text-center px-4' style={{ fontSize: '1rem', color: '#c0b038' }}>
@@ -380,7 +337,7 @@ export const NosferatuMint = () => {
                             <div className='presale-label-container mt-4'>
                                 <div className="presale-label-row presale-label-border">
                                     <span>Price</span>
-                                    <span>13 OURO</span>
+                                    <span>{prices.map((price) => `${convertBigNumberToLocalString(convertWeiToEsdt(price.price))} ${price.ticker}`).join(' or ')}</span>
                                 </div>
                                 <div className="presale-label-row presale-label-border">
                                     <span>Balance</span>
@@ -396,16 +353,33 @@ export const NosferatuMint = () => {
                                 <button
                                     className="mint-number-button"
                                     style={{ marginLeft: '0.1rem' }}
+                                    onClick={() => onChangeMintCount(mintCount - 1)}
                                 >
                                     -
                                 </button>
-                                <div className='mx-3' style={{ color: '#f0f0f0', fontSize: '1.3rem', fontWeight: 'bold' }}>9</div>
+                                <div className='mx-3' style={{ color: '#f0f0f0', fontSize: '1.3rem', fontWeight: 'bold' }}>{mintCount}</div>
                                 <button
-                                    className="mint-number-button"
+                                    className="mint-number-button me-4"
                                     style={{ marginLeft: '0.1rem' }}
+                                    onClick={() => onChangeMintCount(mintCount + 1)}
                                 >
                                     +
                                 </button>
+
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={selectedTokenId}
+                                    label="Age"
+                                    onChange={(event: SelectChangeEvent) => setSelectedTokenId(event.target.value)}
+                                    input={<BootstrapInput />}
+                                >
+                                    {
+                                        prices.length > 0 && prices.map((price, index) => (
+                                            <MenuItem key={index} value={price.identifier}>{price.ticker}</MenuItem>
+                                        ))
+                                    }
+                                </Select>
                             </div>
 
                             <div className="d-flex justify-content-center mt-4 mb-2">

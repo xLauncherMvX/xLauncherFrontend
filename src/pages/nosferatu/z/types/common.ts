@@ -105,3 +105,9 @@ export interface EsdtTokenPaymentType {
     token_nonce: number,
     amount: string,
 }
+
+export interface PriceType {
+    identifier: string,
+    ticker: string,
+    price: string,
+}

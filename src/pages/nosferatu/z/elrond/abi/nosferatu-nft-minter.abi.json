@@ -8,57 +8,20 @@
             "short": "rustc 1.70.0-nightly (f63ccaf25 2023-03-06)"
         },
         "contractCrate": {
-            "name": "snake-coil",
-            "version": "0.1.0"
+            "name": "nosferatu-nft-minter",
+            "version": "0.0.1"
         },
         "framework": {
             "name": "multiversx-sc",
-            "version": "0.41.1"
+            "version": "0.41.2"
         }
     },
-    "name": "SnakeCoil",
+    "name": "NosferatuNftMinterContract",
     "constructor": {
         "inputs": [],
         "outputs": []
     },
     "endpoints": [
-        {
-            "name": "viewBaseContext",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "BaseContext"
-                }
-            ]
-        },
-        {
-            "name": "getTokenSupply",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "token_tier",
-                    "type": "u32"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "BigUint"
-                }
-            ]
-        },
-        {
-            "name": "initConfig",
-            "onlyOwner": true,
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "ouro_token",
-                    "type": "TokenIdentifier"
-                }
-            ],
-            "outputs": []
-        },
         {
             "name": "issue",
             "onlyOwner": true,
@@ -66,34 +29,84 @@
             "payableInTokens": [
                 "EGLD"
             ],
-            "inputs": [
-                {
-                    "name": "tier",
-                    "type": "u32"
-                }
-            ],
+            "inputs": [],
             "outputs": []
         },
         {
             "name": "setLocalRoles",
             "onlyOwner": true,
             "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "mint",
+            "onlyOwner": true,
+            "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "tier",
+                    "name": "mint_size",
                     "type": "u32"
                 }
             ],
             "outputs": []
         },
         {
-            "name": "createMetaEsdt",
+            "name": "moveLegendary",
             "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "tier",
+                    "name": "to",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "buy",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<EsdtTokenPayment>"
+                }
+            ]
+        },
+        {
+            "name": "getLeftCount",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
                     "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "setTreasuryAddress",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "treasury_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "addPrices",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "rows",
+                    "type": "variadic<multi<TokenIdentifier,BigUint>>",
+                    "multi_arg": true
                 }
             ],
             "outputs": []
@@ -104,10 +117,6 @@
             "mutability": "mutable",
             "inputs": [
                 {
-                    "name": "tier",
-                    "type": "u32"
-                },
-                {
                     "name": "to",
                     "type": "Address"
                 }
@@ -115,45 +124,54 @@
             "outputs": []
         },
         {
-            "name": "coil",
-            "mutability": "mutable",
-            "payableInTokens": [
-                "*"
-            ],
+            "name": "getCollection",
+            "mutability": "readonly",
             "inputs": [],
             "outputs": [
                 {
-                    "type": "EsdtTokenPayment"
+                    "type": "TokenIdentifier"
                 }
             ]
         },
         {
-            "name": "getTokenTier",
+            "name": "getLastNonce",
             "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "token",
-                    "type": "TokenIdentifier"
-                }
-            ],
+            "inputs": [],
             "outputs": [
                 {
-                    "type": "u32"
+                    "type": "u64"
                 }
             ]
         },
         {
-            "name": "getToken",
+            "name": "getTokensLeftToMint",
             "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "token_tier",
-                    "type": "u32"
-                }
-            ],
+            "inputs": [],
             "outputs": [
                 {
-                    "type": "TokenIdentifier"
+                    "type": "variadic<u32>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getPriceMap",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<multi<TokenIdentifier,BigUint>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getTreasuryAddress",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
                 }
             ]
         }
@@ -161,19 +179,6 @@
     "events": [],
     "hasCallback": true,
     "types": {
-        "BaseContext": {
-            "type": "struct",
-            "fields": [
-                {
-                    "name": "tokens",
-                    "type": "List<TokenIdentifier>"
-                },
-                {
-                    "name": "token_supplies",
-                    "type": "List<BigUint>"
-                }
-            ]
-        },
         "EsdtTokenPayment": {
             "type": "struct",
             "fields": [
