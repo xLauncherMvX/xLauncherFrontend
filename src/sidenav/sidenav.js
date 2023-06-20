@@ -137,6 +137,14 @@ export function Sidenav() {
 						>
 							Nosferatu Mint
 						</MenuItem>
+						<MenuItem
+							icon={<FilterIcon/>}
+							component={<Link to="/snake-mint"/>}
+							active={pathname === "/snake-mint"}
+							onClick={() => toggleSidebar()}
+						>
+							Snake NFT Sale
+						</MenuItem>
 						{/*<MenuItem*/}
 						{/*    label="Lottery"*/}
 						{/*    icon={<ShoppingCart />}*/}

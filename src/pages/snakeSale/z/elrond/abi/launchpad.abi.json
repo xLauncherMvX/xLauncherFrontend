@@ -1,0 +1,843 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.72.0-nightly",
+            "commitHash": "b2b34bd83192c3d16c88655158f7d8d612513e88",
+            "commitDate": "2023-06-06",
+            "channel": "Nightly",
+            "short": "rustc 1.72.0-nightly (b2b34bd83 2023-06-06)"
+        },
+        "contractCrate": {
+            "name": "launchpad",
+            "version": "0.0.0",
+            "git_version": "3e33704-modified"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.34.1"
+        }
+    },
+    "name": "NftMinter",
+    "constructor": {
+        "inputs": [
+            {
+                "name": "opt_client_address",
+                "type": "optional<Address>",
+                "multi_arg": true
+            }
+        ],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "buy",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "opt_arg_qty",
+                    "type": "optional<u8>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "issueToken",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "payableInTokens": [
+                "EGLD"
+            ],
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "token_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "token_ticker",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setLocalRoles",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "issueNftTokenAndSetRoles",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "payableInTokens": [
+                "EGLD"
+            ],
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "token_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "token_ticker",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setToken",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "token_ticker",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setupGenerativeSale",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "name_prefix",
+                    "type": "bytes"
+                },
+                {
+                    "name": "royalties",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "resource_ipfs_hash",
+                    "type": "bytes"
+                },
+                {
+                    "name": "metadata_ipfs_hash",
+                    "type": "bytes"
+                },
+                {
+                    "name": "resource_file_type",
+                    "type": "bytes"
+                },
+                {
+                    "name": "has_collection_json",
+                    "type": "u8"
+                },
+                {
+                    "name": "max_inclusive_nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "opt_tags",
+                    "type": "optional<bytes>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_description",
+                    "type": "optional<bytes>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_use_nonce_number_in_name",
+                    "type": "optional<u8>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_batch_size",
+                    "type": "optional<u64>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "alterBatchSize",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "size",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "skipImagesFromGeneration",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "images_to_skip",
+                    "type": "variadic<u64>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setupGenerativeNonces",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getImagesToSkip",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<u64>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "setupSingleMintSale",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "max_inclusive_nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "royalties",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "name_prefix",
+                    "type": "bytes"
+                },
+                {
+                    "name": "attributes",
+                    "type": "bytes"
+                },
+                {
+                    "name": "resource_full_uri",
+                    "type": "bytes"
+                },
+                {
+                    "name": "metadata_uri",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getSingleMintable",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "setupPremintedSale",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setSft",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "remaining",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getClientAddress",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        },
+        {
+            "name": "getLastSaleId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getSaleInfo",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "SaleInfo"
+                }
+            ]
+        },
+        {
+            "name": "getPriceTag",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getCustomPriceTag",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getSaleEgldOrEsdtTokenIdentifier",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "getLinkedSales",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<u64>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "create",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sale_type_num",
+                    "type": "u8"
+                },
+                {
+                    "name": "is_disabled",
+                    "type": "u8"
+                },
+                {
+                    "name": "opt_max_qty_per_address",
+                    "type": "optional<u8>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_max_qty_per_transaction",
+                    "type": "optional<u8>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_start_time",
+                    "type": "optional<u64>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_end_time",
+                    "type": "optional<u64>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "alterSale",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "sale_type_num",
+                    "type": "u8"
+                },
+                {
+                    "name": "is_disabled",
+                    "type": "u8"
+                },
+                {
+                    "name": "opt_max_qty_per_address",
+                    "type": "optional<u8>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_max_qty_per_transaction",
+                    "type": "optional<u8>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_start_time",
+                    "type": "optional<u64>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_end_time",
+                    "type": "optional<u64>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setPriceTag",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "payment_token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "payment_token_nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setCustomPriceTag",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "payment_token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "payment_token_nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "addresses",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removePriceTag",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "payment_token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "payment_token_nonce",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "linkSales",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "sale_ids",
+                    "type": "variadic<u64>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setWhitelistMode",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "mode",
+                    "type": "u8"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "whitelist",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "addr",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "unwhitelist",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "addr",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getSaleType",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "SaleType"
+                }
+            ]
+        },
+        {
+            "name": "getIsSaleDisabled",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "getSaleAddressMaxQuantity",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u8"
+                }
+            ]
+        },
+        {
+            "name": "getSaleTransactionMaxQuantity",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u8"
+                }
+            ]
+        },
+        {
+            "name": "getSaleStartTime",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getSaleEndTime",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "sale_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        }
+    ],
+    "events": [],
+    "hasCallback": true,
+    "types": {
+        "SaleInfo": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "sale_type",
+                    "type": "SaleType"
+                },
+                {
+                    "name": "is_disabled",
+                    "type": "bool"
+                },
+                {
+                    "name": "max_quantity_per_address",
+                    "type": "u8"
+                },
+                {
+                    "name": "max_quantity_per_transaction",
+                    "type": "u8"
+                },
+                {
+                    "name": "start_time",
+                    "type": "u64"
+                },
+                {
+                    "name": "end_time",
+                    "type": "u64"
+                }
+            ]
+        },
+        "SaleType": {
+            "type": "enum",
+            "variants": [
+                {
+                    "name": "None",
+                    "discriminant": 0
+                },
+                {
+                    "name": "Generative",
+                    "discriminant": 1
+                },
+                {
+                    "name": "SingleNft",
+                    "discriminant": 2
+                },
+                {
+                    "name": "Preminted",
+                    "discriminant": 3
+                },
+                {
+                    "name": "SftSalePreminted",
+                    "discriminant": 4
+                },
+                {
+                    "name": "Raffle",
+                    "discriminant": 5
+                },
+                {
+                    "name": "RandomFromSales",
+                    "discriminant": 6
+                },
+                {
+                    "name": "BulkFromSales",
+                    "discriminant": 7
+                }
+            ]
+        }
+    }
+}
