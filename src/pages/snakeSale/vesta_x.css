@@ -71,6 +71,11 @@
 .presale-button:hover {
     background: #627EEA;
 }
+.presale-button:disabled {
+    color: #a7a7a7;
+    background: #8d8d8d2f;
+    cursor: not-allowed;
+}
 
 .mint-number-button {
     color: #f0f0f0;

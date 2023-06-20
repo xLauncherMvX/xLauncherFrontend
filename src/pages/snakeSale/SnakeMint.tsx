@@ -160,6 +160,35 @@ export const SnakeMint = () => {
     setMintCount(value)
   }
 
+  const countdownRenderer = ({
+    days,
+    hours,
+    minutes,
+    seconds,
+    completed,
+} : {
+    days: number,
+    hours: number,
+    minutes: number,
+    seconds: number,
+    completed: boolean,
+}) => {
+    if (completed) {
+        return (<></>);
+    } else {
+        return (
+            <div className="presale-timer-container text-center mt-4">
+                <strong>
+                    <span className="presale-timer-box p-2 me-2">{String(days).padStart(2, '0')}</span>
+                    <span className="presale-timer-box p-2 me-2">{String(hours).padStart(2, '0')}</span>
+                    <span className="presale-timer-box p-2 me-2">{String(minutes).padStart(2, '0')}</span>
+                    <span className="presale-timer-box p-2 me-2">{String(seconds).padStart(2, '0')}</span>
+                </strong>
+            </div>
+        );
+    }
+};
+
   useEffect(() => {
     (async () => {
       const _collection = await getSnakeCollection()
@@ -307,7 +336,10 @@ export const SnakeMint = () => {
   //         location.reload();
   //     }
   // }
-
+  function onCompleteCountDown() {
+    location.reload();
+  }
+  const mintStartTimestamp = 1687280400000;
   return (
     <>
       <div className="container" style={{ marginTop: '25px' }}>
@@ -324,7 +356,7 @@ export const SnakeMint = () => {
                   Snake NFT Mint
                 </div>
               </div>
-
+              <Countdown renderer={countdownRenderer} date={mintStartTimestamp} onComplete={onCompleteCountDown} autoStart />
               <div style={{ marginTop: '2rem' }}>
                 <BorderLinearProgress
                   variant="determinate"
@@ -436,7 +468,7 @@ export const SnakeMint = () => {
               </div>
 
               <div className="d-flex justify-content-center mt-4 mb-2">
-                <button className="presale-button" onClick={onClickBuy}>
+                <button className="presale-button" onClick={onClickBuy} disabled={Date.now() < mintStartTimestamp}>
                   Mint
                 </button>
               </div>
