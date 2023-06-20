@@ -53,6 +53,22 @@ export async function getAccountNftsByCollection(
     return [];
 }
 
+export async function getAccountNftCountByCollection(
+    address: string,
+    collection: string,
+): Promise<number> {
+    try {
+        const url = `${ELROND_API_URL}/accounts/${address}/nfts/count?collections=${collection}`;
+        const { data } = await axios.get<number>(url, axoisConfig);
+
+        return data;
+    } catch (err) {
+        console.error('getAccountNftCountByCollection falied:', err);
+    }
+
+    return 0;
+}
+
 export async function getElrondStatsFromApi(): Promise<ElrondStatsType | undefined> {
     const configUrl = `${ELROND_API_URL}/stats`;
     

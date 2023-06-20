@@ -8,6 +8,8 @@ import { useGetAccount, useGetPendingTransactions } from '@multiversx/sdk-dapp/h
 import Countdown from 'react-countdown';
 import { getTokenDecimals } from './config';
 import {
+    getAccountNftCountByCollection,
+    getAccountNftsByCollection,
     getCollection,
     getLeftCount,
     getPriceMap,
@@ -129,13 +131,15 @@ export const NosferatuMint = () => {
     const [selectedTokenId, setSelectedTokenId] = useState<string>('');
     const [selectedPrice, setSelectedPrice] = useState<number>(0);
     const [mintCount, setMintCount] = useState<number>(1);
-    console.log('selectedPrice', selectedPrice);
-    console.log('quoteTokenBalance', quoteTokenBalance);
+    const [nftBalance, setNftBalance] = useState<number>(0);
+    // console.log('selectedPrice', selectedPrice);
+    // console.log('quoteTokenBalance', quoteTokenBalance);
 
     const tokenTicker = selectedTokenId.startsWith('WEGLD') ? 'EGLD' : convertTokenIdentifierToTicker(selectedTokenId);
     const totalCount = 1400;
 
     function onChangeMintCount(value: number) {
+        if (hasPendingTransactions) return;
         if (value <= 0) return;
         if (value > leftCount) return;
         setMintCount(value);
@@ -144,13 +148,13 @@ export const NosferatuMint = () => {
     useEffect(() => {
         (async () => {
             const _collection = await getCollection();
-            console.log('_collection', _collection);
+            // console.log('_collection', _collection);
             setCollection(_collection);
         })();
 
         (async () => {
             const _prices = await getPriceMap();
-            console.log('_prices', _prices);
+            // console.log('_prices', _prices);
             setPrices(_prices);
         })();
     }, []);
@@ -177,20 +181,23 @@ export const NosferatuMint = () => {
 
         (async () => {
             const _leftCount = await getLeftCount();
-            console.log('_leftCount', _leftCount);
+            // console.log('_leftCount', _leftCount);
             setLeftCount(_leftCount);
         })();
     }, [hasPendingTransactions]);
 
-    // useEffect(() => {
-    //     if (!address || hasPendingTransactions) return;
+    useEffect(() => {
+        if (!collection || !address || hasPendingTransactions) return;
         
-    //     (async () => {
-    //         const _userContext = await viewPresaleUserContext(address);
-    //         // console.log('_userContext', _userContext);
-    //         setUserContext(_userContext);
-    //     })();
-    // }, [address, hasPendingTransactions]);
+        (async () => {
+            const _nftCount = await getAccountNftCountByCollection(
+                address,
+                collection,
+            );
+            // console.log('_nftCount', _nftCount);
+            setNftBalance(_nftCount);
+        })();
+    }, [collection, address, hasPendingTransactions]);
 
     useEffect(() => {
         if (!selectedTokenId || !address || hasPendingTransactions) return;
@@ -345,7 +352,7 @@ export const NosferatuMint = () => {
                                 </div>
                                 <div className="presale-label-row">
                                     <span>You minted</span>
-                                    <span>5 NFT(s)</span>
+                                    <span>{nftBalance > 1 ? `${nftBalance} NFTs` : `${nftBalance} NFT`} </span>
                                 </div>
                             </div>
 
@@ -371,7 +378,10 @@ export const NosferatuMint = () => {
                                     id="demo-simple-select"
                                     value={selectedTokenId}
                                     label="Age"
-                                    onChange={(event: SelectChangeEvent) => setSelectedTokenId(event.target.value)}
+                                    onChange={(event: SelectChangeEvent) => {
+                                        if (hasPendingTransactions) return;
+                                        setSelectedTokenId(event.target.value);
+                                    }}
                                     input={<BootstrapInput />}
                                 >
                                     {
