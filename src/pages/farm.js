@@ -6,7 +6,7 @@ import stakeV2Abi from "abiFiles/xlauncher-staking-v2.abi.json";
 import {ProxyNetworkProvider} from "@multiversx/sdk-network-providers/out";
 import {allTokens, networkId, customConfig} from "config/customConfig";
 import {networkConfig} from "config/networks";
-import {multiplier, formatString} from "utils/utilities";
+import {calc2, multiplier, formatString} from "utils/utilities";
 import StakingV2Card from "cards/StakingV2Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -352,7 +352,19 @@ export default function Farm(props) {
 			[new U64Value(farmId)]
 		);
 		if(newWalletsList){
-			setWalletsList(newWalletsList);
+			const newArray = [];
+			newWalletsList.forEach(wallet => {
+				let formattedWallet = wallet.client_address.bech32();
+				let formattedAmount = wallet.xlh_amount / multiplier;
+				if(formattedAmount >= 1){
+					newArray.push({
+						client_address: formattedWallet,
+						xlh_amount: calc2(formattedAmount)
+					})
+				}
+			});
+			newArray.sort((a, b) => parseInt(b.xlh_amount) - parseInt(a.xlh_amount));
+			setWalletsList(newArray);
 		}
 	};
 
