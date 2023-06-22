@@ -8,7 +8,7 @@ import Image from "react-bootstrap/Image";
 import {Col, Row} from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faAnglesUp, faAnglesDown, faCircleInfo, faLink} from '@fortawesome/free-solid-svg-icons';
+import {faAnglesUp, faAnglesDown, faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 import Tooltip from "@mui/material/Tooltip";
 import Fade from "@mui/material/Fade";
 import Backdrop from "@mui/material/Backdrop";
@@ -217,8 +217,8 @@ export default function StakingV2Card({
 		<div className={`farming-card-v2 ${customBorder} text-white`} id={"id" + title.toString()}>
 			<div className="float-end">
 				<Tooltip key="showInfo" title="View Details" arrow placement="bottom" componentsProps={componentsProps}>
-					<Button variant="text" className={`float-right ${tierText}`} onClick={() => openInSameTab(`/view-farm/${poolId}`)}>
-						<FontAwesomeIcon fontSize={"medium"} icon={faLink}/>
+					<Button variant="text" className={`float-right ${tierText}`} onClick={() => openInSameTab(`/view-farm/${poolId}`)} style={{marginRight: '-10px'}}>
+						<FontAwesomeIcon fontSize={"medium"} icon={faInfoCircle} />
 					</Button>
 				</Tooltip>
 				{!visible ? (
