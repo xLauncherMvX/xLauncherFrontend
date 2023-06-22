@@ -211,6 +211,21 @@
             ]
         },
         {
+            "name": "getStakingWalletsReport",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "pool_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<StakingWalletReportItem>"
+                }
+            ]
+        },
+        {
             "name": "getContractSettings",
             "mutability": "readonly",
             "inputs": [],
@@ -511,6 +526,19 @@
                 {
                     "name": "sft_increment_apy",
                     "type": "u64"
+                }
+            ]
+        },
+        "StakingWalletReportItem": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "client_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "xlh_amount",
+                    "type": "BigUint"
                 }
             ]
         },

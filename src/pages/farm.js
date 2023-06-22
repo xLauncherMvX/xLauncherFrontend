@@ -6,7 +6,7 @@ import stakeV2Abi from "abiFiles/xlauncher-staking-v2.abi.json";
 import {ProxyNetworkProvider} from "@multiversx/sdk-network-providers/out";
 import {allTokens, networkId, customConfig} from "config/customConfig";
 import {networkConfig} from "config/networks";
-import {multiplier} from "utils/utilities";
+import {multiplier, formatString} from "utils/utilities";
 import StakingV2Card from "cards/StakingV2Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -20,6 +20,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUndo, faRedo, faSave, faClose } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from "@mui/material/Tooltip/Tooltip";
 import Fade from "@mui/material/Fade/Fade";
+import { CSVLink } from 'react-csv';
 
 const componentsProps={
 	tooltip: {
@@ -339,6 +340,39 @@ export default function Farm(props) {
 		setShowEditor(!showEditor);
 	};
 
+	//Export wallets
+	const [walletsList, setWalletsList] = useState([]);
+	const getWalletsList = async () => {
+		const newWalletsList = await contractQuery(
+			networkProvider,
+			stakeV2Abi,
+			stakeScAddress,
+			"HelloWorld",
+			"getStakingWalletsReport",
+			[new U64Value(farmId)]
+		);
+		if(newWalletsList){
+			setWalletsList(newWalletsList);
+		}
+	};
+
+	useEffect(() => {
+		getWalletsList();
+		const interval = window.setInterval(() => {
+			getWalletsList();
+		}, 5000);
+
+		return () => window.clearInterval(interval);
+		// eslint-disable-next-line
+	}, [isLoggedIn]);
+
+	const csvHeaders = [
+		{ label: 'Wallet address', key: 'client_address' },
+		{ label: 'Staked amount', key: 'xlh_amount' },
+	];
+	let poolName = farmDetails.pool_title ? formatString(farmDetails.pool_title) : 'farm';
+	let filename = poolName + '_wallets_list.csv';
+
 	return (
 		<div>
 			<p className="text-white font-bold mt-4 ms-2 mb-4" style={{fontSize: "40px"}}>
@@ -350,7 +384,11 @@ export default function Farm(props) {
 						<button className="btn btn-info btn-block" onClick={changeVisibility}>Edit Offer</button>
 					</Col>
 					<Col xs={6} lg={2}>
-						<button className="btn btn-info btn-block">Export Wallets List</button>
+						<button className="btn btn-info btn-block">
+							<CSVLink data={walletsList} headers={csvHeaders} filename={filename}>
+								<span className="text-white">Export Wallets</span>
+							</CSVLink>
+						</button>
 					</Col>
 				</Row>
 				): (' ')
@@ -418,7 +456,7 @@ export default function Farm(props) {
 							stakeToken={stakeToken}
 							poolId={farmId.toString()}
 
-							title={farmDetails.pool_title ? farmDetails.pool_title : 'Farm name'}
+							title={farmDetails.pool_title ? farmDetails.pool_title : ''}
 							tier={farmDetails.pool_rank ? farmDetails.pool_rank.toString() : '-'}
 							sftNumber={sftNumber}
 							myXLH={userFarmDetails.pool_amount ? userFarmDetails.pool_amount : 0}
