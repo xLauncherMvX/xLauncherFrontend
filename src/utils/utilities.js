@@ -80,3 +80,7 @@ export const openInSameTab = (url) => {
     const newWindow = window.open(url, '_self', 'noopener,noreferrer')
     if (newWindow) newWindow.opener = null;
 };
+
+export function formatString(str) {
+    return str.replace(/\s/g, '_').toLowerCase();
+}
