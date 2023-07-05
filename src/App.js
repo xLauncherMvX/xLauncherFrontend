@@ -35,8 +35,8 @@ import { networkId } from "config/customConfig";
 import { networkConfig } from "config/networks";
 import Layout from "layout/layout";
 import Bloodshed_lottery from "pages/presale/bloodshed_lottery";
-import { NosferatuMint } from "pages/nosferatu/NosferatuMint";
-import { SnakeMint } from "pages/snakeSale/SnakeMint";
+// import { NosferatuMint } from "pages/nosferatu/NosferatuMint";
+// import { SnakeMint } from "pages/snakeSale/SnakeMint";
 
 library.add(
   fab,
@@ -130,8 +130,8 @@ function App() {
         { path: "/projects/vestax-finance", element: <VestaXFinance /> },
         { path: "/staking2.0", element: <StakingV2 walletState={walletState} /> },
         { path: "/view-farm/:farmId", element: <Farm walletState={walletState} /> },
-        { path: "/nosferatu-mint", element: <NosferatuMint /> },
-        { path: "/snake-mint", element: <SnakeMint /> },
+        // { path: "/nosferatu-mint", element: <NosferatuMint /> },
+        // { path: "/snake-mint", element: <SnakeMint /> },
 
         { path: "*", element: <Dashboard /> },
       ],
