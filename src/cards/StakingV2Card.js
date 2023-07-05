@@ -56,11 +56,11 @@ const componentsProps = {
 };
 
 export default function StakingV2Card({
-	stakeV2Abi, stakeScAddress, scName, chainID, stakeToken, poolId,
-	title, tier, sftNumber, myXLH, myRewards, xlhBalance, isLoggedIn,
-	maxXLH, capacityPercentage,
-	stake, unstake, claim, loadingTransactions
-}) {
+																				stakeV2Abi, stakeScAddress, scName, chainID, stakeToken, poolId,
+																				title, tier, sftNumber, myXLH, myRewards, xlhBalance, isLoggedIn,
+																				maxXLH, capacityPercentage,
+																				stake, unstake, claim, loadingTransactions
+																			}) {
 	const [visible, setVisible] = useState(false);
 
 	//Change the logo based on farm tier
