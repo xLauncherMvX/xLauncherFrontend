@@ -129,14 +129,14 @@ export function Sidenav() {
 						>
 							Stake NFTS
 						</MenuItem>
-						{/*<MenuItem*/}
-						{/*    label="Lottery"*/}
-						{/*    icon={<ShoppingCart />}*/}
-						{/*    component={<Link to="/lottery/bloodshed"/>}*/}
-						{/*    active={pathname === "/lottery/bloodshed"}*/}
-						{/*>*/}
-						{/*    Lottery*/}
-						{/*</MenuItem>*/}
+						<MenuItem
+						    label="Lottery"
+						    icon={<ShoppingCart />}
+						    component={<Link to="/lottery/nosferatu"/>}
+						    active={pathname === "/lottery/nosferatu"}
+						>
+						    Nosferatu Lottery
+						</MenuItem>
 						{/*<MenuItem*/}
 						{/*  label="Lottery with XLH"*/}
 						{/*  icon={<ShoppingCart />}*/}

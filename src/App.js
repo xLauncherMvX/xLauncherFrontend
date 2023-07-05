@@ -34,6 +34,7 @@ import {
 import { networkId } from "config/customConfig";
 import { networkConfig } from "config/networks";
 import Layout from "layout/layout";
+import Bloodshed_lottery from "pages/presale/bloodshed_lottery";
 
 library.add(
   fab,
@@ -121,6 +122,7 @@ function App() {
         { path: "/team", element: <Team /> },
         { path: "/admin", element: <Admin /> },
         { path: "/lottery/bloodshed-reveal", element: <BloodshedReveal walletState={walletState}/> },
+        { path: "/lottery/nosferatu", element: <Bloodshed_lottery walletState={walletState}/> },
         { path: "/projects/zero-2-infinity", element: <Zero2Infinity /> },
         { path: "/projects/estar-games", element: <EstarGames /> },
         { path: "/projects/vestax-finance", element: <VestaXFinance /> },
