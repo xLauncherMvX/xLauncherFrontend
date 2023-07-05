@@ -137,6 +137,22 @@ export function Sidenav() {
 						>
 						    Nosferatu Lottery
 						</MenuItem>
+						<MenuItem
+							icon={<FilterIcon/>}
+							component={<Link to="/nosferatu-mint"/>}
+							active={pathname === "/nosferatu-mint"}
+							onClick={() => toggleSidebar()}
+						>
+							Nosferatu Mint
+						</MenuItem>
+						<MenuItem
+							icon={<FilterIcon/>}
+							component={<Link to="/snake-mint"/>}
+							active={pathname === "/snake-mint"}
+							onClick={() => toggleSidebar()}
+						>
+							Snake NFT Sale
+						</MenuItem>
 						{/*<MenuItem*/}
 						{/*  label="Lottery with XLH"*/}
 						{/*  icon={<ShoppingCart />}*/}
