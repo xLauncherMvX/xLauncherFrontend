@@ -8,6 +8,8 @@ import char2 from "assets/images/char2.png";
 import Container from "@mui/material/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import {Card} from "react-bootstrap";
+import lotteryImage from "assets/images/lottery.png";
 
 import { contractQuery } from "utils/api";
 import { buyTickets, claimResults } from "utils/bloodshedLotteryApi.js";
@@ -202,7 +204,8 @@ function Bloodshed_lottery() {
       <Row className="mt-4">
         <Col xs={12} lg={{ offset: 3, span: 6 }}>
           <div className="farm-card text-white">
-            <p className="h3 text-white">Lottery stage: {lotteryStage}</p>
+						<Card.Img variant="top" src={lotteryImage} style={{borderRadius: "15px", height: "250px"}}/>
+            <p className="h3 text-white mt-2">Lottery stage: {lotteryStage}</p>
             <div
               className="light-divider"
               style={{ width: "100%", marginLeft: 0, marginBottom: "5px" }}

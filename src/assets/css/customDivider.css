@@ -1,0 +1,23 @@
+.custom-divider {
+	position: relative;
+	height: 1px;
+	border-color: transparent !important;
+}
+
+.custom-divider::before,
+.custom-divider::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	width: 30px;
+	height: 100%;
+	background: linear-gradient(to right, transparent, white, white, transparent) !important;
+}
+
+.custom-divider::before {
+	left: 0;
+}
+
+.custom-divider::after {
+	right: 0;
+}
