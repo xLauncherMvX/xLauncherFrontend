@@ -241,7 +241,7 @@ function Bloodshed_lottery() {
               className="light-divider"
               style={{ width: "100%", marginLeft: 0, marginBottom: "5px" }}
             ></div>
-            {lotteryStage === "Claim" && (
+            {address && lotteryStage === "Claim" && (
               <div className="b-r-xs text-white">
                 {(winningTicketIdsForAddress ?? []).length > 0 && (
                   <>
@@ -288,6 +288,11 @@ function Bloodshed_lottery() {
                   </p>
                 )}
               </div>
+            )}
+            {!address && (
+              <p className="h5 mt-3">
+                Connect to see the lottery results
+              </p>
             )}
           </div>
         </Col>
