@@ -82,3 +82,39 @@ export const claimResults = async (networkProvider, abiFile, scAddress, scName, 
         console.error(error);
     }
 };
+
+export const claimLegendaryNft = async (networkProvider, abiFile, scAddress, scName, chainID, amount) => {
+    try {
+        let abiRegistry = AbiRegistry.create(abiFile);
+        let contract = new SmartContract({
+            address: new Address(scAddress),
+            abi: abiRegistry
+        });
+
+        const transaction = contract.methodsExplicit
+            .buy()
+            .withMultiESDTNFTTransfer([TokenTransfer.semiFungible("DEMIOULTR-15a313", 1, amount)])
+            .withChainID(chainID)
+            .buildTransaction();
+        const claimResultsTransaction = {
+            value: 0,
+            data: Buffer.from(transaction.getData().valueOf()),
+            receiver: scAddress,
+            gasLimit: 15_000_000 + (2_000_000 * amount)
+        };
+        await refreshAccount();
+
+        const { sessionId } = await sendTransactions({
+            transactions: claimResultsTransaction,
+            transactionsDisplayInfo: {
+                processingMessage: 'Processing Claim Lottery Results transaction',
+                errorMessage: 'An error has occurred during Claim Lottery Results transaction',
+                successMessage: 'Claim Lottery Results transaction successful'
+            },
+            redirectAfterSign: false
+        });
+
+    } catch (error) {
+        console.error(error);
+    }
+};

@@ -8,19 +8,26 @@ import char2 from "assets/images/char2.png";
 import Container from "@mui/material/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {Card} from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import lotteryImage from "assets/images/lottery.png";
 
 import { contractQuery } from "utils/api";
-import { buyTickets, claimResults } from "utils/bloodshedLotteryApi.js";
+import {
+  buyTickets,
+  claimLegendaryNft,
+  claimResults,
+} from "utils/bloodshedLotteryApi.js";
 import { customConfig, networkId } from "config/customConfig";
 import { networkConfig } from "config/networks";
 import lotteryAbi from "abiFiles/launchpad.abi.json";
+import claimLegendaryNftAbi from "abiFiles/launchpadv2.abi.json";
 import { ProxyNetworkProvider } from "@multiversx/sdk-network-providers/out";
 import { getIsLoggedIn, refreshAccount } from "@multiversx/sdk-dapp/utils";
 import Button from "react-bootstrap/Button";
 import { useGetAccountInfo } from "@multiversx/sdk-dapp/hooks";
-import { Address, AddressValue } from "@multiversx/sdk-core/out";
+import { Address, AddressValue, Transaction } from "@multiversx/sdk-core/out";
+import axios from "axios";
+import { sendTransactions } from "@multiversx/sdk-dapp/services";
 
 function Bloodshed_lottery() {
   //Set the config network
@@ -175,6 +182,34 @@ function Bloodshed_lottery() {
 
   const currentTimeStamp = new Date();
 
+  const [winningTicketsCount, setWinningTicketsCount] = useState(-1);
+  useEffect(() => {
+    if (!address) {
+      return;
+    }
+
+    axios
+      .get(
+        `https://api.multiversx.com/accounts/${address}/nfts?collections=DEMIOULTR-15a313&size=10000`
+      )
+      .then((res) => {
+        if (res.data.length > 0) {
+          setWinningTicketsCount(parseInt(res.data[0].balance));
+        }
+      });
+  }, [address]);
+
+  const handleClaimLegendary = async () => {
+    await claimLegendaryNft(
+      new ProxyNetworkProvider("https://gateway.multiversx.com"),
+      claimLegendaryNftAbi,
+      "erd1qqqqqqqqqqqqqpgqseuf6zuaxewychcxyt7920jz96x4ls0ayl5swmh07r",
+      "Launchpadv2Contract",
+      networkConfig.chainID,
+      winningTicketsCount
+    );
+  };
+
   return (
     // <Container>
     //   <Row className="mt-5">
@@ -197,107 +232,143 @@ function Bloodshed_lottery() {
     //     </Col>
     //   </Row>
     // </Container>
-    <div className="container mt-4 text-center">
-      <p className="text-white font-bold mt-4" style={{ fontSize: "40px" }}>
-        Nosferatu Legendary NFT lottery
-      </p>
-      <Row className="mt-4">
-        <Col xs={12} lg={{ offset: 3, span: 6 }}>
-          <div className="farm-card text-white">
-						<Card.Img variant="top" src={lotteryImage} style={{borderRadius: "15px", height: "250px"}}/>
-            <p className="h3 text-white mt-2">Lottery stage: {lotteryStage}</p>
-            <div
-              className="light-divider"
-              style={{ width: "100%", marginLeft: 0, marginBottom: "5px" }}
-            ></div>
-            <div className="d-flex justify-content-between align-items-center mt-4">
-              <p className="h5">Total number of tickets: </p>
-              <p className="h5">
-                {totalNumberOfSoldTickets === undefined
-                  ? 0
-                  : totalNumberOfSoldTickets.toNumber()}
+    <>
+      <div className="container mt-4 text-center">
+        <p className="text-white font-bold mt-4" style={{ fontSize: "40px" }}>
+          Nosferatu Legendary NFT lottery
+        </p>
+        <Row className="mt-4">
+          <Col xs={12} lg={{ offset: 3, span: 6 }}>
+            <div className="farm-card text-white">
+              <Card.Img
+                variant="top"
+                src={lotteryImage}
+                style={{ borderRadius: "15px", height: "250px" }}
+              />
+              <p className="h3 text-white mt-2">
+                Lottery stage: {lotteryStage}
               </p>
-            </div>
-            <div className="d-flex justify-content-between align-items-center">
-              <p className="h5">Your tickets: </p>
-              <p className="h5">
-                {totalNumberOfTicketsForAddress === undefined
-                  ? 0
-                  : totalNumberOfTicketsForAddress.toNumber()}
-              </p>
-            </div>
-            {totalNumberOfTicketsForAddress !== undefined ||
-              (totalNumberOfTicketsForAddress > 0 && (
-                <div className="d-flex justify-content-between align-items-center">
-                  <p className="h5">Your ticket range: </p>
-                  <p className="h5">
-                    {ticketRangeForAddress
-                      .map((tr) => tr && tr.toNumber())
-                      .join(" to ")}
-                  </p>
+              <div
+                className="light-divider"
+                style={{ width: "100%", marginLeft: 0, marginBottom: "5px" }}
+              ></div>
+              <div className="d-flex justify-content-between align-items-center mt-4">
+                <p className="h5">Total number of tickets: </p>
+                <p className="h5">
+                  {totalNumberOfSoldTickets === undefined
+                    ? 0
+                    : totalNumberOfSoldTickets.toNumber()}
+                </p>
+              </div>
+              <div className="d-flex justify-content-between align-items-center">
+                <p className="h5">Your tickets: </p>
+                <p className="h5">
+                  {totalNumberOfTicketsForAddress === undefined
+                    ? 0
+                    : totalNumberOfTicketsForAddress.toNumber()}
+                </p>
+              </div>
+              {totalNumberOfTicketsForAddress !== undefined ||
+                (totalNumberOfTicketsForAddress > 0 && (
+                  <div className="d-flex justify-content-between align-items-center">
+                    <p className="h5">Your ticket range: </p>
+                    <p className="h5">
+                      {ticketRangeForAddress
+                        .map((tr) => tr && tr.toNumber())
+                        .join(" to ")}
+                    </p>
+                  </div>
+                ))}
+              <div
+                className="light-divider"
+                style={{ width: "100%", marginLeft: 0, marginBottom: "5px" }}
+              ></div>
+              {address && lotteryStage === "Claim" && (
+                <div className="b-r-xs text-white">
+                  {(winningTicketIdsForAddress ?? []).length > 0 && (
+                    <>
+                      <div className="text-center mt-3">
+                        <p className="h5 mt-3">
+                          Congratulations! You have won{" "}
+                          {(winningTicketIdsForAddress ?? []).length} legendary
+                          NFT
+                          {(winningTicketIdsForAddress ?? []).length > 1 && "s"}
+                        </p>
+                      </div>
+                      <div
+                        className="light-divider"
+                        style={{
+                          width: "100%",
+                          marginLeft: 0,
+                          marginTop: "15px",
+                        }}
+                      ></div>
+                      <div className="text-center">
+                        {!hasUserClaimedTokens && (
+                          <button
+                            className="btn btn-primary btn-block mt-2"
+                            onClick={handleClaimResults}
+                          >
+                            Claim tickets
+                          </button>
+                        )}
+                        {hasUserClaimedTokens && (
+                          <button
+                            className="btn btn-primary btn-block mt-2"
+                            onClick={handleClaimResults}
+                            disabled
+                          >
+                            You have already claimed your winning tickets
+                          </button>
+                        )}
+                      </div>
+                    </>
+                  )}
+                  {(winningTicketIdsForAddress ?? []).length === 0 && (
+                    <p className="h5 mt-3">
+                      Bad luck, you have no winning tickets!
+                    </p>
+                  )}
                 </div>
-              ))}
-            <div
-              className="light-divider"
-              style={{ width: "100%", marginLeft: 0, marginBottom: "5px" }}
-            ></div>
-            {address && lotteryStage === "Claim" && (
-              <div className="b-r-xs text-white">
-                {(winningTicketIdsForAddress ?? []).length > 0 && (
+              )}
+              {!address && (
+                <p className="h5 mt-3">Connect to see the lottery results and claim the Legendary NFT</p>
+              )}
+            </div>
+          </Col>
+        </Row>
+      </div>
+      {winningTicketsCount > 0 && (
+        <div className="container mt-5 text-center">
+          <p className="text-white font-bold mt-4" style={{ fontSize: "40px" }}>
+            Claim the legendary Nosferatu NFT
+          </p>
+          <Row className="mt-4">
+            <Col xs={12} lg={{ offset: 3, span: 6 }}>
+              <div className="farm-card text-white">
+                {address && (
                   <>
-                    <div className="text-center mt-3">
-                      <p className="h5 mt-3">
-                        Congratulations! You have won{" "}
-                        {(winningTicketIdsForAddress ?? []).length} legendary
-                        NFT
-                        {(winningTicketIdsForAddress ?? []).length > 1 && "s"}
-                      </p>
-                    </div>
-                    <div
-                      className="light-divider"
-                      style={{
-                        width: "100%",
-                        marginLeft: 0,
-                        marginTop: "15px",
-                      }}
-                    ></div>
-                    <div className="text-center">
-                      {!hasUserClaimedTokens && (
-                        <button
-                          className="btn btn-primary btn-block mt-2"
-                          onClick={handleClaimResults}
-                        >
-                          Claim tickets
-                        </button>
-                      )}
-                      {hasUserClaimedTokens && (
-                        <button
-                          className="btn btn-primary btn-block mt-2"
-                          onClick={handleClaimResults}
-                          disabled
-                        >
-                          You have already claimed your winning tickets
-                        </button>
-                      )}
-                    </div>
+                    <h5 className="mt-2 mb-4">
+                      You have {winningTicketsCount} Legendary Nosferatu NFTs to
+                      claim
+                    </h5>
+                    <button
+                      className="btn btn-primary btn-block mb-3"
+                      onClick={handleClaimLegendary}
+                    >
+                      Claim now
+                    </button>
                   </>
                 )}
-                {(winningTicketIdsForAddress ?? []).length === 0 && (
-                  <p className="h5 mt-3">
-                    Bad luck, you have no winning tickets!
-                  </p>
+                {!address && (
+                  <p className="h5 mt-3">Connect to see the lottery results</p>
                 )}
               </div>
-            )}
-            {!address && (
-              <p className="h5 mt-3">
-                Connect to see the lottery results
-              </p>
-            )}
-          </div>
-        </Col>
-      </Row>
-    </div>
+            </Col>
+          </Row>
+        </div>
+      )}
+    </>
   );
 }
 

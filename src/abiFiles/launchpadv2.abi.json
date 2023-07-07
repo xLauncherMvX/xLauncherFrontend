@@ -1,0 +1,248 @@
+{
+  "buildInfo": {
+    "rustc": {
+      "version": "1.71.0-nightly",
+      "commitHash": "5cdb7886a5ece816864fab177f0c266ad4dd5358",
+      "commitDate": "2023-04-15",
+      "channel": "Nightly",
+      "short": "rustc 1.71.0-nightly (5cdb7886a 2023-04-15)"
+    },
+    "contractCrate": {
+      "name": "launchpadv2",
+      "version": "0.0.0"
+    },
+    "framework": {
+      "name": "multiversx-sc",
+      "version": "0.41.3"
+    }
+  },
+  "name": "Launchpadv2Contract",
+  "constructor": {
+    "inputs": [
+      {
+        "name": "payment_token_id",
+        "type": "TokenIdentifier"
+      },
+      {
+        "name": "payment_token_nonce",
+        "type": "u64"
+      }
+    ],
+    "outputs": []
+  },
+  "endpoints": [
+    {
+      "name": "buy",
+      "mutability": "mutable",
+      "payableInTokens": ["*"],
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "getPaymentTokenId",
+      "mutability": "readonly",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "TokenIdentifier"
+        }
+      ]
+    },
+    {
+      "name": "getPaymentNonce",
+      "mutability": "readonly",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "lastCreatedSale",
+      "mutability": "readonly",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "getConfiguredSale",
+      "mutability": "readonly",
+      "inputs": [
+        {
+          "name": "sale_id",
+          "type": "u64"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "SaleTypeSelection"
+        }
+      ]
+    },
+    {
+      "name": "getAvailableMintedSupply",
+      "mutability": "readonly",
+      "inputs": [
+        {
+          "name": "sale_id",
+          "type": "u64"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "variadic<EsdtTokenPayment>",
+          "multi_result": true
+        }
+      ]
+    },
+    {
+      "name": "create",
+      "onlyOwner": true,
+      "mutability": "mutable",
+      "inputs": [
+        {
+          "name": "sale_asset_status",
+          "type": "SaleAssetStatus"
+        },
+        {
+          "name": "sale_asset_type",
+          "type": "EsdtTokenType"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "addSaleSupply",
+      "onlyOwner": true,
+      "mutability": "mutable",
+      "payableInTokens": ["*"],
+      "inputs": [
+        {
+          "name": "sale_id",
+          "type": "u64"
+        }
+      ],
+      "outputs": []
+    }
+  ],
+  "events": [],
+  "hasCallback": true,
+  "types": {
+    "EsdtTokenPayment": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "token_identifier",
+          "type": "TokenIdentifier"
+        },
+        {
+          "name": "token_nonce",
+          "type": "u64"
+        },
+        {
+          "name": "amount",
+          "type": "BigUint"
+        }
+      ]
+    },
+    "EsdtTokenType": {
+      "type": "enum",
+      "variants": [
+        {
+          "name": "Fungible",
+          "discriminant": 0
+        },
+        {
+          "name": "NonFungible",
+          "discriminant": 1
+        },
+        {
+          "name": "SemiFungible",
+          "discriminant": 2
+        },
+        {
+          "name": "Meta",
+          "discriminant": 3
+        },
+        {
+          "name": "Invalid",
+          "discriminant": 4
+        }
+      ]
+    },
+    "SaleAssetStatus": {
+      "type": "enum",
+      "variants": [
+        {
+          "name": "Invalid",
+          "discriminant": 0
+        },
+        {
+          "name": "Minted",
+          "discriminant": 1
+        },
+        {
+          "name": "NotMinted",
+          "discriminant": 2
+        }
+      ]
+    },
+    "SaleTypeSelection": {
+      "type": "enum",
+      "variants": [
+        {
+          "name": "SftMinter",
+          "discriminant": 0
+        },
+        {
+          "name": "GenerativeNftMinter",
+          "discriminant": 1
+        },
+        {
+          "name": "MintedSft",
+          "discriminant": 2
+        },
+        {
+          "name": "MintedNft",
+          "discriminant": 3
+        },
+        {
+          "name": "MintedMeta",
+          "discriminant": 4
+        },
+        {
+          "name": "MintedToken",
+          "discriminant": 5
+        },
+        {
+          "name": "UnmintedSft",
+          "discriminant": 6
+        },
+        {
+          "name": "UnmintedNft",
+          "discriminant": 7
+        },
+        {
+          "name": "UnmintedMeta",
+          "discriminant": 8
+        },
+        {
+          "name": "UnmintedToken",
+          "discriminant": 9
+        },
+        {
+          "name": "Invalid",
+          "discriminant": 10
+        }
+      ]
+    }
+  }
+}
