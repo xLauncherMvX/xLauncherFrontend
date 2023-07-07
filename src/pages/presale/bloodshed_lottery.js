@@ -206,7 +206,8 @@ function Bloodshed_lottery() {
       "erd1qqqqqqqqqqqqqpgqseuf6zuaxewychcxyt7920jz96x4ls0ayl5swmh07r",
       "Launchpadv2Contract",
       networkConfig.chainID,
-      winningTicketsCount
+      winningTicketsCount,
+      address
     );
   };
 

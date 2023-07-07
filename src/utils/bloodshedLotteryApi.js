@@ -83,7 +83,7 @@ export const claimResults = async (networkProvider, abiFile, scAddress, scName, 
     }
 };
 
-export const claimLegendaryNft = async (networkProvider, abiFile, scAddress, scName, chainID, amount) => {
+export const claimLegendaryNft = async (networkProvider, abiFile, scAddress, scName, chainID, amount, address) => {
     try {
         let abiRegistry = AbiRegistry.create(abiFile);
         let contract = new SmartContract({
@@ -95,11 +95,12 @@ export const claimLegendaryNft = async (networkProvider, abiFile, scAddress, scN
             .buy()
             .withMultiESDTNFTTransfer([TokenTransfer.semiFungible("DEMIOULTR-15a313", 1, amount)])
             .withChainID(chainID)
+            .withSender(new Address(address))
             .buildTransaction();
         const claimResultsTransaction = {
             value: 0,
             data: Buffer.from(transaction.getData().valueOf()),
-            receiver: scAddress,
+            receiver: address,
             gasLimit: 15_000_000 + (2_000_000 * amount)
         };
         await refreshAccount();
