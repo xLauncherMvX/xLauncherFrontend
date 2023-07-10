@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Col, Row, Container} from 'react-bootstrap';
+import {Col, Row, Container, Card} from 'react-bootstrap';
 import {MiniStatisticCard} from 'cards/miniStatisticCard';
 import {MiniNFTRankCard} from 'cards/miniNFTRankCard';
 import {MdOutlineDriveFileRenameOutline} from "react-icons/md";
@@ -15,12 +15,18 @@ import SilverLogo from "assets/images/rockets/silver.png";
 import GoldLogo from "assets/images/rockets/gold.png";
 import PlatinumLogo from "assets/images/rockets/platinum.png";
 import LegendaryLogo from "assets/images/rockets/legendary.png";
+import XLHBooster from "assets/images/xlh_booster.jpg";
 import {contractQuery} from "utils/api";
 import {U64Value} from "@multiversx/sdk-core/out";
 import {ProxyNetworkProvider} from "@multiversx/sdk-network-providers/out";
 import {networkId, customConfig} from "config/customConfig";
 import stakeV2Abi from "abiFiles/xlauncher-staking-v2.abi.json";
 import Chart from "react-apexcharts";
+import { FaCoins } from "react-icons/fa";
+import { GiFactory } from "react-icons/gi";
+import { FaGift } from "react-icons/fa";
+import { FaLayerGroup } from "react-icons/fa";
+import { FaWallet } from "react-icons/fa";
 
 function Dashboard(props) {
 	//Set the config network
@@ -142,11 +148,44 @@ function Dashboard(props) {
 		setFarmsDetails(newFarmsDetails);
 	};
 
+	const [totalRewards, setTotalRewards] = useState(0);
+	const [totalStakedSfts, setTotalStakedSfts] = useState(0);
+	const [totalStakingWallets, setTotalStakingWallets] = useState(0);
+	const getTotalStakedData = async () => {
+		const newStakedData = await contractQuery(
+			networkProvider,
+			stakeV2Abi,
+			stakeScAddress,
+			"HelloWorld",
+			"getTotalStakedData",
+			[]
+		);
+		if(newStakedData){
+			const formattedRewards = newStakedData.total_xlh_available_for_rewords / multiplier;
+			setTotalRewards(formattedRewards);
+			setTotalStakedSfts(newStakedData.total_sft_staked);
+		}
+
+		const newList = await contractQuery(
+			networkProvider,
+			stakeV2Abi,
+			stakeScAddress,
+			"HelloWorld",
+			"getClientList",
+			[]
+		);
+		if(newList){
+			setTotalStakingWallets(newList.length)
+		}
+	};
+
 	const MINUTE_MS = 3000;
 	useEffect(() => {
 		getTokenDetails();
 		getFarmsDetails();
+		getTotalStakedData();
 		const interval = window.setInterval(() => {
+			getTotalStakedData();
 			getTokenDetails();
 			getFarmsDetails();
 		}, MINUTE_MS);
@@ -266,9 +305,68 @@ function Dashboard(props) {
 				Statistics</p>
 			<Container>
 				<Row>
+					<Col xs={6} md={4} lg={2} className="mt-4">
+						<div className={`mini-statistic-card text-center`}>
+							<div className="mx-auto mb-4 mt-2">
+								<Card.Img variant="top" src={XLHBooster} style={{borderRadius: "15px", height: "125px", width: 'auto'}}/>
+							</div>
+							<p className="text-secondary small">SFT Booster</p>
+							<div className="light-divider" style={{ width: '100%', marginLeft: 0, marginTop: '5px', marginBottom: '5px' }}> </div>
+							<p className="text-white h5">XLHB-4989e2</p>
+						</div>
+					</Col>
+					<Col xs={6} md={4} lg={2} className="mt-4">
+						<MiniStatisticCard
+							icon={GiFactory}
+							title="Farms"
+							description="Total Created"
+							value={poolRanksNumber.tier1 + poolRanksNumber.tier2 + poolRanksNumber.tier3}
+							border=""
+						/>
+					</Col>
+					<Col xs={6} md={4} lg={2} className="mt-4">
+						<MiniStatisticCard
+							icon={FaCoins}
+							title="XLH"
+							description="Total Staked"
+							value={intlNumberFormat(poolRanksTotal.tier1 + poolRanksTotal.tier2 + poolRanksTotal.tier3)}
+							border=""
+						/>
+					</Col>
+					<Col xs={6} md={4} lg={2} className="mt-4">
+						<MiniStatisticCard
+							icon={FaGift}
+							title="Rewards"
+							description="Total Available"
+							value={intlNumberFormat(totalRewards)}
+							border=""
+						/>
+					</Col>
+					<Col xs={6} md={4} lg={2} className="mt-4">
+						<MiniStatisticCard
+							icon={FaLayerGroup}
+							title="SFTs"
+							description="Total Staked"
+							value={intlNumberFormat(totalStakedSfts, "en-GB", 0, 0)}
+							border=""
+						/>
+					</Col>
+					<Col xs={6} md={4} lg={2} className="mt-4">
+						<MiniStatisticCard
+							icon={FaWallet}
+							title="Wallets"
+							description="Total Staking"
+							value={intlNumberFormat(totalStakingWallets, "en-GB", 0, 0)}
+							border=""
+						/>
+					</Col>
+				</Row>
+			</Container>
+			<Container>
+				<Row>
 					<Col xs={12} lg={4} className="mt-4">
 						<div className="farming-card">
-							<p className="text-white ms-3 h4 font-bold">Total Opened Farms</p>
+							<p className="text-white ms-3 h4 font-bold">Created Farms / Tier</p>
 							<Chart
 								options={{
 									chart: {
@@ -378,7 +476,7 @@ function Dashboard(props) {
 					</Col>
 					<Col xs={12} lg={8} className="mt-4">
 						<div className="farming-card">
-							<p className="text-white ms-3 h4 font-bold">Total Staked XLH</p>
+							<p className="text-white ms-3 h4 font-bold">Staked XLH / Tier</p>
 							<Chart
 								options={{
 									chart: {
