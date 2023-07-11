@@ -24,18 +24,21 @@ import stakeV2Abi from "abiFiles/xlauncher-staking-v2.abi.json";
 import Chart from "react-apexcharts";
 import { FaCoins } from "react-icons/fa";
 import { GiFactory } from "react-icons/gi";
-import { FaGift } from "react-icons/fa";
 import { FaLayerGroup } from "react-icons/fa";
 import { FaWallet } from "react-icons/fa";
+import { FaUsers } from "react-icons/fa";
 
 function Dashboard(props) {
 	//Set the config network
 	const config = customConfig[networkId];
 	const networkProvider = new ProxyNetworkProvider(config.provider);
 	const stakeScAddress = config.stakeV2Address;
+	const apiAddress = config.apiAddress;
+	const token = config.token;
+	const sft = config.stakeV2SFT;
 
 	//Get Token Details
-	const tokenAPI = 'https://api.elrond.com/tokens/XLH-8daa50';
+	const tokenAPI = apiAddress + '/tokens/' + token;
 	const [tokenDetails, setTokenDetails] = useState([]);
 	const getTokenDetails = async () => {
 		try {
@@ -73,6 +76,25 @@ function Dashboard(props) {
 	if (tokenDetails.transactions) {
 		tokenTransactions = intlNumberFormat(tokenDetails.transactions, "en-GB", 0, 0);
 	}
+
+	//Get SFT Booster holders
+	const sftAPI = apiAddress + '/collections/' + sft + '/accounts?size=5000';
+	const [sftHolders, setSftHolders] = useState([]);
+	const getSFTDetails = async () => {
+		try {
+			const response = await fetch(sftAPI,
+				{
+					headers: {
+						'Accept': 'application/json',
+					}
+				});
+
+			const json = await response.json();
+			setSftHolders(json.length);
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 	//Get Staking V2 farms
 	//Get the total number of created farms
@@ -181,10 +203,12 @@ function Dashboard(props) {
 
 	const MINUTE_MS = 3000;
 	useEffect(() => {
+		getSFTDetails();
 		getTokenDetails();
 		getFarmsDetails();
 		getTotalStakedData();
 		const interval = window.setInterval(() => {
+			getSFTDetails();
 			getTotalStakedData();
 			getTokenDetails();
 			getFarmsDetails();
@@ -335,19 +359,19 @@ function Dashboard(props) {
 					</Col>
 					<Col xs={6} md={4} lg={2} className="mt-4">
 						<MiniStatisticCard
-							icon={FaGift}
-							title="Rewards"
-							description="Total Available"
-							value={intlNumberFormat(totalRewards)}
+							icon={FaLayerGroup}
+							title="SFT"
+							description="Total Staked"
+							value={intlNumberFormat(totalStakedSfts, "en-GB", 0, 0)}
 							border=""
 						/>
 					</Col>
 					<Col xs={6} md={4} lg={2} className="mt-4">
 						<MiniStatisticCard
-							icon={FaLayerGroup}
-							title="SFTs"
-							description="Total Staked"
-							value={intlNumberFormat(totalStakedSfts, "en-GB", 0, 0)}
+							icon={FaUsers}
+							title="SFT"
+							description="Unstaked Holders"
+							value={intlNumberFormat(sftHolders, "en-GB", 0, 0)}
 							border=""
 						/>
 					</Col>
