@@ -416,6 +416,41 @@ export function Navbar(props) {
       </Modal.Body>
     </Modal>
   );
+
+  //Buy XLH modal
+  const [showBuy, setShowBuy] = useState(false);
+  const handleCloseBuy = () => setShowBuy(false);
+  const handleShowBuy = () => {
+    setShowBuy(true);
+  };
+  let buyModal = (
+    <Modal show={showBuy} onHide={handleCloseBuy} centered size="sm">
+      <Modal.Body>
+        <Container className="modal-container">
+          <Row>
+            <Col xs={6}>
+              <p className="h5" style={{ marginLeft: "12px" }}>
+                {" "}
+                Buy XLH
+              </p>
+            </Col>
+            <Col xs={6}>
+              <Button
+                size="sm"
+                variant="danger"
+                className="float-end b-r-sm"
+                onClick={handleCloseBuy}
+                style={{ marginTop: "-10px", marginRight: "12px" }}
+              >
+                <FontAwesomeIcon icon="fa-xmark" size="sm" />
+              </Button>
+            </Col>
+          </Row>
+        </Container>
+      </Modal.Body>
+    </Modal>
+  );
+
   if (isLoggedIn) {
     return broken ? (
       <React.Fragment>
@@ -450,14 +485,45 @@ export function Navbar(props) {
               My Account
             </Button>
           </Col>
+          <Col xs={6}>
+            <Button
+              variant="outline-light"
+              size="sm"
+              className="btn btn-block"
+              onClick={handleShowBuy}
+            >
+              <FontAwesomeIcon
+                icon="fa-shopping-cart"
+                style={{ marginRight: "5px" }}
+                size={"xs"}
+              />
+              Buy XLH
+            </Button>
+          </Col>
           <Col xs={12}>{accountModal}</Col>
+          <Col xs={12}>{buyModal}</Col>
         </Row>
       </React.Fragment>
     ) : (
       <React.Fragment>
         <Container>
           <Row>
-            <Col xs={{ offset: 10, span: 2 }}>
+            <Col xs={{ offset: 8, span: 2 }}>
+              <Button
+                variant="outline-light"
+                size="sm"
+                className="btn btn-block"
+                onClick={handleShowBuy}
+              >
+                <FontAwesomeIcon
+                  icon="fa-shopping-cart"
+                  style={{ marginRight: "5px" }}
+                  size={"xs"}
+                />
+                Buy XLH
+              </Button>
+            </Col>
+            <Col xs={2}>
               <Button
                 variant="outline-light"
                 size="sm"
@@ -472,6 +538,7 @@ export function Navbar(props) {
                 My Account
               </Button>
             </Col>
+            <Col xs={12}>{buyModal}</Col>
           </Row>
         </Container>
         <Col xs={12}>{accountModal}</Col>
@@ -514,14 +581,45 @@ export function Navbar(props) {
               Connect
             </Button>
           </Col>
+          <Col xs={6}>
+            <Button
+              variant="outline-light"
+              size="sm"
+              className="btn btn-block mt-2"
+              onClick={handleShowBuy}
+            >
+              <FontAwesomeIcon
+                icon="fa-shopping-cart"
+                style={{ marginRight: "5px" }}
+                size={"xs"}
+              />
+              Buy XLH
+            </Button>
+          </Col>
           {connectSection}
+          {buyModal}
         </Row>
       </React.Fragment>
     ) : (
       <React.Fragment>
         <Container>
           <Row>
-            <Col xs={{ offset: 10, span: 2 }}>
+            <Col xs={{ offset: 8, span: 2 }}>
+              <Button
+                variant="outline-light"
+                size="sm"
+                className="btn btn-block"
+                onClick={handleShowBuy}
+              >
+                <FontAwesomeIcon
+                  icon="fa-shopping-cart"
+                  style={{ marginRight: "5px" }}
+                  size={"xs"}
+                />
+                Buy XLH
+              </Button>
+            </Col>
+            <Col xs={2}>
               <Button
                 variant="outline-light"
                 size="sm"
@@ -539,6 +637,7 @@ export function Navbar(props) {
                 Connect
               </Button>
             </Col>
+            <Col xs={12}>{buyModal}</Col>
           </Row>
         </Container>
         {connectSection}

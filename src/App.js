@@ -1,5 +1,6 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
+import { fas } from '@fortawesome/free-solid-svg-icons';
 import {
   faCheckSquare,
   faCoffee,
@@ -46,7 +47,8 @@ library.add(
   faXmark,
   faUser,
   faUserCircle,
-  faCheck
+  faCheck,
+  fas
 );
 
 const defaultClientReportData = {
