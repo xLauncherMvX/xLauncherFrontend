@@ -198,7 +198,7 @@ export default function StakingV2Card({
 
 	//Change color of rewards to green when the reached amount is higher that set value
 	let myRewardsColor = 'white';
-	if (myRewards >= 100) {
+	if (myRewards >= 1) {
 		myRewardsColor = 'lexaloffle-green';
 		claim.disabled = false;
 	}
