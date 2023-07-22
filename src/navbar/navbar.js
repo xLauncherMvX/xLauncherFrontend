@@ -27,7 +27,7 @@ import XLHLogo from "assets/images/logo.svg";
 import EGLDLogo from "assets/images/egld-logo.svg";
 import VEGLDLogo from "assets/images/vegld-logo.svg";
 import Image from "react-bootstrap/Image";
-import { multiplier, calc2, intlNumberFormat } from "utils/utilities";
+import {multiplier, calc2, intlNumberFormat, openInNewTab} from "utils/utilities";
 import {
   allTokens,
   customConfig,
@@ -428,21 +428,38 @@ export function Navbar(props) {
       <Modal.Body>
         <Container className="modal-container">
           <Row>
-            <Col xs={6}>
-              <p className="h5" style={{ marginLeft: "12px" }}>
-                {" "}
-                Buy XLH
-              </p>
-            </Col>
-            <Col xs={6}>
+            <Col xs={12}>
               <Button
                 size="sm"
                 variant="danger"
                 className="float-end b-r-sm"
                 onClick={handleCloseBuy}
-                style={{ marginTop: "-10px", marginRight: "12px" }}
+                style={{ marginTop: "-20px"}}
               >
                 <FontAwesomeIcon icon="fa-xmark" size="sm" />
+              </Button>
+              <p className="h5 text-center" style={{ marginLeft: "12px" }}>
+                Buy XLH
+              </p>
+            </Col>
+            <Col xs={12} className="text-center">
+              <Button
+                size="sm"
+                variant="primary"
+                className="btn btn-block btn-sm font-size-sm w-75 mt-4"
+                onClick={() => openInNewTab("https://dex.vestax.finance/swap?firstToken=XLH-8daa50&secondToken=VEGLD-2b9319")}
+              >
+                Buy XLH - VestaDex
+              </Button>
+            </Col>
+            <Col xs={12} className="text-center">
+              <Button
+                size="sm"
+                variant="primary"
+                className="btn btn-block btn-sm font-size-sm w-75 mt-2"
+                onClick={() => openInNewTab("https://swap.onedex.app/swap?firstToken=XLH-8daa50&secondToken=EGLD")}
+              >
+                Buy XLH - OneDex
               </Button>
             </Col>
           </Row>
