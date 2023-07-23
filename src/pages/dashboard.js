@@ -77,6 +77,30 @@ function Dashboard(props) {
 		tokenTransactions = intlNumberFormat(tokenDetails.transactions, "en-GB", 0, 0);
 	}
 
+	//Get Token Details
+	const tokenPriceAPI = "https://api-v2.egldscan.com/token-prices?fsym=XLH&tsym=USDC";
+	const [tokenPrice, setTokenPrice] = useState(0);
+	const getTokenPrice = async () => {
+		try {
+			const response = await fetch(tokenPriceAPI,
+				{
+					headers: {
+						'Accept': 'application/json',
+					}
+				});
+
+			const json = await response.json();
+			console.log(JSON.stringify(json.value));
+			if(json){
+				if(json.value){
+					setTokenPrice(json.value);
+				}
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	//Get SFT Booster holders
 	const sftAPI = apiAddress + '/collections/' + sft + '/accounts?size=5000';
 	const [sftHolders, setSftHolders] = useState([]);
@@ -204,11 +228,13 @@ function Dashboard(props) {
 	const MINUTE_MS = 3000;
 	useEffect(() => {
 		getSFTDetails();
+		getTokenPrice();
 		getTokenDetails();
 		getFarmsDetails();
 		getTotalStakedData();
 		const interval = window.setInterval(() => {
 			getSFTDetails();
+			getTokenPrice();
 			getTotalStakedData();
 			getTokenDetails();
 			getFarmsDetails();
@@ -273,9 +299,9 @@ function Dashboard(props) {
 					<Col xs={6} md={4} lg={2} className="mt-4">
 						<MiniStatisticCard
 							icon={BiTransfer}
-							title="Transactions"
-							description="Total"
-							value={tokenTransactions}
+							title="XLH Price"
+							description="USDC"
+							value={intlNumberFormat(tokenPrice, "en-GB", 5, 5)}
 							border=""
 						/>
 					</Col>
