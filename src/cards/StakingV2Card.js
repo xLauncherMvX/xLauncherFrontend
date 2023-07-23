@@ -401,7 +401,7 @@ export default function StakingV2Card({
 								<p className="font-size-sm text-white text-capitalize">
 									Balance: {intlNumberFormat(xlhBalance)} XLH
 								</p>
-								<p className="font-size-sm text-white text-capitalize mb-5" style={{marginTop: '-10px'}}>
+								<p className="font-size-sm text-white text-capitalize mb-5">
 									Max Staking Amount: {intlNumberFormat(maxS)} XLH
 								</p>
 								<Row className="mt-5">
