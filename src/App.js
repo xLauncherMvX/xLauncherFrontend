@@ -121,7 +121,7 @@ function App() {
         },
         { path: "/projects", element: <Projects /> },
         { path: "/team", element: <Team /> },
-        { path: "/admin", element: <Admin /> },
+        { path: "/admin", element: <Admin walletState={walletState} /> },
         { path: "/lottery/bloodshed-reveal", element: <BloodshedReveal walletState={walletState}/> },
         { path: "/projects/zero-2-infinity", element: <Zero2Infinity /> },
         { path: "/projects/estar-games", element: <EstarGames /> },
