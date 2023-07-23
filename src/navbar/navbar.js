@@ -27,7 +27,7 @@ import XLHLogo from "assets/images/logo.svg";
 import EGLDLogo from "assets/images/egld-logo.svg";
 import VEGLDLogo from "assets/images/vegld-logo.svg";
 import Image from "react-bootstrap/Image";
-import { multiplier, calc2, intlNumberFormat } from "utils/utilities";
+import {multiplier, calc2, intlNumberFormat, openInNewTab} from "utils/utilities";
 import {
   allTokens,
   customConfig,
@@ -416,6 +416,58 @@ export function Navbar(props) {
       </Modal.Body>
     </Modal>
   );
+
+  //Buy XLH modal
+  const [showBuy, setShowBuy] = useState(false);
+  const handleCloseBuy = () => setShowBuy(false);
+  const handleShowBuy = () => {
+    setShowBuy(true);
+  };
+  let buyModal = (
+    <Modal show={showBuy} onHide={handleCloseBuy} centered size="sm">
+      <Modal.Body>
+        <Container className="modal-container">
+          <Row>
+            <Col xs={12}>
+              <Button
+                size="sm"
+                variant="danger"
+                className="float-end b-r-sm"
+                onClick={handleCloseBuy}
+                style={{ marginTop: "-20px"}}
+              >
+                <FontAwesomeIcon icon="fa-xmark" size="sm" />
+              </Button>
+              <p className="h5 text-center" style={{ marginLeft: "12px" }}>
+                Buy XLH
+              </p>
+            </Col>
+            <Col xs={12} className="text-center">
+              <Button
+                size="sm"
+                variant="primary"
+                className="btn btn-block btn-sm font-size-sm w-75 mt-4"
+                onClick={() => openInNewTab("https://dex.vestax.finance/swap?firstToken=XLH-8daa50&secondToken=VEGLD-2b9319")}
+              >
+                Buy XLH - VestaDex
+              </Button>
+            </Col>
+            <Col xs={12} className="text-center">
+              <Button
+                size="sm"
+                variant="primary"
+                className="btn btn-block btn-sm font-size-sm w-75 mt-2"
+                onClick={() => openInNewTab("https://swap.onedex.app/swap?firstToken=XLH-8daa50&secondToken=EGLD")}
+              >
+                Buy XLH - OneDex
+              </Button>
+            </Col>
+          </Row>
+        </Container>
+      </Modal.Body>
+    </Modal>
+  );
+
   if (isLoggedIn) {
     return broken ? (
       <React.Fragment>
@@ -450,14 +502,45 @@ export function Navbar(props) {
               My Account
             </Button>
           </Col>
+          <Col xs={6}>
+            <Button
+              variant="outline-light"
+              size="sm"
+              className="btn btn-block"
+              onClick={handleShowBuy}
+            >
+              <FontAwesomeIcon
+                icon="fa-shopping-cart"
+                style={{ marginRight: "5px" }}
+                size={"xs"}
+              />
+              Buy XLH
+            </Button>
+          </Col>
           <Col xs={12}>{accountModal}</Col>
+          <Col xs={12}>{buyModal}</Col>
         </Row>
       </React.Fragment>
     ) : (
       <React.Fragment>
         <Container>
           <Row>
-            <Col xs={{ offset: 10, span: 2 }}>
+            <Col xs={{ offset: 8, span: 2 }}>
+              <Button
+                variant="outline-light"
+                size="sm"
+                className="btn btn-block"
+                onClick={handleShowBuy}
+              >
+                <FontAwesomeIcon
+                  icon="fa-shopping-cart"
+                  style={{ marginRight: "5px" }}
+                  size={"xs"}
+                />
+                Buy XLH
+              </Button>
+            </Col>
+            <Col xs={2}>
               <Button
                 variant="outline-light"
                 size="sm"
@@ -472,6 +555,7 @@ export function Navbar(props) {
                 My Account
               </Button>
             </Col>
+            <Col xs={12}>{buyModal}</Col>
           </Row>
         </Container>
         <Col xs={12}>{accountModal}</Col>
@@ -514,14 +598,45 @@ export function Navbar(props) {
               Connect
             </Button>
           </Col>
+          <Col xs={6}>
+            <Button
+              variant="outline-light"
+              size="sm"
+              className="btn btn-block mt-2"
+              onClick={handleShowBuy}
+            >
+              <FontAwesomeIcon
+                icon="fa-shopping-cart"
+                style={{ marginRight: "5px" }}
+                size={"xs"}
+              />
+              Buy XLH
+            </Button>
+          </Col>
           {connectSection}
+          {buyModal}
         </Row>
       </React.Fragment>
     ) : (
       <React.Fragment>
         <Container>
           <Row>
-            <Col xs={{ offset: 10, span: 2 }}>
+            <Col xs={{ offset: 8, span: 2 }}>
+              <Button
+                variant="outline-light"
+                size="sm"
+                className="btn btn-block"
+                onClick={handleShowBuy}
+              >
+                <FontAwesomeIcon
+                  icon="fa-shopping-cart"
+                  style={{ marginRight: "5px" }}
+                  size={"xs"}
+                />
+                Buy XLH
+              </Button>
+            </Col>
+            <Col xs={2}>
               <Button
                 variant="outline-light"
                 size="sm"
@@ -539,6 +654,7 @@ export function Navbar(props) {
                 Connect
               </Button>
             </Col>
+            <Col xs={12}>{buyModal}</Col>
           </Row>
         </Container>
         {connectSection}

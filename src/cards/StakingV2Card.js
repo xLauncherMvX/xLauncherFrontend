@@ -178,8 +178,9 @@ export default function StakingV2Card({
 	//Calculate the max amount of xlh that can be staked in current pool
 	let currentPoolXLh = 0;
 	if (maxXLH) currentPoolXLh = 1000000 - maxXLH;
-
-
+	if(currentPoolXLh >= 999999){
+		currentPoolXLh = 1000000;
+	}
 
 	//Calculate apr based on staked sfts
 	let apr = sftNumber ? (sftNumber * 1.5 + 15) : 15;
@@ -198,7 +199,7 @@ export default function StakingV2Card({
 
 	//Change color of rewards to green when the reached amount is higher that set value
 	let myRewardsColor = 'white';
-	if (myRewards >= 100) {
+	if (myRewards >= 1) {
 		myRewardsColor = 'lexaloffle-green';
 		claim.disabled = false;
 	}
@@ -401,7 +402,7 @@ export default function StakingV2Card({
 								<p className="font-size-sm text-white text-capitalize">
 									Balance: {intlNumberFormat(xlhBalance)} XLH
 								</p>
-								<p className="font-size-sm text-white text-capitalize mb-5" style={{marginTop: '-10px'}}>
+								<p className="font-size-sm text-white text-capitalize mb-5">
 									Max Staking Amount: {intlNumberFormat(maxS)} XLH
 								</p>
 								<Row className="mt-5">

@@ -1,5 +1,6 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
+import { fas } from '@fortawesome/free-solid-svg-icons';
 import {
   faCheckSquare,
   faCoffee,
@@ -48,7 +49,8 @@ library.add(
   faXmark,
   faUser,
   faUserCircle,
-  faCheck
+  faCheck,
+  fas
 );
 
 const defaultClientReportData = {
@@ -121,7 +123,7 @@ function App() {
         },
         { path: "/projects", element: <Projects /> },
         { path: "/team", element: <Team /> },
-        { path: "/admin", element: <Admin /> },
+        { path: "/admin", element: <Admin walletState={walletState} /> },
         { path: "/lottery/bloodshed-reveal", element: <BloodshedReveal walletState={walletState}/> },
         { path: "/projects/zero-2-infinity", element: <Zero2Infinity /> },
         { path: "/projects/estar-games", element: <EstarGames /> },

@@ -295,7 +295,7 @@ export default function StakingV2UserCard({
 								<p className="font-size-sm text-white text-capitalize">
 									Available SFT Balance : {sftBalance} SFT
 								</p>
-								<p className="font-size-sm text-white text-capitalize mb-5" style={{marginTop: '-12px'}}>
+								<p className="font-size-sm text-white text-capitalize mb-5">
 									Max Staking Amount : {maxS} SFT
 								</p>
 								<Row className="mt-5">
