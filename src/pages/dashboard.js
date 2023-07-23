@@ -64,9 +64,6 @@ function Dashboard(props) {
 	if (tokenDetails.initialMinted) {
 		tokenMinted = intlNumberFormat(tokenDetails.initialMinted / multiplier, "en-GB", 0, 0);
 	}
-	if (tokenDetails.burnt) {
-		tokenBurnt = intlNumberFormat(tokenDetails.burnt / multiplier, "en-GB", 0, 0);
-	}
 	if (tokenDetails.supply) {
 		tokenSupply = intlNumberFormat(tokenDetails.supply, "en-GB", 0, 0);
 	}
@@ -99,6 +96,12 @@ function Dashboard(props) {
 			console.error(error);
 		}
 	};
+	if (tokenDetails.burnt) {
+		let tokenBurntF = intlNumberFormat(tokenDetails.burnt / multiplier, "en-GB", 0, 0);
+		let burntPrice = (tokenDetails.burnt / multiplier) * tokenPrice;
+		let burntPriceF = intlNumberFormat(burntPrice, "en-GB", 1, 1);
+		tokenBurnt = `${tokenBurntF} (${burntPriceF}$)`;
+	}
 
 	//Get SFT Booster holders
 	const sftAPI = apiAddress + '/collections/' + sft + '/accounts?size=5000';
