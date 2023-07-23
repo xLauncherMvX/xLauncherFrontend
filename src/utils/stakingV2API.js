@@ -65,7 +65,7 @@ export const unstake = async (abiFile, scAddress, scName, chainID, token, amount
             value: 0,
             data: Buffer.from(transaction.getData().valueOf()),
             receiver: scAddress,
-            gasLimit: '15000000'
+            gasLimit: '30000000'
         };
         await refreshAccount();
 
