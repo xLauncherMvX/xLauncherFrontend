@@ -178,8 +178,9 @@ export default function StakingV2Card({
 	//Calculate the max amount of xlh that can be staked in current pool
 	let currentPoolXLh = 0;
 	if (maxXLH) currentPoolXLh = 1000000 - maxXLH;
-
-
+	if(currentPoolXLh >= 999999){
+		currentPoolXLh = 1000000;
+	}
 
 	//Calculate apr based on staked sfts
 	let apr = sftNumber ? (sftNumber * 1.5 + 15) : 15;

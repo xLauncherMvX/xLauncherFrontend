@@ -90,7 +90,6 @@ function Dashboard(props) {
 				});
 
 			const json = await response.json();
-			console.log(JSON.stringify(json.value));
 			if(json){
 				if(json.value){
 					setTokenPrice(json.value);
