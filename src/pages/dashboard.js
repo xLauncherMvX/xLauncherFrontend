@@ -75,7 +75,7 @@ function Dashboard(props) {
 	}
 
 	//Get Token Details
-	const tokenPriceAPI = "https://api-v2.egldscan.com/token-prices?fsym=XLH&tsym=USDC";
+	const tokenPriceAPI = "https://maiartokens.com/token-value?fsym=XLH&tsym=USDC";
 	const [tokenPrice, setTokenPrice] = useState(0);
 	const getTokenPrice = async () => {
 		try {
