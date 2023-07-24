@@ -40,6 +40,7 @@ import imgNosferatu from './nosferatu.png';
 import { PriceType } from './z/types';
 import SelectInput from '@mui/material/Select/SelectInput';
 import { setTokenLogin } from '@multiversx/sdk-dapp/reduxStore/slices';
+import {openInSameTab} from "../../utils/utilities";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 4,
@@ -410,7 +411,13 @@ export const NosferatuMint = () => {
                     </div>
                     <div className='col-lg-6 col-12 px-2'>
                         <div className="vesta_x_swap_card mb-4">
-                            <div className='mt-3' style={{ color: '#F1DC46', fontSize: '1.2rem' }}>Nosferatu NFT</div>
+                            <div className='mt-3' style={{ color: '#F1DC46', fontSize: '1.2rem' }}>Nosferatu Lottery</div>
+                            <div className="mt-2" style={{ color: '#939da7', fontSize: '.9rem' }}>
+                                <div className='mb-2'>
+                                    <a href="/lottery/nosferatu">The Nosferatu Legendary NFT Lottery is live. Click here to open the lottery page. </a>
+                                </div>
+                            </div>
+                            <div className='mt-5' style={{ color: '#F1DC46', fontSize: '1.2rem' }}>Nosferatu NFT</div>
                             <div className="mt-2" style={{ color: '#939da7', fontSize: '.9rem' }}>
                                 <div className='mb-2'>
                                     Introducing a remarkable NFT collection, meticulously curated by Demiourgos Holdings, known as &apos;Nosferatu: Origins of Terror.&apos; <br />
