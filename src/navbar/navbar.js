@@ -447,7 +447,7 @@ export function Navbar(props) {
                 size="sm"
                 variant="primary"
                 className="btn btn-block btn-sm font-size-sm w-75 mt-4"
-                onClick={() => openInNewTab("https://dex.vestax.finance/swap?firstToken=XLH-8daa50&secondToken=VEGLD-2b9319")}
+                onClick={() => openInNewTab("https://dex.vestax.finance/swap?firstToken=VEGLD-2b9319&secondToken=XLH-8daa50")}
               >
                 Buy XLH - VestaDex
               </Button>
@@ -457,7 +457,7 @@ export function Navbar(props) {
                 size="sm"
                 variant="primary"
                 className="btn btn-block btn-sm font-size-sm w-75 mt-2"
-                onClick={() => openInNewTab("https://swap.onedex.app/swap?firstToken=XLH-8daa50&secondToken=EGLD")}
+                onClick={() => openInNewTab("https://swap.onedex.app/swap?firstToken=EGLD&secondToken=XLH-8daa50")}
               >
                 Buy XLH - OneDex
               </Button>
