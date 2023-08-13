@@ -11,15 +11,6 @@ import {
     convertTokenIdentifierToTicker,
 } from '../utils';
 
-export const axoisConfig = {
-    headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Content-Type': 'application/json;charset=UTF-8',
-    },
-};
-
 export async function getTokenBalanceFromApi(
     address: string,
     tokenId: string,
@@ -27,7 +18,7 @@ export async function getTokenBalanceFromApi(
     const configUrl = `${ELROND_API_URL}/accounts/${address}/tokens/${tokenId}`;
     
     try {
-        const { data } = await axios.get<TokenBalanceType>(configUrl, axoisConfig);
+        const { data } = await axios.get<TokenBalanceType>(configUrl);
 
         return data;
     } catch (err) {
@@ -43,7 +34,7 @@ export async function getAccountNftsByCollection(
 ): Promise<NftType[]> {
     try {
         const url = `${ELROND_API_URL}/accounts/${address}/nfts?collections=${collection}`;
-        const { data } = await axios.get<NftType[]>(url, axoisConfig);
+        const { data } = await axios.get<NftType[]>(url);
 
         return data;
     } catch (err) {
@@ -59,7 +50,7 @@ export async function getAccountNftCountByCollection(
 ): Promise<number> {
     try {
         const url = `${ELROND_API_URL}/accounts/${address}/nfts/count?collections=${collection}`;
-        const { data } = await axios.get<number>(url, axoisConfig);
+        const { data } = await axios.get<number>(url);
 
         return data;
     } catch (err) {
@@ -73,7 +64,7 @@ export async function getElrondStatsFromApi(): Promise<ElrondStatsType | undefin
     const configUrl = `${ELROND_API_URL}/stats`;
     
     try {
-        const { data } = await axios.get<ElrondStatsType>(configUrl, axoisConfig);
+        const { data } = await axios.get<ElrondStatsType>(configUrl);
         
         if (data) {
             data.leftTime = convertSecondsToPrintDateTime((data.roundsPerEpoch - data.roundsPassed) * 6);
@@ -86,4 +77,22 @@ export async function getElrondStatsFromApi(): Promise<ElrondStatsType | undefin
     }
 
     return undefined;
+}
+
+export async function getAccountNftBalanceFromApi(
+    address: string,
+    nftId: string,
+): Promise<number> {
+    const configUrl = `${ELROND_API_URL}/accounts/${address}/nfts/${nftId}`;
+    
+    try {
+        const { data } = await axios.get<NftType>(configUrl);
+        const _balance = data.balance ? Number(data.balance) : 0;
+        
+        return _balance;
+    } catch (err) {
+        console.error('getAccountNftBalanceFromApi:', err);
+    }
+
+    return 0;
 }

@@ -4,13 +4,15 @@ import {
     SmartContract,
 } from "@multiversx/sdk-core/out";
 import { ProxyNetworkProvider } from "@multiversx/sdk-network-providers/out";
-import abiNosferatu from './abi/nosferatu-nft-minter.abi.json';
 import abiSnake from './abi/launchpad.abi.json';
+import abiNosferatu from './abi/nosferatu-nft-minter.abi.json';
+import abiVestaxBronzeMinter from './abi/vestax-bronze-minter.abi.json';
 import {
     ELROND_ACCESS_TIMEOUT,
     ELROND_API_URL,
     NOSFERATU_SC_ADDRESS,
     SNAKE_SC_ADDRESS,
+    VESTAX_BRONZE_MINTER_SC_ADDRESS,
 } from '../../config';
 
 // export const elrondProvider = new ProxyNetworkProvider(ELROND_GATEWAY_URL, { timeout: ELROND_ACCESS_TIMEOUT });
@@ -27,3 +29,4 @@ function createSmartContract(abiJson: any, scAddress: string): SmartContract {
 
 export const nosferatuSmartContract = createSmartContract(abiNosferatu, NOSFERATU_SC_ADDRESS);
 export const snakeSmartContract = createSmartContract(abiSnake, SNAKE_SC_ADDRESS);
+export const vestaxBronzeMinterSmartContract = createSmartContract(abiVestaxBronzeMinter, VESTAX_BRONZE_MINTER_SC_ADDRESS);

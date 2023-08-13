@@ -31,6 +31,7 @@ export const EGLD_WRAPPER_ADDRESS = [
 
 export const NOSFERATU_SC_ADDRESS = IS_DEV ? 'erd1qqqqqqqqqqqqqpgq39jdcnps6gmy938vm5ul7hkppm5xmjd503asd6u3xh' : 'erd1qqqqqqqqqqqqqpgqfuhz8t9nqc0ty63jf7zsayagw9jl4vrn0a0szgq0ps';
 export const SNAKE_SC_ADDRESS = IS_DEV ? 'erd1qqqqqqqqqqqqqpgqhg5egagxy6tuwdhggkhhv0adlthk8hgtyl5s3g7quv' : 'erd1qqqqqqqqqqqqqpgqrujrjjnaeqc3srdqn8vtzz8wh5dmnq9xyl5s8797wk';
+export const VESTAX_BRONZE_MINTER_SC_ADDRESS = IS_DEV ? '' : 'erd1qqqqqqqqqqqqqpgqx9sdqmsapmz6yv507vr3stex4errsf4u0a0snd8hha';
 
 export const FEE_DENOMINATOR = 10000;
 
@@ -56,3 +57,7 @@ export function getTokenDecimals(tokenId: string): number {
 
 
 export const SNAKE_NFT_COLLECTION = IS_DEV ? 'DEMIOU-4ae975' : 'DEMIOU-704b5c';
+
+export const VESTAX_BRONZE_COLLECTION = IS_DEV ? '' : 'VESTAXDAO-e6c48c';
+export const VESTAX_BRONZE_NONCE = 3;
+export const OURO_TOKEN_ID = IS_DEV ? '' : 'OURO-9ecd6a';

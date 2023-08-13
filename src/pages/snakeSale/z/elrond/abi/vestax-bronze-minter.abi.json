@@ -1,0 +1,190 @@
+{
+  "buildInfo": {
+      "rustc": {
+          "version": "1.70.0-nightly",
+          "commitHash": "f63ccaf25f74151a5d8ce057904cd944074b01d2",
+          "commitDate": "2023-03-06",
+          "channel": "Nightly",
+          "short": "rustc 1.70.0-nightly (f63ccaf25 2023-03-06)"
+      },
+      "contractCrate": {
+          "name": "vestax-bronze-minter",
+          "version": "0.0.0"
+      },
+      "framework": {
+          "name": "multiversx-sc",
+          "version": "0.42.0"
+      }
+  },
+  "name": "VestaxBronzeMinterContract",
+  "constructor": {
+      "inputs": [
+          {
+              "name": "sft_token_id",
+              "type": "TokenIdentifier"
+          },
+          {
+              "name": "sft_token_nonce",
+              "type": "u64"
+          },
+          {
+              "name": "payment_token_id",
+              "type": "TokenIdentifier"
+          },
+          {
+              "name": "price",
+              "type": "BigUint"
+          },
+          {
+              "name": "elite_account_tracker_address",
+              "type": "Address"
+          },
+          {
+              "name": "treasury_address",
+              "type": "Address"
+          }
+      ],
+      "outputs": []
+  },
+  "endpoints": [
+      {
+          "name": "mint",
+          "mutability": "mutable",
+          "payableInTokens": [
+              "*"
+          ],
+          "inputs": [],
+          "outputs": []
+      },
+      {
+          "name": "getMintPrice",
+          "mutability": "readonly",
+          "inputs": [
+              {
+                  "name": "user_address",
+                  "type": "Address"
+              }
+          ],
+          "outputs": [
+              {
+                  "type": "BigUint"
+              }
+          ]
+      },
+      {
+          "name": "getSftReserve",
+          "mutability": "readonly",
+          "inputs": [],
+          "outputs": [
+              {
+                  "type": "BigUint"
+              }
+          ]
+      },
+      {
+          "name": "withdraw",
+          "onlyOwner": true,
+          "mutability": "mutable",
+          "inputs": [],
+          "outputs": []
+      },
+      {
+          "name": "getSftTokenId",
+          "mutability": "readonly",
+          "inputs": [],
+          "outputs": [
+              {
+                  "type": "TokenIdentifier"
+              }
+          ]
+      },
+      {
+          "name": "getSftTokenNonce",
+          "mutability": "readonly",
+          "inputs": [],
+          "outputs": [
+              {
+                  "type": "u64"
+              }
+          ]
+      },
+      {
+          "name": "getPaymentTokenId",
+          "mutability": "readonly",
+          "inputs": [],
+          "outputs": [
+              {
+                  "type": "TokenIdentifier"
+              }
+          ]
+      },
+      {
+          "name": "getPrice",
+          "mutability": "readonly",
+          "inputs": [],
+          "outputs": [
+              {
+                  "type": "BigUint"
+              }
+          ]
+      },
+      {
+          "name": "getEliteAccountTrackerAddress",
+          "mutability": "readonly",
+          "inputs": [],
+          "outputs": [
+              {
+                  "type": "Address"
+              }
+          ]
+      },
+      {
+          "name": "getTreasuryAddress",
+          "mutability": "readonly",
+          "inputs": [],
+          "outputs": [
+              {
+                  "type": "Address"
+              }
+          ]
+      },
+      {
+          "name": "getTotalMintedAmount",
+          "mutability": "readonly",
+          "inputs": [],
+          "outputs": [
+              {
+                  "type": "BigUint"
+              }
+          ]
+      },
+      {
+          "name": "getTotalPaidAmount",
+          "mutability": "readonly",
+          "inputs": [],
+          "outputs": [
+              {
+                  "type": "BigUint"
+              }
+          ]
+      },
+      {
+          "name": "getEliteAccountTier",
+          "mutability": "readonly",
+          "inputs": [
+              {
+                  "name": "target_address",
+                  "type": "Address"
+              }
+          ],
+          "outputs": [
+              {
+                  "type": "u32"
+              }
+          ]
+      }
+  ],
+  "events": [],
+  "hasCallback": false,
+  "types": {}
+}

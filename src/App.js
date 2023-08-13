@@ -38,6 +38,7 @@ import Layout from "layout/layout";
 import Bloodshed_lottery from "pages/presale/bloodshed_lottery";
 import { NosferatuMint } from "pages/nosferatu/NosferatuMint";
 import { SnakeMint } from "pages/snakeSale/SnakeMint";
+import { VestaxBronzeMint } from "pages/snakeSale/VestaxBronzeMint";
 
 library.add(
   fab,
@@ -134,6 +135,7 @@ function App() {
         { path: "/view-farm/:farmId", element: <Farm walletState={walletState} /> },
         { path: "/nosferatu-mint", element: <NosferatuMint /> },
         { path: "/snake-mint", element: <SnakeMint /> },
+        { path: "/vestax-bronze-mint", element: <VestaxBronzeMint /> },
 
         { path: "*", element: <Dashboard /> },
       ],

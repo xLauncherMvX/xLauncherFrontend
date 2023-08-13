@@ -153,6 +153,14 @@ export function Sidenav() {
 						>
 							Snake NFT Sale
 						</MenuItem>
+						<MenuItem
+							icon={<FilterIcon/>}
+							component={<Link to="/vestax-bronze-mint"/>}
+							active={pathname === "/vestax-bronze-mint"}
+							onClick={() => toggleSidebar()}
+						>
+							VestaX Bronze Mint
+						</MenuItem>
 						{/*<MenuItem*/}
 						{/*  label="Lottery with XLH"*/}
 						{/*  icon={<ShoppingCart />}*/}

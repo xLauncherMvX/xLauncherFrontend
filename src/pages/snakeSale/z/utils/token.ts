@@ -1,3 +1,4 @@
+import { numberToPaddedHex } from '@multiversx/sdk-core/out/utils.codec';
 import BigNumber from 'bignumber.js';
 import { BIG_NUMBER_ROUNDING_MODE } from './bignum';
 
@@ -50,3 +51,7 @@ export function getLPTokenRatio(lpBalance: string, totalLpBalance: string, token
     const cTokenReserve = convertWeiToEsdt(tokenReserve);
     return cLpBalance.div(cTotalLpBalance).multipliedBy(cTokenReserve);
 }
+
+export const createNftId = (collection_id: string, nft_nonce: number) => {
+    return `${collection_id}-${numberToPaddedHex(nft_nonce)}`;
+};
