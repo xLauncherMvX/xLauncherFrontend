@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { TokenTransfer } from '@multiversx/sdk-core/out';
 import { Toaster } from 'react-hot-toast'
 import { InputBase, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import LinearProgress, {
@@ -35,8 +36,6 @@ import {
   ZERO_STRING,
 } from './z/utils'
 import './vesta_x.css'
-import { TokenTransfer } from '@multiversx/sdk-core/out'
-import imgSnake from './nft.png'
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 4,
@@ -227,8 +226,10 @@ export const VestaxBronzeMint = () => {
               </div>
 
               <div className="d-flex justify-content-center mt-3">
-                <img
-                  src={imgSnake}
+                <video
+                  autoPlay
+                  loop
+                  muted
                   style={{
                     width: '90%',
                     height: 'auto',
@@ -236,7 +237,9 @@ export const VestaxBronzeMint = () => {
                     border: '1px solid #ffffff2f',
                     padding: '4px',
                   }}
-                />
+                >
+                  <source src="/bronze.mp4" type="video/mp4" />
+                </video>
               </div>
 
               <div className="presale-label-container mt-4">
