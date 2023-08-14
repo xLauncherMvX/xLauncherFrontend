@@ -37,6 +37,41 @@ import {
   ZERO_STRING,
 } from './z/utils'
 import './vesta_x.css'
+import Countdown from 'react-countdown';
+
+// Renderer callback with condition
+const countdownRenderer = ({
+  days,
+  hours,
+  minutes,
+  seconds,
+  completed,
+}: {
+  days: number
+  hours: number
+  minutes: number
+  seconds: number
+  completed: boolean
+}) => {
+  return (
+    <div className="presale-timer-container text-center mt-3">
+      <strong>
+        <span className="presale-timer-box p-2 me-2">
+          {String(days).padStart(2, '0')}
+        </span>
+        <span className="presale-timer-box p-2 me-2">
+          {String(hours).padStart(2, '0')}
+        </span>
+        <span className="presale-timer-box p-2 me-2">
+          {String(minutes).padStart(2, '0')}
+        </span>
+        <span className="presale-timer-box p-2 me-2">
+          {String(seconds).padStart(2, '0')}
+        </span>
+      </strong>
+    </div>
+  )
+}
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 4,
@@ -193,8 +228,12 @@ export const VestaxBronzeMint = () => {
     await vbmMint(payment);
   }
 
+  function onCompleteCountDown() {
+    // location.reload();
+  }
+
   const totalCount = 4000;
-  const mintStartTimestamp = 1687280400000;
+  const mintStartTimestamp = 1692122400000;
   return (
     <>
       <div className="container" style={{ marginTop: '25px' }}>
@@ -211,6 +250,7 @@ export const VestaxBronzeMint = () => {
                   VestaX Bronze Mint
                 </div>
               </div>
+              <Countdown renderer={countdownRenderer} date={mintStartTimestamp} onComplete={onCompleteCountDown} autoStart />
               <div style={{ marginTop: '2rem' }}>
                 <BorderLinearProgress
                   variant="determinate"
