@@ -37,6 +37,7 @@ import {
   ZERO_STRING,
 } from './z/utils'
 import './vesta_x.css'
+import {Col, Row} from "react-bootstrap";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 4,
@@ -198,9 +199,9 @@ export const VestaxBronzeMint = () => {
   return (
     <>
       <div className="container" style={{ marginTop: '25px' }}>
-        <div className="row">
-          <div className="col-lg-12 col-12 px-2 d-flex justify-content-center">
-            <div className="vesta_x_swap_card mb-4 w-50">
+        <Row>
+          <Col xs={12} md={{offset: 3, span: 6}} className="px-2 d-flex justify-content-center">
+            <div className="vesta_x_swap_card mb-4">
               <div className="d-flex justify-content-center align-items-center mt-3">
                 <div
                   style={{
@@ -326,8 +327,8 @@ export const VestaxBronzeMint = () => {
                 </button>
               </div>
             </div>
-          </div>
-        </div>
+          </Col>
+        </Row>
       </div>
 
       <Toaster />
