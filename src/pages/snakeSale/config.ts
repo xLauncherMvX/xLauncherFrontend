@@ -61,3 +61,15 @@ export const SNAKE_NFT_COLLECTION = IS_DEV ? 'DEMIOU-4ae975' : 'DEMIOU-704b5c';
 export const VESTAX_BRONZE_COLLECTION = IS_DEV ? '' : 'VESTAXDAO-e6c48c';
 export const VESTAX_BRONZE_NONCE = 3;
 export const OURO_TOKEN_ID = IS_DEV ? '' : 'OURO-9ecd6a';
+
+export const ELITE_ACCOUNT_TIER_NAMES: string[] = [
+    '',
+    '',
+    'Partner',
+    'Investor',
+    'Entrepreneur',
+    'Baron',
+    'Mogul',
+    'Magnate',
+    'Demiurg',
+];

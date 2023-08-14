@@ -14,6 +14,7 @@ import {
   VESTAX_BRONZE_COLLECTION,
   VESTAX_BRONZE_NONCE,
   OURO_TOKEN_ID,
+  ELITE_ACCOUNT_TIER_NAMES,
 } from './config'
 import {
   getAccountNftBalanceFromApi,
@@ -104,9 +105,14 @@ export const VestaxBronzeMint = () => {
   // console.log('quoteTokenBalance', quoteTokenBalance);
 
   function onChangeMintCount(value: number) {
-    if (hasPendingTransactions) return
-    if (value <= 0) return
-    if (value > leftCount) return
+    if (value <= 0) {
+      toastError(ERROR_INVALID_NUMBER);
+      return;
+    }
+    if (value > leftCount) {
+      toastError(`You cannot mint more than ${leftCount} SFTs.`);
+      return;
+    }
     setMintCount(value)
   }
 
@@ -244,9 +250,16 @@ export const VestaxBronzeMint = () => {
 
               <div className="presale-label-container mt-4">
                 <div className="presale-label-row presale-label-border">
+                  <span>Elite Account Tier</span>
+                  <span>
+                    {Math.max(eliteAccountTier - 1, 0)}
+                    {eliteAccountTier > 1 ? `: ${ELITE_ACCOUNT_TIER_NAMES[eliteAccountTier]}` : ''}
+                  </span>
+                </div>
+                <div className="presale-label-row presale-label-border">
                   <span>Price</span>
                   <span>
-                    {convertBigNumberToLocalString(convertWeiToEsdt(price))}
+                    {convertBigNumberToLocalString(convertWeiToEsdt(price).multipliedBy(mintCount))}
                     {' '}OURO
                   </span>
                 </div>
@@ -292,6 +305,19 @@ export const VestaxBronzeMint = () => {
                 >
                   +
                 </button>
+
+                <input
+                  type="number"
+                  className='ms-3'
+                  style={{
+                    width: '4rem',
+                    padding: '0rem .2rem',
+                    textAlign: 'right',
+                    fontSize: '1rem',
+                  }}
+                  value={mintCount}
+                  onChange={(event) => onChangeMintCount(Number(event.target.value))}
+                />
               </div>
 
               <div className="d-flex justify-content-center mt-4 mb-2">
