@@ -17,7 +17,7 @@ import {
     vestaxBronzeMinterSmartContract,
 } from "./provider";
 import {
-    NOSFERATU_SC_ADDRESS,
+    VESTAX_BRONZE_MINTER_SC_ADDRESS,
     PRESALE_BUY_GAS_LIMIT,
 } from "../../config";
 
@@ -105,7 +105,7 @@ export async function vbmMint(
     const tx = {
         value: 0,
         data,
-        receiver: NOSFERATU_SC_ADDRESS,
+        receiver: VESTAX_BRONZE_MINTER_SC_ADDRESS,
         gasLimit: PRESALE_BUY_GAS_LIMIT,
     };
     
