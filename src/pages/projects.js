@@ -8,6 +8,7 @@ import profile4 from "assets/images/ethernityx_mini.png";
 import profile5 from "assets/images/parascox_mini.png";
 import profile6 from "assets/images/bloodshed_nfts.png";
 import profile7 from "assets/images/snake_token_mini.jpg";
+import profile8 from "assets/images/xbid_mini2.png";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
@@ -24,6 +25,24 @@ function Projects() {
 		<div>
 			<p className="text-white font-bold mt-4 ms-2" style={{fontSize: '40px'}}>Projects</p>
 			<Row>
+				<Col xs={12} md={6} lg={4}>
+					<div className="project-card mt-4">
+						<DefaultProjectCard
+							image={profile8}
+							label="project #8"
+							title="xBid"
+							description="XBid represents a sophisticated online auction platform, designed to facilitate the bidding process in
+														a secure and efficient virtual environment. Through this platform, participants are invited to submit price bids for a variety of enticing prizes."
+							totalRaised="Upcoming"
+							action={{
+								type: "internal",
+								route: "/projects/xbid",
+								color: "white",
+								label: "VIEW",
+							}}
+						/>
+					</div>
+				</Col>
 				<Col xs={12} md={6} lg={4}>
 					<div className="project-card mt-4">
 						<DefaultProjectCard

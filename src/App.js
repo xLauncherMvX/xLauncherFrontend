@@ -25,6 +25,7 @@ import BloodshedReveal from "pages/presale/bloodshed_reveal";
 import Zero2Infinity from "pages/projects/Zero2Infinity";
 import EstarGames from "pages/projects/EstarGames";
 import VestaXFinance from "pages/projects/VestaXFinance";
+import XBid from "pages/projects/xBid";
 import Farm from "pages/farm";
 import { DappProvider } from "@multiversx/sdk-dapp/wrappers/DappProvider";
 import {
@@ -131,6 +132,7 @@ function App() {
         { path: "/projects/zero-2-infinity", element: <Zero2Infinity /> },
         { path: "/projects/estar-games", element: <EstarGames /> },
         { path: "/projects/vestax-finance", element: <VestaXFinance /> },
+        { path: "/projects/xbid", element: <XBid /> },
         { path: "/staking2.0", element: <StakingV2 walletState={walletState} /> },
         { path: "/view-farm/:farmId", element: <Farm walletState={walletState} /> },
         { path: "/nosferatu-mint", element: <NosferatuMint /> },
