@@ -138,7 +138,7 @@ export function Sidenav() {
 						{/*    Nosferatu Lottery*/}
 						{/*</MenuItem>*/}
 						<MenuItem
-							icon={<FilterIcon/>}
+							icon={<ShoppingCart/>}
 							component={<Link to="/nosferatu-mint"/>}
 							active={pathname === "/nosferatu-mint"}
 							onClick={() => toggleSidebar()}
@@ -146,21 +146,21 @@ export function Sidenav() {
 							Nosferatu Mint
 						</MenuItem>
 						<MenuItem
-							icon={<FilterIcon/>}
+							icon={<ShoppingCart/>}
 							component={<Link to="/snake-mint"/>}
 							active={pathname === "/snake-mint"}
 							onClick={() => toggleSidebar()}
 						>
 							Snake NFT Sale
 						</MenuItem>
-						<MenuItem
-							icon={<FilterIcon/>}
-							component={<Link to="/vestax-bronze-mint"/>}
-							active={pathname === "/vestax-bronze-mint"}
-							onClick={() => toggleSidebar()}
-						>
-							VestaX Bronze Mint
-						</MenuItem>
+						{/*<MenuItem*/}
+						{/*	icon={<FilterIcon/>}*/}
+						{/*	component={<Link to="/vestax-bronze-mint"/>}*/}
+						{/*	active={pathname === "/vestax-bronze-mint"}*/}
+						{/*	onClick={() => toggleSidebar()}*/}
+						{/*>*/}
+						{/*	VestaX Bronze Mint*/}
+						{/*</MenuItem>*/}
 						{/*<MenuItem*/}
 						{/*  label="Lottery with XLH"*/}
 						{/*  icon={<ShoppingCart />}*/}
