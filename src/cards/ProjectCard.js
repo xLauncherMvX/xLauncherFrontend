@@ -104,7 +104,7 @@ export default function ProjectCard({date, banner, website, linkedin, twitter, f
                         contentArrowStyle={{border: 0}}
                         date={false}
                     >
-                        <p className="h5 font-bold font-size-sm">{element.title}</p>
+                        <p className="h5 font-bold font-size-sm text-uppercase">{element.title}</p>
                         <p className="mt-1 font-size-xs" style={{textAlign: 'justify'}}>
                             {element.desc}
                         </p>
