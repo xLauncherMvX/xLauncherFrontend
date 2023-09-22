@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 import "assets/css/globals.css";
 import ProjectCard from "cards/ProjectCard";
 
-import banner from "assets/images/xbid_mini2.png";
+import banner from "assets/images/xbid.png";
 
 const details = [
     {
