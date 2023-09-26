@@ -396,7 +396,7 @@ function VaultBooster() {
 									<Card.Img
 										variant="top"
 										src={picture}
-										style={{borderRadius: "15px", height: "250px"}}
+										style={{borderRadius: "15px", height: "300px", width: "300px"}}
 										className="mt-2"
 									/>
 									{isLoggedIn && whitelistElement}
