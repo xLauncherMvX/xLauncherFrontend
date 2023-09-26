@@ -27,7 +27,7 @@ import {faAdd, faMinus} from "@fortawesome/free-solid-svg-icons";
 import {
 	AbiRegistry,
 	Address,
-	SmartContract,
+	SmartContract, TokenTransfer,
 	U32Value
 } from "@multiversx/sdk-core/out";
 import {refreshAccount} from "@multiversx/sdk-dapp/utils/account";
@@ -157,6 +157,9 @@ function VaultBooster() {
 			const transaction = contract.methodsExplicit
 				.buy([new U32Value(quantity)])
 				.withChainID(chainID)
+				.withSingleESDTTransfer(
+					TokenTransfer.fungibleFromAmount(scToken, quantity * multiplier, 18)
+				)
 				.buildTransaction();
 
 			const mintTransaction = {
