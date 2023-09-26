@@ -10,14 +10,14 @@ export default function CustomCountdown({ startTitle, completedTitle, startTimes
 			return (
 				<>
 					<div className="presale-timer-container text-center mt-4">
-						{completedTitle && (<p className="mb-4 h1">{completedTitle}</p>)}
+						{completedTitle && (<p className="h1">{completedTitle}</p>)}
 					</div>
 				</>
 			);
 		} else {
 			return (
-				<div className="presale-timer-container text-center mt-4">
-					{startTitle && (<p className="mb-4 h1">{startTitle}</p>)}
+				<div className="presale-timer-container text-center mt-4 mb-3">
+					{startTitle && (<p className="mb-3 h1">{startTitle}</p>)}
 					<strong>
 						<span className="presale-timer-box p-2 me-2">{String(days).padStart(2, '0')} D</span>
 						<span>: </span>
