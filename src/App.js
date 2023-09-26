@@ -40,6 +40,7 @@ import Bloodshed_lottery from "pages/presale/bloodshed_lottery";
 import { NosferatuMint } from "pages/nosferatu/NosferatuMint";
 import { SnakeMint } from "pages/snakeSale/SnakeMint";
 import { VestaxBronzeMint } from "pages/snakeSale/VestaxBronzeMint";
+import  VaultBooster from "pages/presale/vault_booster";
 
 library.add(
   fab,
@@ -138,6 +139,7 @@ function App() {
         { path: "/nosferatu-mint", element: <NosferatuMint /> },
         { path: "/snake-mint", element: <SnakeMint /> },
         { path: "/vestax-bronze-mint", element: <VestaxBronzeMint /> },
+        { path: "/og-vault-booster", element: <VaultBooster walletState={walletState}/> },
 
         { path: "*", element: <Dashboard /> },
       ],

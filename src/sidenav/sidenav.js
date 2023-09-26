@@ -139,6 +139,14 @@ export function Sidenav() {
 						{/*</MenuItem>*/}
 						<MenuItem
 							icon={<ShoppingCart/>}
+							component={<Link to="/og-vault-booster"/>}
+							active={pathname === "/og-vault-booster"}
+							onClick={() => toggleSidebar()}
+						>
+							Vault Booster Mint
+						</MenuItem>
+						<MenuItem
+							icon={<ShoppingCart/>}
 							component={<Link to="/nosferatu-mint"/>}
 							active={pathname === "/nosferatu-mint"}
 							onClick={() => toggleSidebar()}
