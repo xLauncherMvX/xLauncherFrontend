@@ -1,0 +1,9 @@
+.presale-timer-container {
+	color: #f0f0f0;
+	font-size: 1.2rem;
+}
+.presale-timer-box {
+	border: 1px solid limegreen;
+	border-radius: 4px;
+	background-color: transparent;
+}
