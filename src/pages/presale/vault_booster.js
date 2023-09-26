@@ -17,7 +17,7 @@ import { Toaster } from 'react-hot-toast';
 import {contractQuery} from "utils/api";
 import {customConfig, networkId, allTokens} from "config/customConfig";
 import {networkConfig} from "config/networks";
-import abiFile from "abiFiles/launchpad.abi.json";
+import abiFile from "abiFiles/vault-booster-sale.abi.json";
 import {ProxyNetworkProvider} from "@multiversx/sdk-network-providers/out";
 import {multiplier} from "utils/utilities";
 import {useGetAccountInfo} from "@multiversx/sdk-dapp/hooks";
@@ -25,20 +25,15 @@ import Box from "@mui/material/Box";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAdd, faMinus} from "@fortawesome/free-solid-svg-icons";
 import {
-	BigUIntValue,
-	StringValue,
-	TokenIdentifierValue,
-	TokenTransfer,
-	U64Value,
-	U8Value
+	AbiRegistry,
+	Address,
+	SmartContract,
+	U32Value
 } from "@multiversx/sdk-core/out";
-import {ArgSerializer} from "@multiversx/sdk-core/out/smartcontracts/argSerializer";
-import {BigNumber} from "bignumber.js";
 import {refreshAccount} from "@multiversx/sdk-dapp/utils/account";
 import {sendTransactions} from "@multiversx/sdk-dapp/services";
 
 function VaultBooster() {
-
 	//Set the config network
 	const config = customConfig[networkId];
 	const tokens = allTokens[networkId];
@@ -48,11 +43,11 @@ function VaultBooster() {
 	const networkProvider = new ProxyNetworkProvider(config.provider);
 	const scAddress = "sds232dsfdsfs";
 	const scToken = "OURO-9ecd6a";
-	const scName = "Launchpad";
+	const scName = "VaultBoosterSaleContract";
 	const chainID = networkConfig[networkId].shortId;
 	const tokensAPI = config.apiLink + address + "/tokens?size=2000";
 
-	const mintStartTimestamp = 1695834000000;
+	const mintStartTimestamp = 695834000000;
 	const currentTimestamp = new Date().getTime();
 
 	let mintIsOpen = false;
@@ -137,7 +132,7 @@ function VaultBooster() {
 	};
 
 	//Mint Function
-	const mintFunction = async(quantity) => {
+	const mintFunction = async (quantity) => {
 		if (mintCount >= leftCount) {
 			toast.error(
 				"Not enough NFTs left",
@@ -152,41 +147,40 @@ function VaultBooster() {
 			return
 		}
 
-		const payment = TokenTransfer.fungibleFromAmount(
-			scToken,
-			mintPrice,
-			18,
-		)
+		try {
+			let abiRegistry = AbiRegistry.create(abiFile);
+			let contract = new SmartContract({
+				address: new Address(scAddress),
+				abi: abiRegistry
+			});
 
-		const args = [
-			new TokenIdentifierValue(payment.tokenIdentifier),
-			new BigUIntValue(payment.amountAsBigInteger),
-			new StringValue('buy'),
-			new U64Value(1),
-			new U8Value(quantity),
-		]
+			const transaction = contract.methodsExplicit
+				.buy([new U32Value(quantity)])
+				.withChainID(chainID)
+				.buildTransaction();
 
-		const { argumentsString } = new ArgSerializer().valuesToString(args)
-		const data = `ESDTTransfer@${argumentsString}`
-		const tx = {
-			value: 0,
-			data,
-			receiver: scAddress,
-			gasLimit: 20_000_000,
+			const mintTransaction = {
+				value: 0,
+				data: Buffer.from(transaction.getData().valueOf()),
+				receiver: scAddress,
+				gasLimit: '15000000'
+			};
+			await refreshAccount();
+
+			const { sessionId } = await sendTransactions({
+				transactions: mintTransaction,
+				transactionsDisplayInfo: {
+					processingMessage: 'Processing Mint transaction',
+					errorMessage: 'An error has occurred during Mint transaction',
+					successMessage: 'Mint transaction successful'
+				},
+				redirectAfterSign: false
+			});
+
+		} catch (error) {
+			console.error(error);
 		}
-
-		await refreshAccount();
-
-		await sendTransactions({
-			transactions: [tx],
-			transactionsDisplayInfo: {
-				processingMessage: "Mint Transaction",
-				errorMessage: "An error has occurred during Mint Transaction",
-				successMessage: "Mint Transaction successful",
-			},
-			redirectAfterSign: false,
-		});
-	}
+	};
 
 	//Ouro Balance
 	const [ouroBalance, setOuroBalance] = useState(0);
