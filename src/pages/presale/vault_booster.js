@@ -23,10 +23,10 @@ import {multiplier} from "utils/utilities";
 import {useGetAccountInfo} from "@multiversx/sdk-dapp/hooks";
 import Box from "@mui/material/Box";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAdd, faMinus} from "@fortawesome/free-solid-svg-icons";
+import {faAdd, faMinus, faXmark, faCheck} from "@fortawesome/free-solid-svg-icons";
 import {
 	AbiRegistry,
-	Address,
+	Address, AddressValue,
 	SmartContract, TokenTransfer,
 	U32Value
 } from "@multiversx/sdk-core/out";
@@ -39,13 +39,68 @@ function VaultBooster() {
 	const tokens = allTokens[networkId];
 	const {address} = useGetAccountInfo();
 
-	const isLoggedIn = address.startsWith("erd1");
+	const isLoggedIn = address.startsWith("erd");
 	const networkProvider = new ProxyNetworkProvider(config.provider);
 	const scAddress = "sds232dsfdsfs";
 	const scToken = "OURO-9ecd6a";
 	const scName = "VaultBoosterSaleContract";
 	const chainID = networkConfig[networkId].shortId;
 	const tokensAPI = config.apiLink + address + "/tokens?size=2000";
+
+	// Get general config
+	const [roundInfo, setRoundInfo] = useState({
+		round_number: 0,
+		start_timestamp: 0,
+		end_timestamp: 0,
+		discounted_price: 0
+	});
+	const getRoundInfo = async () => {
+		const newRoundData = await contractQuery(
+			networkProvider,
+			abiFile,
+			scAddress,
+			scName,
+			"getCurrentRoundInfo",
+			[]
+		);
+		if(newRoundData){
+			setRoundInfo({
+				round_number: newRoundData[0],
+				start_timestamp: newRoundData[1],
+				end_timestamp: newRoundData[2],
+				discounted_price: newRoundData[3] / multiplier
+			});
+		}
+	};
+
+	// Get whitelist info
+	const [isWhitelisted, setIsWhitelisted] = useState(false);
+	const getIsWhitelisted = async () => {
+		const whitelistData = await contractQuery(
+			networkProvider,
+			abiFile,
+			scAddress,
+			scName,
+			"getIsWhitelisted",
+			[new AddressValue(new Address(address))]
+		);
+		if(whitelistData){
+			setIsWhitelisted(whitelistData);
+		}
+	};
+
+	let whitelistElement =
+		<p className="mt-2">Address whitelisted:
+			<FontAwesomeIcon className="ms-1" size="xl" icon={faXmark} style={{color: "red"}}/>
+		</p>
+	;
+	if (isWhitelisted){
+		whitelistElement =
+			<p className="mt-2">Address whitelisted:
+				<FontAwesomeIcon className="ms-1" size="lg" icon={faCheck} style={{color: "green"}}/>
+			</p>
+		;
+	}
 
 	const mintStartTimestamp = 695834000000;
 	const currentTimestamp = new Date().getTime();
@@ -68,7 +123,7 @@ function VaultBooster() {
 				"Mint not started",
 				{
 					position: 'top-right',
-					duration: 1000,
+					duration: 1500,
 					style: {
 						border: '1px solid red'
 					}
@@ -81,7 +136,7 @@ function VaultBooster() {
 				"Not enough NFTs left",
 				{
 					position: 'top-right',
-					duration: 1000,
+					duration: 1500,
 					style: {
 						border: '1px solid red'
 					}
@@ -103,7 +158,7 @@ function VaultBooster() {
 				"Mint not started",
 				{
 					position: 'top-right',
-					duration: 1000,
+					duration: 1500,
 					style: {
 						border: '1px solid red'
 					}
@@ -116,7 +171,7 @@ function VaultBooster() {
 				"You can't mint less than 1 NFT",
 				{
 					position: 'top-right',
-					duration: 1000,
+					duration: 1500,
 					style: {
 						border: '1px solid red'
 					}
@@ -133,12 +188,25 @@ function VaultBooster() {
 
 	//Mint Function
 	const mintFunction = async (quantity) => {
+		if (!isWhitelisted) {
+			toast.error(
+				"Your Address is not whitelisted",
+				{
+					position: 'top-right',
+					duration: 1500,
+					style: {
+						border: '1px solid red'
+					}
+				}
+			);
+			return;
+		}
 		if (mintCount >= leftCount) {
 			toast.error(
 				"Not enough NFTs left",
 				{
 					position: 'top-right',
-					duration: 1000,
+					duration: 1500,
 					style: {
 						border: '1px solid red'
 					}
@@ -209,6 +277,28 @@ function VaultBooster() {
 
 	// Buy element
 	const buyButton = () => {
+		if (!isWhitelisted) {
+			return (
+				<Button
+					className="btn btn-block btn-sm btn-info mt-3"
+					style={{minWidth: "90px"}}
+					onClick={() => {
+						toast.error(
+							"Your Address is not whitelisted",
+							{
+								position: 'top-right',
+								duration: 1500,
+								style: {
+									border: '1px solid red'
+								}
+							}
+						);
+					}}
+				>
+					Your Address is not whitelisted
+				</Button>
+			);
+		}
 		if (!mintIsOpen) {
 			return (
 				<Button
@@ -219,7 +309,7 @@ function VaultBooster() {
 							"Mint not started",
 							{
 								position: 'top-right',
-								duration: 1000,
+								duration: 1500,
 								style: {
 									border: '1px solid red'
 								}
@@ -241,7 +331,7 @@ function VaultBooster() {
 							"Insufficient OURO",
 							{
 								position: 'top-right',
-								duration: 1000,
+								duration: 1500,
 								style: {
 									border: '1px solid red'
 								}
@@ -269,14 +359,17 @@ function VaultBooster() {
 	let disabledButtons = false;
 
 	useEffect(() => {
+		getRoundInfo();
 		if (isLoggedIn) {
 			getWalletData();
+			getIsWhitelisted();
 		}
 		const interval = window.setInterval(() => {
 			if (isLoggedIn) {
 				getWalletData();
+				getIsWhitelisted();
 			}
-		}, 1000);
+		}, 5000);
 		return () => window.clearInterval(interval);
 		// eslint-disable-next-line
 	}, [isLoggedIn]);
@@ -306,6 +399,7 @@ function VaultBooster() {
 										style={{borderRadius: "15px", height: "250px"}}
 										className="mt-2"
 									/>
+									{isLoggedIn && whitelistElement}
 								</Col>
 								<Col xs={12}>
 									<div className="light-divider" style={{width: "100%", marginLeft: 0}}>
