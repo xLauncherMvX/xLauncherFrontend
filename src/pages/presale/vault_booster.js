@@ -212,6 +212,28 @@ function VaultBooster() {
 
 	// Buy element
 	const buyButton = () => {
+		if (!mintIsOpen) {
+			return (
+				<Button
+					className="btn btn-block btn-sm btn-info mt-3"
+					style={{minWidth: "90px"}}
+					onClick={() => {
+						toast.error(
+							"Mint not started",
+							{
+								position: 'top-right',
+								duration: 1000,
+								style: {
+									border: '1px solid red'
+								}
+							}
+						);
+					}}
+				>
+					Mint not started
+				</Button>
+			);
+		}
 		if (mintPrice > ouroBalance) {
 			return (
 				<Button
