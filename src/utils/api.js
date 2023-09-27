@@ -175,3 +175,29 @@ export const contractQuery = async (networkProvider, abiFile, scAddress, scName,
 		console.error(error);
 	}
 };
+
+export const contractQueryMultipleValues = async (networkProvider, abiFile, scAddress, scName, methodName, methodArgs) => {
+	try {
+		let abiRegistry = AbiRegistry.create(abiFile);
+		let contract = new SmartContract({
+			address: new Address(scAddress),
+			abi: abiRegistry
+		});
+
+		let contractEndpoint = new ContractFunction(methodName);
+		let interaction = new Interaction(contract, contractEndpoint, methodArgs);
+
+		let query = interaction.check().buildQuery();
+		let queryResponse = await networkProvider.queryContract(query);
+
+		let endpointDefinition = interaction.getEndpoint();
+		let resultsParser = new ResultsParser();
+		let values = resultsParser.parseQueryResponse(queryResponse, endpointDefinition);
+
+		//console.log("values " + JSON.stringify(values.values, null, 2));
+		if (values) return values.values;
+
+	} catch (error) {
+		console.error(error);
+	}
+};

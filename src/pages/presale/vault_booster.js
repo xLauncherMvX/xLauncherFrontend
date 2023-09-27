@@ -14,7 +14,7 @@ import toast from 'react-hot-toast';
 import { Toaster } from 'react-hot-toast';
 
 
-import {contractQuery} from "utils/api";
+import {contractQuery, contractQueryMultipleValues} from "utils/api";
 import {customConfig, networkId, allTokens} from "config/customConfig";
 import {networkConfig} from "config/networks";
 import abiFile from "abiFiles/vault-booster-sale.abi.json";
@@ -41,7 +41,8 @@ function VaultBooster() {
 
 	const isLoggedIn = address.startsWith("erd");
 	const networkProvider = new ProxyNetworkProvider(config.provider);
-	const scAddress = "sds232dsfdsfs";
+	//const scAddress = "erd1qqqqqqqqqqqqqpgqkxlmuzghh6emru2yue3xnl57hhy7gr446ppsn38wz2";
+	const scAddress = "erd1qqqqqqqqqqqqqpgqly6tr5r9tzurmchpz9evy04l0nqfnsxpkc3q0djf8k";
 	const scToken = "OURO-9ecd6a";
 	const scName = "VaultBoosterSaleContract";
 	const chainID = networkConfig[networkId].shortId;
@@ -52,10 +53,12 @@ function VaultBooster() {
 		round_number: 0,
 		start_timestamp: 0,
 		end_timestamp: 0,
+		left_nfts: 0,
 		discounted_price: 0
 	});
+	const [roundTickets, setRoundTickets] = useState("");
 	const getRoundInfo = async () => {
-		const newRoundData = await contractQuery(
+		const newRoundData = await contractQueryMultipleValues(
 			networkProvider,
 			abiFile,
 			scAddress,
@@ -65,11 +68,23 @@ function VaultBooster() {
 		);
 		if(newRoundData){
 			setRoundInfo({
-				round_number: newRoundData[0],
-				start_timestamp: newRoundData[1],
-				end_timestamp: newRoundData[2],
-				discounted_price: newRoundData[3] / multiplier
+				round_number: newRoundData[0].value.toNumber(),
+				start_timestamp: newRoundData[1].value.toNumber(),
+				end_timestamp: newRoundData[2].value.toNumber(),
+				left_nfts: newRoundData[3].value.toNumber(),
+				discounted_price: newRoundData[4].value / multiplier
 			});
+
+			let round = newRoundData[0].value.toNumber();
+			let aux = " ";
+			switch (round) {
+				case 1: aux = " / 1 Left"; break;
+				case 2: aux = " / 2 Left"; break;
+				case 3: aux = " / 3 Left"; break;
+				case 4: aux = " "; break;
+				case 5: aux = " / 10 Left"; break;
+			}
+			setRoundTickets(aux);
 		}
 	};
 
@@ -89,32 +104,47 @@ function VaultBooster() {
 		}
 	};
 
-	let whitelistElement =
-		<p className="mt-2">Address whitelisted:
-			<FontAwesomeIcon className="ms-1" size="xl" icon={faXmark} style={{color: "red"}}/>
-		</p>
-	;
+	let whitelistElement = "";
 	if (isWhitelisted){
 		whitelistElement =
 			<p className="mt-2">Address whitelisted:
 				<FontAwesomeIcon className="ms-1" size="lg" icon={faCheck} style={{color: "green"}}/>
 			</p>
 		;
+	}else{
+		whitelistElement =
+			<p className="mt-2">Address whitelisted:
+				<FontAwesomeIcon className="ms-1" size="xl" icon={faXmark} style={{color: "red"}}/>
+			</p>
 	}
 
-	const mintStartTimestamp = 695834000000;
-	const currentTimestamp = new Date().getTime();
+	//getRemainingPurchaseLimit
+	const [remainingPurchaseLimit, setRemainingPurchaseLimit] = useState(0);
+	const getRemainingPurchaseLimit = async () => {
+		const RemainingPurchaseData = await contractQuery(
+			networkProvider,
+			abiFile,
+			scAddress,
+			scName,
+			"getRemainingPurchaseLimit",
+			[new AddressValue(new Address(address))]
+		);
+		if(RemainingPurchaseData){
+			setRemainingPurchaseLimit(RemainingPurchaseData.toNumber());
+		}
+	};
 
+	const currentTimestamp = new Date().getTime();
 	let mintIsOpen = false;
-	if (mintStartTimestamp - currentTimestamp <= 0) {
+	if (roundInfo.start_timestamp - currentTimestamp <= 0) {
 		mintIsOpen = true;
 	}
-	const totalCount = 1000;
-	const leftCount = 5;
+	const totalCount = 300;
+	const leftCount = roundInfo.left_nfts;
 
-	const price = 5;
+
 	const [mintCount, setMintCount] = useState(1);
-	const [mintPrice, setMintPrice] = useState(price);
+	const [mintPrice, setMintPrice] = useState(0);
 
 	//+/- buttons
 	const increaseAmount = (amount) => {
@@ -147,7 +177,8 @@ function VaultBooster() {
 
 		let newValue = mintCount + amount;
 		setMintCount(newValue);
-		setMintPrice(price * newValue);
+		let auxPrice = roundInfo.discounted_price * newValue;
+		setMintPrice(Math.round(auxPrice * 100) / 100);
 	};
 
 	const decreaseAmount = (amount) => {
@@ -182,7 +213,8 @@ function VaultBooster() {
 
 		if (newValue > 0) {
 			setMintCount(newValue);
-			setMintPrice(price * newValue);
+			let auxPrice = roundInfo.discounted_price * newValue;
+			setMintPrice(Math.round(auxPrice * 100) / 100);
 		}
 	};
 
@@ -363,23 +395,26 @@ function VaultBooster() {
 		if (isLoggedIn) {
 			getWalletData();
 			getIsWhitelisted();
+			getRemainingPurchaseLimit();
 		}
 		const interval = window.setInterval(() => {
+			getRoundInfo();
 			if (isLoggedIn) {
 				getWalletData();
 				getIsWhitelisted();
+				getRemainingPurchaseLimit();
 			}
-		}, 5000);
+		}, 2000);
 		return () => window.clearInterval(interval);
 		// eslint-disable-next-line
-	}, [isLoggedIn]);
+	}, []);
 
 	return (
 		<div>
 			<Container>
 				<Row>
 					<Col xs={12} lg={12} className="text-center">
-						<CustomCountdown startTitle="Mint starts in" completedTitle="Mint Started" startTimestamp={mintStartTimestamp}/>
+						{roundInfo.start_timestamp > 0  && <CustomCountdown startTitle="Mint starts in" completedTitle="Mint Started" startTimestamp={roundInfo.start_timestamp * 1000}/>}
 					</Col>
 				</Row>
 				<Row>
@@ -393,6 +428,7 @@ function VaultBooster() {
 							<Row>
 								<Col xs={12}>
 									<p className="h3 text-white mb-1 mt-2">OG VAULT BOOSTER</p>
+									<p className="h5 text-white mb-1 mt-2">{`Round ` + roundInfo.round_number} {remainingPurchaseLimit && `(` + remainingPurchaseLimit + roundTickets + `)`}</p>
 									<Card.Img
 										variant="top"
 										src={picture}
@@ -423,7 +459,7 @@ function VaultBooster() {
 										justifyContent="center"
 										alignItems="center"
 									>
-										<p className="h4 text-white"><span className="text-green-A200">{mintPrice}</span> OURO</p>
+										<p className="h4 text-white"><span className="text-green-A200">{mintPrice > 0 ? mintPrice : Math.round(roundInfo.discounted_price * 100) / 100}</span> OURO</p>
 									</Box>
 								</Col>
 							</Row>

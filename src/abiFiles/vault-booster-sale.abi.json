@@ -168,6 +168,9 @@
                 },
                 {
                     "type": "BigUint"
+                },
+                {
+                    "type": "BigUint"
                 }
             ]
         },
