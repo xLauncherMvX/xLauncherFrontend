@@ -15,7 +15,7 @@ export const networkConfig = {
         walletAddress: 'https://devnet-wallet.multiversx.com',
         apiAddress: 'https://devnet-api.multiversx.com',
         explorerAddress: 'https://devnet-explorer.multiversx.com',
-        apiTimeout: '6000',
+        apiTimeout: '10000',
         walletConnectV2ProjectId: '3eed50c3b154388063a0920505f8322a'
     },
 
@@ -34,7 +34,7 @@ export const networkConfig = {
         walletAddress: 'https://testnet-wallet.multiversx.com',
         apiAddress: 'https://testnet-api.multiversx.com',
         explorerAddress: 'https://testnet-explorer.multiversx.com',
-        apiTimeout: '6000',
+        apiTimeout: '10000',
         walletConnectV2ProjectId: '3eed50c3b154388063a0920505f8322a'
     },
 
@@ -53,7 +53,7 @@ export const networkConfig = {
         walletAddress: 'https://wallet.multiversx.com',
         apiAddress: 'https://api.multiversx.com',
         explorerAddress: 'https://explorer.multiversx.com',
-        apiTimeout: '6000',
+        apiTimeout: '10000',
         walletConnectV2ProjectId: '3eed50c3b154388063a0920505f8322a'
     },
 };

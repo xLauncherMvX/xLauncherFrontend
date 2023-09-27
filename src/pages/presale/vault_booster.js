@@ -12,6 +12,8 @@ import CustomCountdown from "components/countdown";
 import CustomProgressBar from "components/progress_bar";
 import toast from 'react-hot-toast';
 import { Toaster } from 'react-hot-toast';
+import BigNumber from 'bignumber.js';
+
 
 
 import {contractQuery, contractQueryMultipleValues} from "utils/api";
@@ -19,7 +21,7 @@ import {customConfig, networkId, allTokens} from "config/customConfig";
 import {networkConfig} from "config/networks";
 import abiFile from "abiFiles/vault-booster-sale.abi.json";
 import {ProxyNetworkProvider} from "@multiversx/sdk-network-providers/out";
-import {multiplier} from "utils/utilities";
+import {multiplier, calc4} from "utils/utilities";
 import {useGetAccountInfo} from "@multiversx/sdk-dapp/hooks";
 import Box from "@mui/material/Box";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -32,6 +34,7 @@ import {
 } from "@multiversx/sdk-core/out";
 import {refreshAccount} from "@multiversx/sdk-dapp/utils/account";
 import {sendTransactions} from "@multiversx/sdk-dapp/services";
+import {ZERO} from "@multiversx/sdk-dapp/__commonjs/constants";
 
 function VaultBooster() {
 	//Set the config network
@@ -42,7 +45,7 @@ function VaultBooster() {
 	const isLoggedIn = address.startsWith("erd");
 	const networkProvider = new ProxyNetworkProvider(config.provider);
 	//const scAddress = "erd1qqqqqqqqqqqqqpgqkxlmuzghh6emru2yue3xnl57hhy7gr446ppsn38wz2";
-	const scAddress = "erd1qqqqqqqqqqqqqpgqly6tr5r9tzurmchpz9evy04l0nqfnsxpkc3q0djf8k";
+	const scAddress = "erd1qqqqqqqqqqqqqpgqcpz4t6vdld0jjlj9n7t5fk53nl9ynh4nyl5skr8laa";
 	const scToken = "OURO-9ecd6a";
 	const scName = "VaultBoosterSaleContract";
 	const chainID = networkConfig[networkId].shortId;
@@ -54,9 +57,16 @@ function VaultBooster() {
 		start_timestamp: 0,
 		end_timestamp: 0,
 		left_nfts: 0,
-		discounted_price: 0
+		discounted_price: 0,
+		discounted_amount: 0
 	});
-	const [roundTickets, setRoundTickets] = useState("");
+	const [roundTickets, setRoundTickets] = useState(" Left");
+	let customAddress;
+	if(isLoggedIn){
+		customAddress = new AddressValue(new Address(address));
+	}else{
+		customAddress = new AddressValue(new Address(Address.Zero()));
+	}
 	const getRoundInfo = async () => {
 		const newRoundData = await contractQueryMultipleValues(
 			networkProvider,
@@ -64,15 +74,16 @@ function VaultBooster() {
 			scAddress,
 			scName,
 			"getCurrentRoundInfo",
-			[]
+			[customAddress]
 		);
-		if(newRoundData){
+		if(newRoundData && !newRoundData.every(item => item === null)){
 			setRoundInfo({
 				round_number: newRoundData[0].value.toNumber(),
 				start_timestamp: newRoundData[1].value.toNumber(),
 				end_timestamp: newRoundData[2].value.toNumber(),
 				left_nfts: newRoundData[3].value.toNumber(),
-				discounted_price: newRoundData[4].value / multiplier
+				discounted_price: newRoundData[4].value / multiplier,
+				discounted_amount: newRoundData[5].value
 			});
 
 			let round = newRoundData[0].value.toNumber();
@@ -83,6 +94,7 @@ function VaultBooster() {
 				case 3: aux = " / 3 Left"; break;
 				case 4: aux = " "; break;
 				case 5: aux = " / 10 Left"; break;
+				default: aux = " "; break
 			}
 			setRoundTickets(aux);
 		}
@@ -129,6 +141,7 @@ function VaultBooster() {
 			"getRemainingPurchaseLimit",
 			[new AddressValue(new Address(address))]
 		);
+
 		if(RemainingPurchaseData){
 			setRemainingPurchaseLimit(RemainingPurchaseData.toNumber());
 		}
@@ -143,7 +156,7 @@ function VaultBooster() {
 	const leftCount = roundInfo.left_nfts;
 
 
-	const [mintCount, setMintCount] = useState(1);
+	const [mintCount, setMintCount] = useState(0);
 	const [mintPrice, setMintPrice] = useState(0);
 
 	//+/- buttons
@@ -178,7 +191,7 @@ function VaultBooster() {
 		let newValue = mintCount + amount;
 		setMintCount(newValue);
 		let auxPrice = roundInfo.discounted_price * newValue;
-		setMintPrice(Math.round(auxPrice * 100) / 100);
+		setMintPrice(auxPrice);
 	};
 
 	const decreaseAmount = (amount) => {
@@ -214,12 +227,12 @@ function VaultBooster() {
 		if (newValue > 0) {
 			setMintCount(newValue);
 			let auxPrice = roundInfo.discounted_price * newValue;
-			setMintPrice(Math.round(auxPrice * 100) / 100);
+			setMintPrice(auxPrice);
 		}
 	};
 
 	//Mint Function
-	const mintFunction = async (quantity) => {
+	const mintFunction = async (quantity, price) => {
 		if (!isWhitelisted) {
 			toast.error(
 				"Your Address is not whitelisted",
@@ -258,7 +271,7 @@ function VaultBooster() {
 				.buy([new U32Value(quantity)])
 				.withChainID(chainID)
 				.withSingleESDTTransfer(
-					TokenTransfer.fungibleFromAmount(scToken, quantity * multiplier, 18)
+					TokenTransfer.fungibleFromAmount(scToken, price, 18)
 				)
 				.buildTransaction();
 
@@ -266,7 +279,7 @@ function VaultBooster() {
 				value: 0,
 				data: Buffer.from(transaction.getData().valueOf()),
 				receiver: scAddress,
-				gasLimit: '15000000'
+				gasLimit: '30000000'
 			};
 			await refreshAccount();
 
@@ -379,7 +392,7 @@ function VaultBooster() {
 				<Button
 					className="btn btn-block btn-sm btn-info mt-3"
 					style={{minWidth: "90px"}}
-					onClick={() => mintFunction(mintCount)}
+					onClick={() => mintFunction(mintCount, mintPrice)}
 				>
 					Mint NFT
 				</Button>
@@ -393,18 +406,29 @@ function VaultBooster() {
 	useEffect(() => {
 		getRoundInfo();
 		if (isLoggedIn) {
-			getWalletData();
 			getIsWhitelisted();
 			getRemainingPurchaseLimit();
 		}
 		const interval = window.setInterval(() => {
 			getRoundInfo();
 			if (isLoggedIn) {
-				getWalletData();
 				getIsWhitelisted();
 				getRemainingPurchaseLimit();
 			}
 		}, 2000);
+		return () => window.clearInterval(interval);
+		// eslint-disable-next-line
+	}, []);
+
+	useEffect(() => {
+		if (isLoggedIn) {
+			getWalletData();
+		}
+		const interval = window.setInterval(() => {
+			if (isLoggedIn) {
+				getWalletData();
+			}
+		}, 4000);
 		return () => window.clearInterval(interval);
 		// eslint-disable-next-line
 	}, []);
@@ -459,7 +483,7 @@ function VaultBooster() {
 										justifyContent="center"
 										alignItems="center"
 									>
-										<p className="h4 text-white"><span className="text-green-A200">{mintPrice > 0 ? mintPrice : Math.round(roundInfo.discounted_price * 100) / 100}</span> OURO</p>
+										<p className="h4 text-white"><span className="text-green-A200">{new BigNumber(mintCount).multipliedBy(roundInfo.discounted_price).toFixed(4)}</span> OURO</p>
 									</Box>
 								</Col>
 							</Row>

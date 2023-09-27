@@ -26,6 +26,11 @@ export function calc3(item) {
     return parseFloat(with3Decimals);
 }
 
+export function calc4(item) {
+    let with3Decimals = item.toString().match(/^-?\d+(?:\.\d{0,4})?/)[0];
+    return parseFloat(with3Decimals);
+}
+
 //Converts big number to date
 export function convertBigNumberToDate(big) {
     return new Date(big.toNumber() * 1000);

@@ -26,6 +26,10 @@
             {
                 "name": "router_address",
                 "type": "Address"
+            },
+            {
+                "name": "elite_account_tracker_address",
+                "type": "Address"
             }
         ],
         "outputs": []
@@ -47,7 +51,6 @@
         },
         {
             "name": "setRoundInfo",
-            "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
                 {
@@ -65,13 +68,17 @@
                 {
                     "name": "end",
                     "type": "u64"
+                },
+                {
+                    "name": "limit_per_wallet",
+                    "type": "optional<u32>",
+                    "multi_arg": true
                 }
             ],
             "outputs": []
         },
         {
             "name": "deposit",
-            "onlyOwner": true,
             "mutability": "mutable",
             "payableInTokens": [
                 "*"
@@ -81,7 +88,6 @@
         },
         {
             "name": "whitelist",
-            "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
                 {
@@ -98,7 +104,6 @@
         },
         {
             "name": "addSwapOperation",
-            "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
                 {
@@ -113,9 +118,58 @@
             "outputs": []
         },
         {
+            "name": "setFullAssetPrice",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "price",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "addAdmins",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "addresses",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "withdraw",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "address_opt",
+                    "type": "optional<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "getPricePerUnit",
             "mutability": "readonly",
-            "inputs": [],
+            "inputs": [
+                {
+                    "name": "address_opt",
+                    "type": "optional<Address>",
+                    "multi_arg": true
+                }
+            ],
             "outputs": [
                 {
                     "type": "BigUint"
@@ -155,7 +209,12 @@
         {
             "name": "getCurrentRoundInfo",
             "mutability": "readonly",
-            "inputs": [],
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
             "outputs": [
                 {
                     "type": "u8"
@@ -171,6 +230,24 @@
                 },
                 {
                     "type": "BigUint"
+                },
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getEliteAccountTier",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "target_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
                 }
             ]
         },
@@ -305,12 +382,33 @@
             ]
         },
         {
+            "name": "getEliteAccountTrackerAddress",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        },
+        {
             "name": "getSwapOperations",
             "mutability": "readonly",
             "inputs": [],
             "outputs": [
                 {
                     "type": "variadic<SwapOperation>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getAdminList",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
                     "multi_result": true
                 }
             ]
