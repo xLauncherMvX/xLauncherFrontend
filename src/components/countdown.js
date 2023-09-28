@@ -2,7 +2,7 @@ import React from "react";
 import "assets/css/mint.css";
 import Countdown from 'react-countdown';
 
-export default function CustomCountdown({ startTitle, completedTitle, startTimestamp }) {
+export default function CustomCountdown({ startTitle, titleStyles, completedTitle, startTimestamp }) {
 
 	// build the countdown timer
 	const countdownRenderer = ({ days, hours, minutes, seconds, completed, }) => {
@@ -17,7 +17,7 @@ export default function CustomCountdown({ startTitle, completedTitle, startTimes
 		} else {
 			return (
 				<div className="presale-timer-container text-center mt-4 mb-3">
-					{startTitle && (<p className="mb-3 h1">{startTitle}</p>)}
+					{startTitle && (<p className={`mb-3 ${titleStyles}`}>{startTitle}</p>)}
 					<strong>
 						<span className="presale-timer-box p-2 me-2">{String(days).padStart(2, '0')} D</span>
 						<span>: </span>
