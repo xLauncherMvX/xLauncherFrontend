@@ -506,7 +506,7 @@ export function Navbar(props) {
             <Button
               variant="outline-light"
               size="sm"
-              className="btn btn-block"
+              className="btn btn-block mt-2"
               onClick={handleShowBuy}
             >
               <FontAwesomeIcon
