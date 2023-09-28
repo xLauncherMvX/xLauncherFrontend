@@ -7,3 +7,17 @@
 	border-radius: 4px;
 	background-color: transparent;
 }
+.mint-image {
+	max-height: 90%;
+	max-width: 90%;
+	width: auto;
+	height: auto;
+	border-radius: 15px;
+}
+
+@media screen and (max-width: 576px) {
+	.mint-image {
+		max-height: 300px;
+		max-width: 100%;
+	}
+}

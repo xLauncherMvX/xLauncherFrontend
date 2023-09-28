@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "assets/css/globals.css";
+import "assets/css/mint.css";
 import Image from "react-bootstrap/Image";
 import picture from "assets/images/og_vault_booster.jpg";
 import Container from "@mui/material/Container";
@@ -438,7 +439,7 @@ function VaultBooster() {
 			<Container>
 				<Row>
 					<Col xs={12} lg={12} className="text-center">
-						{roundInfo.start_timestamp > 0  && <CustomCountdown startTitle="Mint starts in" completedTitle="Mint Started" startTimestamp={roundInfo.start_timestamp * 1000}/>}
+						{roundInfo.end_timestamp > 0  && <CustomCountdown startTitle={`Mint round ${roundInfo.round_number} has started, next round starts in`} titleStyles="h2" startTimestamp={roundInfo.end_timestamp * 1000}/>}
 					</Col>
 				</Row>
 				<Row>
@@ -456,8 +457,8 @@ function VaultBooster() {
 									<Card.Img
 										variant="top"
 										src={picture}
-										style={{borderRadius: "15px", height: "300px", width: "300px"}}
-										className="mt-2"
+										style={{borderRadius: "15px"}}
+										className="mt-2 mint-image"
 									/>
 									{isLoggedIn && whitelistElement}
 								</Col>
