@@ -439,7 +439,7 @@ function VaultBooster() {
 			<Container>
 				<Row>
 					<Col xs={12} lg={12} className="text-center">
-						{roundInfo.end_timestamp > 0  && <CustomCountdown startTitle={`Mint round ${roundInfo.round_number} has started, next round starts in`} titleStyles="h2" startTimestamp={roundInfo.end_timestamp * 1000}/>}
+						{roundInfo.end_timestamp > 0  && <CustomCountdown startTitle={`Mint round ${roundInfo.round_number} has started, round ends in`} titleStyles="h2" startTimestamp={roundInfo.end_timestamp * 1000}/>}
 					</Col>
 				</Row>
 				<Row>
@@ -453,7 +453,7 @@ function VaultBooster() {
 							<Row>
 								<Col xs={12}>
 									<p className="h3 text-white mb-1 mt-2">OG VAULT BOOSTER</p>
-									<p className="h5 text-white mb-1 mt-2">{`Round ` + roundInfo.round_number} {remainingPurchaseLimit && `(` + remainingPurchaseLimit + roundTickets + `)`}</p>
+									<p className="h5 text-white mb-1 mt-2">{`Round ` + roundInfo.round_number}</p>
 									<Card.Img
 										variant="top"
 										src={picture}

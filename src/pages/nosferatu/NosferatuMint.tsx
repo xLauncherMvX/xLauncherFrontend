@@ -296,7 +296,7 @@ export const NosferatuMint = () => {
     }
 
     function onCompleteCountDown() {
-        location.reload();
+        //location.reload();
     }
 
     return (
