@@ -41,6 +41,7 @@ import { NosferatuMint } from "pages/nosferatu/NosferatuMint";
 import { SnakeMint } from "pages/snakeSale/SnakeMint";
 import { VestaxBronzeMint } from "pages/snakeSale/VestaxBronzeMint";
 import  VaultBooster from "pages/presale/vault_booster";
+import  Xbid from "pages/presale/xbid";
 
 library.add(
   fab,
@@ -140,6 +141,7 @@ function App() {
         { path: "/snake-mint", element: <SnakeMint /> },
         { path: "/vestax-bronze-mint", element: <VestaxBronzeMint /> },
         { path: "/og-vault-booster", element: <VaultBooster walletState={walletState}/> },
+        { path: "/xbid", element: <Xbid walletState={walletState}/> },
 
         { path: "*", element: <Dashboard /> },
       ],

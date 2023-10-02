@@ -21,3 +21,11 @@
 		max-width: 100%;
 	}
 }
+
+.xbid-image {
+	max-height: 80%;
+	max-width: 80%;
+	width: auto;
+	height: auto;
+	border-radius: 15px;
+}

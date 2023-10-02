@@ -139,6 +139,14 @@ export function Sidenav() {
 						{/*</MenuItem>*/}
 						<MenuItem
 							icon={<ShoppingCart/>}
+							component={<Link to="/xbid"/>}
+							active={pathname === "/xbid"}
+							onClick={() => toggleSidebar()}
+						>
+							XBid Presale
+						</MenuItem>
+						<MenuItem
+							icon={<ShoppingCart/>}
 							component={<Link to="/og-vault-booster"/>}
 							active={pathname === "/og-vault-booster"}
 							onClick={() => toggleSidebar()}

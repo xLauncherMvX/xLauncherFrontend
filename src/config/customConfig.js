@@ -1,4 +1,4 @@
-export const networkId = "mainnet";
+export const networkId = "devnet";
 
 export const customConfig = {
     mainnet: {
@@ -13,7 +13,10 @@ export const customConfig = {
         bloodshedXLHAddress: "erd1qqqqqqqqqqqqqpgq7u7e4lggx0vp09wyklu4cjh233nfchtayl5sq0xp43",
         bloodshedToken: "VEGLD-2b9319",
         stakeV2Address: "erd1qqqqqqqqqqqqqpgqakurn4jvyhuull080mul0whr7e56jkpl4d6qcpa5x0",
-        stakeV2SFT: "XLHB-4989e2"
+        stakeV2SFT: "XLHB-4989e2",
+        xBidAddress: "",
+        xBidToken: "XBID-c7e360",
+        xBidTokenLabel: "XBID"
     },
 
     devnet: {
@@ -28,7 +31,10 @@ export const customConfig = {
         bloodshedXLHAddress: "",
         bloodshedToken: "WEB-5d08be",
         stakeV2Address: "erd1qqqqqqqqqqqqqpgqwhqpykc0p9z08qgd85echw9jm4lv66nnpa7qrqyj9c",
-        stakeV2SFT: "SFT-8ff335"
+        stakeV2SFT: "SFT-8ff335",
+        xBidAddress: "erd1qqqqqqqqqqqqqpgqp37tg4u9ydmzyyxs8fdtwkpecjwxcvj7pa7q4plr2q",
+        xBidToken: "XLH-4a7cc0",
+        xBidTokenLabel: "XBID"
     },
 
     testnet: {
@@ -43,7 +49,10 @@ export const customConfig = {
         bloodshedXLHAddress: "",
         bloodshedToken: "",
         stakeV2Address: "",
-        stakeV2SFT: ""
+        stakeV2SFT: "",
+        xBidAddress: "",
+        xBidToken: "",
+        xBidTokenLabel: "XBID"
     }
 };
 

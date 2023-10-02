@@ -10,7 +10,7 @@ export default function CustomCountdown({ startTitle, titleStyles, completedTitl
 			return (
 				<>
 					<div className="presale-timer-container text-center mt-4">
-						{completedTitle && (<p className="h1">{completedTitle}</p>)}
+						{completedTitle && (<p className={`${titleStyles}`}>{completedTitle}</p>)}
 					</div>
 				</>
 			);
