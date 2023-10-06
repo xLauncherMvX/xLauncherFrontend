@@ -1,4 +1,4 @@
-export const networkId = "devnet";
+export const networkId = "mainnet";
 
 export const customConfig = {
     mainnet: {
@@ -14,7 +14,7 @@ export const customConfig = {
         bloodshedToken: "VEGLD-2b9319",
         stakeV2Address: "erd1qqqqqqqqqqqqqpgqakurn4jvyhuull080mul0whr7e56jkpl4d6qcpa5x0",
         stakeV2SFT: "XLHB-4989e2",
-        xBidAddress: "",
+        xBidAddress: "erd1qqqqqqqqqqqqqpgqzsfa9hk3c53mjrqvd6dx9y8smj5l96q44d6q57yvce",
         xBidToken: "XBID-c7e360",
         xBidTokenLabel: "XBID"
     },

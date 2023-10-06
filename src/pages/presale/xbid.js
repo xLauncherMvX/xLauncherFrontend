@@ -68,7 +68,7 @@ function XBid() {
 		);
 
 		if(startTimestampData){
-			setStartTimestamp(startTimestampData.toNumber());
+			setStartTimestamp(startTimestampData.toNumber() * 1000);
 		}
 	};
 
@@ -143,7 +143,7 @@ function XBid() {
 
 		if (!presaleIsOpen) {
 			toast.error(
-				"Mint not started",
+				"Presale not started",
 				{
 					position: 'top-right',
 					duration: 1500,
@@ -154,9 +154,22 @@ function XBid() {
 			);
 			return;
 		}
+		if (tokensAmount >= remainingTokensAmount) {
+			toast.error(
+				"Not enough tokens left",
+				{
+					position: 'top-right',
+					duration: 1500,
+					style: {
+						border: '1px solid red'
+					}
+				}
+			);
+			return
+		}
 		if (newValue < 1000) {
 			toast.error(
-				"You can't mint less than 1000 tokens",
+				"You can't buy less than 1000 tokens",
 				{
 					position: 'top-right',
 					duration: 1500,
@@ -178,10 +191,6 @@ function XBid() {
 	const handleSliderChange = (value) => {
 		setTokensCount(value);
 		setTokensPrice(value * price);
-	};
-	const setMaxAmount = () => {
-		setTokensCount(remainingTokensAmount);
-		setTokensPrice(remainingTokensAmount * price);
 	};
 
 	//Buy Function
@@ -292,7 +301,10 @@ function XBid() {
 	};
 
 	//disable buttons
-	let disabledButtons = false;
+	let disabledSlider = true;
+	if(isLoggedIn && presaleIsOpen && (remainingTokensAmount > 0)){
+		disabledSlider = false;
+	}
 
 	useEffect(() => {
 		getStartTimestamp();
@@ -310,7 +322,7 @@ function XBid() {
 			<Container>
 				<Row>
 					<Col xs={12} lg={12} className="text-center">
-						{startTimestamp > 0  && <CustomCountdown startTitle="Presale starts in" completedTitle="Presale started"  titleStyles="h1" startTimestamp={startTimestamp * 1000}/>}
+						{startTimestamp > 0  && <CustomCountdown startTitle="Presale starts in" completedTitle="Presale started"  titleStyles="h1" startTimestamp={startTimestamp}/>}
 					</Col>
 				</Row>
 				<Row>
@@ -374,7 +386,7 @@ function XBid() {
 										step={100}
 										min={5000}
 										max={calc3(remainingTokensAmount)}
-										disabled={!isLoggedIn}
+										disabled={disabledSlider}
 										style={{marginTop: '-10px'}}
 									/>
 									<Row>
