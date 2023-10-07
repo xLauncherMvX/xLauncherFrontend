@@ -36,6 +36,7 @@ import {
 import {refreshAccount} from "@multiversx/sdk-dapp/utils/account";
 import {sendTransactions} from "@multiversx/sdk-dapp/services";
 import {ZERO} from "@multiversx/sdk-dapp/__commonjs/constants";
+import { useGetPendingTransactions } from "@multiversx/sdk-dapp/hooks/transactions";
 
 
 function XBid() {
@@ -53,7 +54,11 @@ function XBid() {
 	const scTokensAPI = config.apiLink + scAddress + "/tokens?size=2000";
 	const totalCount = 5000000;
 	const price = 0.0002;
+	const [tokensAmount, setTokensCount] = useState(5000);
+	const [tokensPrice, setTokensPrice] = useState(1);
 
+	//get loading transactions
+	const loadingTransactions = useGetPendingTransactions().hasPendingTransactions;
 
 	//get start timestamp
 	const [startTimestamp, setStartTimestamp] = useState(0);
@@ -101,24 +106,14 @@ function XBid() {
 		}
 	};
 
-	const [tokensAmount, setTokensCount] = useState(5000);
-	const [tokensPrice, setTokensPrice] = useState(1);
+	//disable buttons
+	let disabledButtons = true;
+	if(isLoggedIn && (remainingTokensAmount > 0) && !loadingTransactions){
+		disabledButtons = false;
+	}
 
 	//+/- buttons
 	const increaseAmount = (amount) => {
-		if (!presaleIsOpen) {
-			toast.error(
-				"Presale not started",
-				{
-					position: 'top-right',
-					duration: 1500,
-					style: {
-						border: '1px solid red'
-					}
-				}
-			);
-			return;
-		}
 		if (tokensAmount >= remainingTokensAmount) {
 			toast.error(
 				"Not enough tokens left",
@@ -140,20 +135,6 @@ function XBid() {
 
 	const decreaseAmount = (amount) => {
 		let newValue = tokensAmount - amount;
-
-		if (!presaleIsOpen) {
-			toast.error(
-				"Presale not started",
-				{
-					position: 'top-right',
-					duration: 1500,
-					style: {
-						border: '1px solid red'
-					}
-				}
-			);
-			return;
-		}
 		if (tokensAmount >= remainingTokensAmount) {
 			toast.error(
 				"Not enough tokens left",
@@ -167,9 +148,9 @@ function XBid() {
 			);
 			return
 		}
-		if (newValue < 1000) {
+		if (newValue < 5000) {
 			toast.error(
-				"You can't buy less than 1000 tokens",
+				"You can't buy less than 5000 tokens",
 				{
 					position: 'top-right',
 					duration: 1500,
@@ -271,6 +252,7 @@ function XBid() {
 				<Button
 					className="btn btn-block btn-sm btn-info mt-3"
 					style={{minWidth: "90px"}}
+					disabled={disabledButtons}
 					onClick={() => {
 						toast.error(
 							"Insufficient EGLD",
@@ -293,18 +275,13 @@ function XBid() {
 					className="btn btn-block btn-sm btn-info mt-3"
 					style={{minWidth: "90px"}}
 					onClick={() => buyFunction(tokensPrice)}
+					disabled={disabledButtons}
 				>
 					Buy {scTokenLabel}
 				</Button>
 			);
 		}
 	};
-
-	//disable buttons
-	let disabledSlider = true;
-	if(isLoggedIn && presaleIsOpen && (remainingTokensAmount > 0)){
-		disabledSlider = false;
-	}
 
 	useEffect(() => {
 		getStartTimestamp();
@@ -386,7 +363,7 @@ function XBid() {
 										step={100}
 										min={5000}
 										max={calc3(remainingTokensAmount)}
-										disabled={disabledSlider}
+										disabled={disabledButtons}
 										style={{marginTop: '-10px'}}
 									/>
 									<Row>
@@ -394,7 +371,7 @@ function XBid() {
 											<Button
 												variant="success"
 												className="btn btn-sm btn-block"
-												disabled={!isLoggedIn}
+												disabled={disabledButtons}
 												onClick={() => increaseAmount(100)}
 												style={{width: '120%', marginLeft: '-10%'}}
 											>
@@ -405,7 +382,7 @@ function XBid() {
 											<Button
 												variant="success"
 												className="btn btn-sm btn-block"
-												disabled={!isLoggedIn}
+												disabled={disabledButtons}
 												onClick={() => increaseAmount(1000)}
 												style={{width: '120%', marginLeft: '-10%'}}
 											>
@@ -416,7 +393,7 @@ function XBid() {
 											<Button
 												variant="success"
 												className="btn btn-sm btn-block"
-												disabled={!isLoggedIn}
+												disabled={disabledButtons}
 												onClick={() => increaseAmount(5000)}
 												style={{width: '120%', marginLeft: '-10%'}}
 											>
@@ -429,7 +406,7 @@ function XBid() {
 											<Button
 												variant="danger"
 												className="btn btn-sm btn-block mt-1"
-												disabled={!isLoggedIn}
+												disabled={disabledButtons}
 												onClick={() => decreaseAmount(100)}
 												style={{width: '120%', marginLeft: '-10%'}}
 											>
@@ -440,7 +417,7 @@ function XBid() {
 											<Button
 												variant="danger"
 												className="btn btn-sm btn-block mt-1"
-												disabled={!isLoggedIn}
+												disabled={disabledButtons}
 												onClick={() => decreaseAmount(1000)}
 												style={{width: '120%', marginLeft: '-10%'}}
 											>
@@ -451,7 +428,7 @@ function XBid() {
 											<Button
 												variant="danger"
 												className="btn btn-sm btn-block mt-1"
-												disabled={!isLoggedIn}
+												disabled={disabledButtons}
 												onClick={() => decreaseAmount(5000)}
 												style={{width: '120%', marginLeft: '-10%'}}
 											>
