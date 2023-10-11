@@ -99,7 +99,7 @@ function MidasChain() {
 	const increaseAmount = (amount) => {
 		if (!mintIsOpen) {
 			toast.error(
-				"Tickets sale not started",
+				"Tickets mint not started",
 				{
 					position: 'top-right',
 					duration: 1500,
@@ -135,7 +135,7 @@ function MidasChain() {
 
 		if (!mintIsOpen) {
 			toast.error(
-				"Tickets sale not started",
+				"Tickets mint not started",
 				{
 					position: 'top-right',
 					duration: 1500,
@@ -214,9 +214,9 @@ function MidasChain() {
 			const { sessionId } = await sendTransactions({
 				transactions: mintTransaction,
 				transactionsDisplayInfo: {
-					processingMessage: 'Processing Buy Tickets transaction',
-					errorMessage: 'An error has occurred during Buy Tickets transaction',
-					successMessage: 'Buy Tickets transaction successful'
+					processingMessage: 'Processing Mint Tickets transaction',
+					errorMessage: 'An error has occurred during Mint Tickets transaction',
+					successMessage: 'Mint Tickets transaction successful'
 				},
 				redirectAfterSign: false
 			});
@@ -257,7 +257,7 @@ function MidasChain() {
 					style={{minWidth: "90px"}}
 					onClick={() => {
 						toast.error(
-							"Tickets sale not started",
+							"Tickets mint not started",
 							{
 								position: 'top-right',
 								duration: 1500,
@@ -268,7 +268,7 @@ function MidasChain() {
 						);
 					}}
 				>
-					Tickets Sale not started
+					Tickets Mint not started
 				</Button>
 			);
 		}
@@ -301,7 +301,7 @@ function MidasChain() {
 					onClick={() => mintFunction(mintCount, mintPrice)}
 					disabled={disabledButtons}
 				>
-					Buy Tickets
+					Mint Tickets
 				</Button>
 			);
 		}
@@ -334,7 +334,7 @@ function MidasChain() {
 			<Container>
 				<Row>
 					<Col xs={12} lg={12} className="text-center">
-						<CustomCountdown startTitle={`Tickets sale starts in`} titleStyles="h2" startTimestamp={startTimestamp} completedTitle={"Tickets sale started"}/>
+						<CustomCountdown startTitle={`Tickets mint starts in`} titleStyles="h2" startTimestamp={startTimestamp} completedTitle={"Tickets mint started"}/>
 					</Col>
 				</Row>
 				<Row>
