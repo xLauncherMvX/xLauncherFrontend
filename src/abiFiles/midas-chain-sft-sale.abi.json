@@ -1,0 +1,260 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.71.0-nightly",
+            "commitHash": "5cdb7886a5ece816864fab177f0c266ad4dd5358",
+            "commitDate": "2023-04-15",
+            "channel": "Nightly",
+            "short": "rustc 1.71.0-nightly (5cdb7886a 2023-04-15)"
+        },
+        "contractCrate": {
+            "name": "enforced-percentual-sft-sale",
+            "version": "0.0.0"
+        },
+        "framework": {
+            "name": "multiversx-sc",
+            "version": "0.43.4"
+        }
+    },
+    "name": "EnforcedPercentualSftSaleContract",
+    "constructor": {
+        "inputs": [
+            {
+                "name": "distribution_cycle_size",
+                "type": "u32"
+            },
+            {
+                "name": "distribution_cycle_amount",
+                "type": "u32"
+            }
+        ],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "buy",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "amount",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setDistributionRule",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "cycle_size",
+                    "type": "u32"
+                },
+                {
+                    "name": "amount",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getDistributedSfts",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "set",
+                    "type": "DistributionSetType"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getControlledSftDistributionRule",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "ControlledSftDistributionRule"
+                }
+            ]
+        },
+        {
+            "name": "updateTokenPaymentDetails",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token_identifier",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "token_nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "price",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "updatePrice",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "price",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getPaymentDetails",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "EsdtTokenPayment"
+                }
+            ]
+        },
+        {
+            "name": "addSwapOperation",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getSwapOperations",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<SwapOperation>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getExchangeAddress",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        },
+        {
+            "name": "getPricePerUnit",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getSaleInfo",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                },
+                {
+                    "type": "BigUint"
+                }
+            ]
+        }
+    ],
+    "events": [],
+    "hasCallback": false,
+    "types": {
+        "ControlledSftDistributionRule": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "distribution_cycle_size",
+                    "type": "u32"
+                },
+                {
+                    "name": "amount_to_distribute",
+                    "type": "u32"
+                }
+            ]
+        },
+        "DistributionSetType": {
+            "type": "enum",
+            "variants": [
+                {
+                    "name": "Invalid",
+                    "discriminant": 0
+                },
+                {
+                    "name": "Lesser",
+                    "discriminant": 1
+                },
+                {
+                    "name": "Greater",
+                    "discriminant": 2
+                },
+                {
+                    "name": "Any",
+                    "discriminant": 3
+                }
+            ]
+        },
+        "EsdtTokenPayment": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "token_identifier",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "token_nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                }
+            ]
+        },
+        "SwapOperation": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                }
+            ]
+        }
+    }
+}
