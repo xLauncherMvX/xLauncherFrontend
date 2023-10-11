@@ -3,6 +3,8 @@ import "assets/css/globals.css";
 import "assets/css/mint.css";
 import picture from "assets/images/midas_chain.jpg";
 import Container from "@mui/material/Container";
+import Input from "@mui/material/Input";
+import TextField from '@mui/material/TextField';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
@@ -165,6 +167,17 @@ function MidasChain() {
 			let auxPrice = saleInfo.price * newValue;
 			setMintPrice(auxPrice);
 		}
+	};
+
+	// input function
+	const handleInputChange = (event) => {
+		let newValue = event.target.value;
+		if (newValue === '' || !newValue) {
+			newValue = 0;
+		}
+		setMintCount(newValue);
+		let auxPrice = saleInfo.price * newValue;
+		setMintPrice(auxPrice);
 	};
 
 	let disabledButtons = true;
@@ -383,41 +396,72 @@ function MidasChain() {
 							</Row>
 							<Row>
 								<Col xs={{offset: 1, span: 10}}>
-									<Box mb={3}>
-										<div
-											className="light-divider"
-											style={{width: "100%", marginLeft: 0}}
-										>
-											{" "}
-										</div>
-									</Box>
-									<Col xs={12}>
-										<Button
-											variant="success"
-											className="btn btn-sm btn-block"
-											disabled={disabledButtons}
-											onClick={() => increaseAmount(1)}
-										>
-											<FontAwesomeIcon fontSize={"medium"} icon={faAdd} color="white"/>
-											<span className="ms-2">Buy more</span>
-										</Button>
-									</Col>
-									<Col xs={12}>
-										<Button
-											variant="danger"
-											className="btn btn-sm btn-block mt-1"
-											disabled={disabledButtons}
-											onClick={() => decreaseAmount(1)}
-										>
-											<FontAwesomeIcon
-												fontSize={"medium"}
-												icon={faMinus}
-												color="white"
-												style={{marginLeft: "-9px"}}
+									<Row>
+										<Box mb={3}>
+											<div
+												className="light-divider"
+												style={{width: "100%", marginLeft: 0}}
+											>
+												{" "}
+											</div>
+										</Box>
+										<Col xs={12}>
+											<TextField
+												value={mintCount}
+												variant="outlined"
+												size="small"
+												onChange={handleInputChange}
+												onKeyPress={(event) => {
+													if (!/[0-9]/.test(event.key)) {
+														event.preventDefault();
+													}
+												}}
+												fullWidth
+												sx={{textAlign: 'center'}}
+												InputProps={{
+													disableUnderline: true,
+													className: 'text-center text-white mb-1 b-r-md',
+													style: {
+														border: '0.5px solid rgb(74, 85, 104)',
+														width: '100%',
+														textAlign: 'center',
+														height: '2.2em'
+													},
+													inputProps: {
+														style: { textAlign: "center" },
+													}
+												}}
+
 											/>
-											<span className="ms-2">Buy less</span>
-										</Button>
-									</Col>
+										</Col>
+										<Col xs={12}>
+											<Button
+												variant="success"
+												className="btn btn-sm btn-block"
+												disabled={disabledButtons}
+												onClick={() => increaseAmount(1)}
+											>
+												<FontAwesomeIcon fontSize={"medium"} icon={faAdd} color="white"/>
+												<span className="ms-2">Buy more</span>
+											</Button>
+										</Col>
+										<Col xs={12}>
+											<Button
+												variant="danger"
+												className="btn btn-sm btn-block mt-1"
+												disabled={disabledButtons}
+												onClick={() => decreaseAmount(1)}
+											>
+												<FontAwesomeIcon
+													fontSize={"medium"}
+													icon={faMinus}
+													color="white"
+													style={{marginLeft: "-9px"}}
+												/>
+												<span className="ms-2">Buy less</span>
+											</Button>
+										</Col>
+									</Row>
 								</Col>
 							</Row>
 							<Row>
