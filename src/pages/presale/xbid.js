@@ -285,10 +285,10 @@ function XBid() {
 
 	useEffect(() => {
 		getStartTimestamp();
-		getRemainingTokensAmount();
+		//getRemainingTokensAmount();
 		const interval = window.setInterval(() => {
 			getStartTimestamp();
-			getRemainingTokensAmount();
+			//getRemainingTokensAmount();
 		}, 2000);
 		return () => window.clearInterval(interval);
 		// eslint-disable-next-line
@@ -299,7 +299,7 @@ function XBid() {
 			<Container>
 				<Row>
 					<Col xs={12} lg={12} className="text-center">
-						{startTimestamp > 0  && <CustomCountdown startTitle="Presale starts in" completedTitle="Presale started"  titleStyles="h1" startTimestamp={startTimestamp}/>}
+						{startTimestamp > 0  && <CustomCountdown startTitle="Presale starts in" completedTitle="Sold out"  titleStyles="h1" startTimestamp={startTimestamp}/>}
 					</Col>
 				</Row>
 				<Row>
