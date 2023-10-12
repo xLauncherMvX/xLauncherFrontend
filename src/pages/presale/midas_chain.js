@@ -15,6 +15,7 @@ import toast from 'react-hot-toast';
 import { Toaster } from 'react-hot-toast';
 import BigNumber from 'bignumber.js';
 import { useGetPendingTransactions } from "@multiversx/sdk-dapp/hooks/transactions";
+import {openInNewTab} from "utils/utilities";
 
 import {contractQueryMultipleValues} from "utils/api";
 import {customConfig, networkId} from "config/customConfig";
@@ -42,9 +43,10 @@ function MidasChain() {
 
 	const isLoggedIn = address.startsWith("erd");
 	const networkProvider = new ProxyNetworkProvider(config.provider);
-	const scAddress = "erd1qqqqqqqqqqqqqpgqvrl9a2ngfv56h60cpw2460ymms7yprla6ppslhp9jm";
-	//const scToken = "OURO-9ecd6a";
-	const scToken = "OURO-9b4e16";
+	const scAddress = "erd1qqqqqqqqqqqqqpgqkgew8kr7nyr2l03d40dwpwzm2udcyq2vyl5sm2k5sp";
+	const scToken = "OURO-9ecd6a";
+	//const scAddress = "erd1qqqqqqqqqqqqqpgqvrl9a2ngfv56h60cpw2460ymms7yprla6ppslhp9jm";
+	//const scToken = "OURO-9b4e16";
 	const scName = "EnforcedPercentualSftSaleContract";
 	const chainID = networkConfig[networkId].shortId;
 	const tokensAPI = config.apiLink + address + "/tokens?size=2000";
@@ -150,7 +152,7 @@ function MidasChain() {
 		}
 		if (newValue <= 0) {
 			toast.error(
-				"You can't buy less than 1 ticket",
+				"You cannot mint less than 1 ticket",
 				{
 					position: 'top-right',
 					duration: 1500,
@@ -187,6 +189,19 @@ function MidasChain() {
 
 	//Mint Function
 	const mintFunction = async (quantity, price) => {
+		if (mintCount == 0 || !mintCount) {
+			toast.error(
+				"You cannot mint 0 tickets",
+				{
+					position: 'top-right',
+					duration: 1500,
+					style: {
+						border: '1px solid red'
+					}
+				}
+			);
+			return
+		}
 		if (mintCount >= leftCount) {
 			toast.error(
 				"Not enough tickets left",
@@ -392,6 +407,14 @@ function MidasChain() {
 									>
 										<p className="h4 text-white"><span className="text-green-A200">{new BigNumber(mintCount).multipliedBy(saleInfo.price).toFixed(4)}</span> OURO</p>
 									</Box>
+									<Button
+										variant="outline-light"
+										size="sm"
+										disabled={!isLoggedIn}
+										onClick={()=> openInNewTab("https://app.jexchange.io/")}
+									>
+										<span className="ms-2">Buy OURO</span>
+									</Button>
 								</Col>
 							</Row>
 							<Row>
@@ -419,7 +442,6 @@ function MidasChain() {
 												fullWidth
 												sx={{textAlign: 'center'}}
 												InputProps={{
-													disableUnderline: true,
 													className: 'text-center text-white mb-1 b-r-md',
 													style: {
 														border: '0.5px solid rgb(74, 85, 104)',

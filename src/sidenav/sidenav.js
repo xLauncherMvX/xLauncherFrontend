@@ -151,7 +151,7 @@ export function Sidenav() {
 							active={pathname === "/midas-chain"}
 							onClick={() => toggleSidebar()}
 						>
-							Midas Chain Mint
+							Midas Chain Lottery
 						</MenuItem>
 						<MenuItem
 							icon={<ShoppingCart/>}
