@@ -127,7 +127,7 @@ export function Sidenav() {
 								target="_blank" rel="noreferrer"> </a>}
 							onClick={() => toggleSidebar()}
 						>
-							Stake NFTS
+							Stake XLH Origins
 						</MenuItem>
 						<MenuItem
 							icon={<ShoppingCart/>}
