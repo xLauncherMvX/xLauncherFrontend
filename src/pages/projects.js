@@ -33,7 +33,7 @@ function Projects() {
 							title="xBid"
 							description="XBid represents a sophisticated online auction platform, designed to facilitate the bidding process in
 														a secure and efficient virtual environment. Through this platform, participants are invited to submit price bids for a variety of enticing prizes."
-							totalRaised="Upcoming"
+							totalRaised="23,000 USD"
 							action={{
 								type: "internal",
 								route: "/projects/xbid",
