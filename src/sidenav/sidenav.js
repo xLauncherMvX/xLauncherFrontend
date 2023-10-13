@@ -129,22 +129,6 @@ export function Sidenav() {
 						>
 							Stake NFTS
 						</MenuItem>
-						{/*<MenuItem*/}
-						{/*    label="Lottery"*/}
-						{/*    icon={<ShoppingCart />}*/}
-						{/*    component={<Link to="/lottery/nosferatu"/>}*/}
-						{/*    active={pathname === "/lottery/nosferatu"}*/}
-						{/*>*/}
-						{/*    Nosferatu Lottery*/}
-						{/*</MenuItem>*/}
-						<MenuItem
-							icon={<ShoppingCart/>}
-							component={<Link to="/xbid"/>}
-							active={pathname === "/xbid"}
-							onClick={() => toggleSidebar()}
-						>
-							XBid Presale
-						</MenuItem>
 						<MenuItem
 							icon={<ShoppingCart/>}
 							component={<Link to="/midas-chain"/>}
@@ -152,14 +136,6 @@ export function Sidenav() {
 							onClick={() => toggleSidebar()}
 						>
 							Midas Chain Lottery
-						</MenuItem>
-						<MenuItem
-							icon={<ShoppingCart/>}
-							component={<Link to="/og-vault-booster"/>}
-							active={pathname === "/og-vault-booster"}
-							onClick={() => toggleSidebar()}
-						>
-							Vault Booster Mint
 						</MenuItem>
 						<MenuItem
 							icon={<ShoppingCart/>}

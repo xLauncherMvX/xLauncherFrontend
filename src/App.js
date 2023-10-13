@@ -141,9 +141,7 @@ function App() {
         { path: "/nosferatu-mint", element: <NosferatuMint /> },
         { path: "/snake-mint", element: <SnakeMint /> },
         { path: "/vestax-bronze-mint", element: <VestaxBronzeMint /> },
-        { path: "/og-vault-booster", element: <VaultBooster walletState={walletState}/> },
         { path: "/midas-chain", element: <MidasChain walletState={walletState}/> },
-        { path: "/xbid", element: <Xbid walletState={walletState}/> },
 
         { path: "*", element: <Dashboard /> },
       ],
