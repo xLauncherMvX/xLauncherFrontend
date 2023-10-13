@@ -15,7 +15,7 @@ import toast from 'react-hot-toast';
 import { Toaster } from 'react-hot-toast';
 import BigNumber from 'bignumber.js';
 import { useGetPendingTransactions } from "@multiversx/sdk-dapp/hooks/transactions";
-import {openInNewTab} from "utils/utilities";
+import {openInNewTab, intlNumberFormat} from "utils/utilities";
 
 import {contractQueryMultipleValues} from "utils/api";
 import {customConfig, networkId} from "config/customConfig";
@@ -412,20 +412,12 @@ function MidasChain() {
 									>
 										<p className="h4 text-white"><span className="text-green-A200">{new BigNumber(mintCount).multipliedBy(saleInfo.price).toFixed(4)}</span> OURO</p>
 									</Box>
-									<Button
-										variant="outline-light"
-										size="sm"
-										disabled={!isLoggedIn}
-										onClick={()=> openInNewTab("https://app.jexchange.io/")}
-									>
-										<span className="ms-2">Buy OURO</span>
-									</Button>
 								</Col>
 							</Row>
 							<Row>
 								<Col xs={{offset: 1, span: 10}}>
 									<Row>
-										<Box mb={3}>
+										<Box>
 											<div
 												className="light-divider"
 												style={{width: "100%", marginLeft: 0}}
@@ -469,7 +461,7 @@ function MidasChain() {
 												onClick={() => increaseAmount(1)}
 											>
 												<FontAwesomeIcon fontSize={"medium"} icon={faAdd} color="white"/>
-												<span className="ms-2">Buy more</span>
+												<span className="ms-2">Mint more</span>
 											</Button>
 										</Col>
 										<Col xs={12}>
@@ -485,7 +477,31 @@ function MidasChain() {
 													color="white"
 													style={{marginLeft: "-9px"}}
 												/>
-												<span className="ms-2">Buy less</span>
+												<span className="ms-2">Mint less</span>
+											</Button>
+										</Col>
+									</Row>
+									<Row>
+										<Col xs={12}>
+											<div
+												className="light-divider"
+												style={{width: "100%", marginLeft: 0}}
+											>
+												{" "}
+											</div>
+											<Box display="flex" justifyContent="center" alignItems="center">
+												<p className="h5 text-white mb-2">
+													Balance: <span className="text-green-A200">{intlNumberFormat(ouroBalance, "en-GB", 2, 2)}</span> OURO
+												</p>
+											</Box>
+											<Button
+												variant="outline-light"
+												size="sm"
+												disabled={!isLoggedIn}
+												className="btn-block"
+												onClick={()=> openInNewTab("https://app.jexchange.io/")}
+											>
+												<span className="ms-2">Buy OURO</span>
 											</Button>
 										</Col>
 									</Row>

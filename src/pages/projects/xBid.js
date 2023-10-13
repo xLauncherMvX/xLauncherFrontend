@@ -47,7 +47,7 @@ export default function xBID() {
             <Row>
                 <Col xs={12} md={12} lg={{offset: 2, span:8}}>
                     <ProjectCard
-                        date="To be announced"
+                        date="10.10.2023"
                         banner={banner}
                         website="https://www.xbid.app/auction"
                         twitter="https://twitter.com/XBid_MVX"
