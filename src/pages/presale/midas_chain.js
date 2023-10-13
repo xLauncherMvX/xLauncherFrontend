@@ -131,6 +131,7 @@ function MidasChain() {
 		let newValue = mintCount + amount;
 		setMintCount(newValue);
 		let auxPrice = saleInfo.price * newValue;
+		auxPrice = parseFloat(auxPrice.toFixed(3));
 		setMintPrice(auxPrice);
 	};
 
@@ -167,6 +168,7 @@ function MidasChain() {
 		if (newValue > 0) {
 			setMintCount(newValue);
 			let auxPrice = saleInfo.price * newValue;
+			auxPrice = parseFloat(auxPrice.toFixed(3));
 			setMintPrice(auxPrice);
 		}
 	};
@@ -179,6 +181,7 @@ function MidasChain() {
 		}
 		setMintCount(newValue);
 		let auxPrice = saleInfo.price * newValue;
+		auxPrice = parseFloat(auxPrice.toFixed(3));
 		setMintPrice(auxPrice);
 	};
 
@@ -186,6 +189,8 @@ function MidasChain() {
 	if(isLoggedIn && (saleInfo.remaining > 0) && !loadingTransactions){
 		disabledButtons = false;
 	}
+
+	let gasLimit = 25000000 + (2300000 * mintCount);
 
 	//Mint Function
 	const mintFunction = async (quantity, price) => {
@@ -235,7 +240,7 @@ function MidasChain() {
 				value: 0,
 				data: Buffer.from(transaction.getData().valueOf()),
 				receiver: scAddress,
-				gasLimit: '30000000'
+				gasLimit: gasLimit
 			};
 			await refreshAccount();
 
