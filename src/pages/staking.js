@@ -86,45 +86,47 @@ function Staking(props) {
       "getClientReport",
       [new AddressValue(new Address(address))]
     );
-    let totalAmount = newClientReport["total_amount"].toFixed(2) / multiplier;
-    let totalRewards = newClientReport["total_rewords"].toFixed(2) / multiplier;
-    let farm1Amount = 0;
-    let farm1Rewards = 0;
-    let farm2Amount = 0;
-    let farm2Rewards = 0;
-    let farm3Amount = 0;
-    let farm3Rewards = 0;
-    if (newClientReport["report_pull_items"]) {
-      newClientReport["report_pull_items"].forEach((item0) => {
-        let switcher = parseInt(item0.pool_id);
-        switch (switcher) {
-          case 1:
-            farm1Amount = item0.pool_amount.toFixed() / multiplier;
-            farm1Rewards = item0.rewords_amount.toFixed() / multiplier;
-            break;
-          case 2:
-            farm2Amount = item0.pool_amount.toFixed() / multiplier;
-            farm2Rewards = item0.rewords_amount.toFixed() / multiplier;
-            break;
-          case 3:
-            farm3Amount = item0.pool_amount.toFixed() / multiplier;
-            farm3Rewards = item0.rewords_amount.toFixed() / multiplier;
-            break;
-          default:
-            break;
-        }
+    if(newClientReport) {
+      let totalAmount = newClientReport["total_amount"].toFixed(2) / multiplier;
+      let totalRewards = newClientReport["total_rewords"].toFixed(2) / multiplier;
+      let farm1Amount = 0;
+      let farm1Rewards = 0;
+      let farm2Amount = 0;
+      let farm2Rewards = 0;
+      let farm3Amount = 0;
+      let farm3Rewards = 0;
+      if (newClientReport["report_pull_items"]) {
+        newClientReport["report_pull_items"].forEach((item0) => {
+          let switcher = parseInt(item0.pool_id);
+          switch (switcher) {
+            case 1:
+              farm1Amount = item0.pool_amount.toFixed() / multiplier;
+              farm1Rewards = item0.rewords_amount.toFixed() / multiplier;
+              break;
+            case 2:
+              farm2Amount = item0.pool_amount.toFixed() / multiplier;
+              farm2Rewards = item0.rewords_amount.toFixed() / multiplier;
+              break;
+            case 3:
+              farm3Amount = item0.pool_amount.toFixed() / multiplier;
+              farm3Rewards = item0.rewords_amount.toFixed() / multiplier;
+              break;
+            default:
+              break;
+          }
+        });
+      }
+      setClientReportData({
+        totalAmount,
+        totalRewards,
+        farm1Amount,
+        farm1Rewards,
+        farm2Amount,
+        farm2Rewards,
+        farm3Amount,
+        farm3Rewards,
       });
     }
-    setClientReportData({
-      totalAmount,
-      totalRewards,
-      farm1Amount,
-      farm1Rewards,
-      farm2Amount,
-      farm2Rewards,
-      farm3Amount,
-      farm3Rewards,
-    });
   };
 
   //Get client report data query

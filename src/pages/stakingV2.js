@@ -106,7 +106,7 @@ function StakingV2(props) {
 			"getTotalStakedData",
 			[]
 		);
-		return newFarmsNumber.last_pool_id;
+		return newFarmsNumber ? newFarmsNumber.last_pool_id : 0;
 	};
 
 	//get the farms data

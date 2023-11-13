@@ -35,8 +35,8 @@ function Admin(props) {
 			[]
 		);
 		if (newFarmsNumber) {
-			setFarmNumber(newFarmsNumber.last_pool_id);
-			setTimer(parseInt(newFarmsNumber.last_pool_id));
+			setFarmNumber(newFarmsNumber?.last_pool_id);
+			setTimer(parseInt(newFarmsNumber?.last_pool_id));
 		}
 	};
 
