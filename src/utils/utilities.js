@@ -89,3 +89,7 @@ export const openInSameTab = (url) => {
 export function formatString(str) {
     return str.replace(/\s/g, '_').toLowerCase();
 }
+
+export function hexToNumber(hexString) {
+    return parseInt(hexString, 16);
+}
