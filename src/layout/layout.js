@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Outlet } from "react-router-dom";
 import { Sidenav } from "sidenav/sidenav";
 import { Navbar } from "navbar/navbar";
 import { Footer } from "footer/footer";
 import "assets/css/globals.css";
+import "assets/css/starWars.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
