@@ -43,6 +43,7 @@ import { VestaxBronzeMint } from "pages/snakeSale/VestaxBronzeMint";
 import  VaultBooster from "pages/presale/vault_booster";
 import  MidasChain from "pages/presale/midas_chain";
 import  Xbid from "pages/presale/xbid";
+import BloodshedMint from "pages/presale/bloodshed_mint";
 
 library.add(
   fab,
@@ -142,6 +143,7 @@ function App() {
         { path: "/snake-mint", element: <SnakeMint /> },
         { path: "/vestax-bronze-mint", element: <VestaxBronzeMint /> },
         { path: "/midas-chain", element: <MidasChain walletState={walletState}/> },
+        { path: "/bloodshed-mint", element: <BloodshedMint walletState={walletState}/> },
 
         { path: "*", element: <Dashboard /> },
       ],

@@ -6,6 +6,7 @@ import {
   WalletConnectLoginButton,
   LedgerLoginButton,
   WebWalletLoginButton,
+  XaliasLoginButton
 } from "@multiversx/sdk-dapp/UI";
 import { useProSidebar } from "react-pro-sidebar";
 import Container from "react-bootstrap/Container";
@@ -165,7 +166,7 @@ export function Navbar(props) {
                 />
               </Col>
             </Row>
-            <Row className="mb-4">
+            <Row>
               <Col>
                 <ExtensionLoginButton
                   callbackRoute="/"
@@ -173,6 +174,17 @@ export function Navbar(props) {
                   loginButtonText="Extension"
                   className="btn btn-block btn-sm dapp-primary font-size-sm w-60 mt-1"
                 />
+              </Col>
+            </Row>
+            <Row className="mb-4">
+              <Col>
+                {/*<XaliasLoginButton*/}
+                {/*  callbackRoute="/"*/}
+                {/*  loginButtonText='xAlias'*/}
+                {/*  data-testid='xAliasLoginBtn'*/}
+                {/*  nativeAuth={true}*/}
+                {/*  className="btn btn-sm dapp-primary font-size-sm w-60"*/}
+                {/*/>*/}
               </Col>
             </Row>
           </div>
