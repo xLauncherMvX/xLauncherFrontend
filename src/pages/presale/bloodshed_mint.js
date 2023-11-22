@@ -254,7 +254,7 @@ function BloodshedMint() {
 			);
 			return;
 		}
-		if (mintCount >= leftCount) {
+		if (mintCount > leftCount) {
 			toast.error(
 				"Not enough NFTS left",
 				{
@@ -361,7 +361,7 @@ function BloodshedMint() {
 			);
 			return
 		}
-		if (mintCount >= leftCount) {
+		if (mintCount > leftCount) {
 			toast.error(
 				"Not enough NFTS left",
 				{
@@ -427,7 +427,7 @@ function BloodshedMint() {
 			);
 			return
 		}
-		if (mintCount >= leftCount) {
+		if (mintCount > leftCount) {
 			toast.error(
 				"Not enough NFTS left",
 				{
