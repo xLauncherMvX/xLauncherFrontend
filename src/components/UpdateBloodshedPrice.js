@@ -1,5 +1,4 @@
 import {
-  ResultsParser,
   SmartContract,
   Address,
   AbiRegistry,
@@ -8,7 +7,6 @@ import {
 import {useGetAccount} from '@multiversx/sdk-dapp/hooks/account/useGetAccount';
 import {useGetNetworkConfig} from '@multiversx/sdk-dapp/hooks/useGetNetworkConfig';
 import {sendTransactions} from '@multiversx/sdk-dapp/services/transactions/sendTransactions';
-import {ProxyNetworkProvider} from '@multiversx/sdk-network-providers/out';
 import React, {useState} from 'react';
 import abi from "abiFiles/coding_division_mint.abi.json";
 import BigNumber from 'bignumber.js';

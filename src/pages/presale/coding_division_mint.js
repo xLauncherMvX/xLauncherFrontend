@@ -32,7 +32,6 @@ import {
 } from "@multiversx/sdk-core/out";
 import {refreshAccount} from "@multiversx/sdk-dapp/utils/account";
 import {sendTransactions} from "@multiversx/sdk-dapp/services";
-import Modal from "react-bootstrap/Modal";
 import {UpdateMintPrice} from "../../components/UpdateBloodshedPrice";
 
 function CodingDivisionMint() {
@@ -312,10 +311,6 @@ function CodingDivisionMint() {
       );
     }
   };
-
-  //Details modal
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
 
   useEffect(() => {
     getMintInfo();

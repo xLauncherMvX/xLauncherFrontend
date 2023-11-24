@@ -40,10 +40,7 @@ import Bloodshed_lottery from "pages/presale/bloodshed_lottery";
 import { NosferatuMint } from "pages/nosferatu/NosferatuMint";
 import { SnakeMint } from "pages/snakeSale/SnakeMint";
 import { VestaxBronzeMint } from "pages/snakeSale/VestaxBronzeMint";
-import  VaultBooster from "pages/presale/vault_booster";
 import  MidasChain from "pages/presale/midas_chain";
-import  Xbid from "pages/presale/xbid";
-import BloodshedMint from "pages/presale/bloodshed_mint";
 import CodingDivisionMint from "pages/presale/coding_division_mint";
 
 library.add(
