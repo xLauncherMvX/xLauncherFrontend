@@ -131,11 +131,11 @@ export function Sidenav() {
 						</MenuItem>
 						<MenuItem
 							icon={<ShoppingCart/>}
-							component={<Link to="/bloodshed-mint"/>}
-							active={pathname === "/bloodshed-mint"}
+							component={<Link to="/coding-division-mint"/>}
+							active={pathname === "/coding-division-mint"}
 							onClick={() => toggleSidebar()}
 						>
-							Bloodshed Mint
+							Coding Division Mint
 						</MenuItem>
 						<MenuItem
 							icon={<ShoppingCart/>}
