@@ -89,7 +89,7 @@ function Dashboard(props) {
 				});
 
 			const json = await response.json();
-			if(json){
+			if(json && json.data){
 				setTokenPrice(json.data[json.data.length-1][1]);
 			}
 		} catch (error) {
