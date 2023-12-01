@@ -1,7 +1,7 @@
 // Customized with our walletConnectV2ProjectId
 export const networkConfig = {
     devnet: {
-        skipFetchFromServer: true,
+        skipFetchFromServer: false,
         id: 'devnet',
         shortId: 'D',
         name: 'Devnet',
@@ -20,7 +20,7 @@ export const networkConfig = {
     },
 
     testnet: {
-        skipFetchFromServer: true,
+        skipFetchFromServer: false,
         id: 'testnet',
         shortId: 'T',
         name: 'Testnet',
@@ -39,7 +39,7 @@ export const networkConfig = {
     },
 
     mainnet: {
-        skipFetchFromServer: true,
+        skipFetchFromServer: false,
         id: 'mainnet',
         shortId: '1',
         name: 'Mainnet',

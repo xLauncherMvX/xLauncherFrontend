@@ -42,9 +42,8 @@ const style = {
 };
 
 function StakingV2(props) {
-	let walletState = props.walletState;
-	const {address} = walletState;
-	const isLoggedIn = address.startsWith("erd1");
+	const address = props.address;
+	const isLoggedIn = Boolean(address);
 
 	//Set the config network
 	const config = customConfig[networkId];

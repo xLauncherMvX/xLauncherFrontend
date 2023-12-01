@@ -4,7 +4,6 @@ import CompleteUnstakeCard from "cards/CompleteUnStakeCard";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { allTokens, customConfig, networkId } from "config/customConfig";
-import { useGetAccountInfo } from "@multiversx/sdk-dapp/hooks/account";
 import { calc2, multiplier, calculateGasLimit } from "utils/utilities";
 import { useGetPendingTransactions } from "@multiversx/sdk-dapp/hooks/transactions";
 import { ProxyNetworkProvider } from "@multiversx/sdk-network-providers/out";
@@ -21,10 +20,7 @@ import {
 import { getIsLoggedIn } from "@multiversx/sdk-dapp/utils";
 
 function Staking(props) {
-  let walletState = props.walletState;
-
-  // decode address from walletState
-  const { address } = walletState;
+  const address = props.address;
 
   //Set the config network
   const config = customConfig[networkId];

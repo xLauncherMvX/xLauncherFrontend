@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import Chart from "react-apexcharts";
 import {Col, Row, Container, Card} from 'react-bootstrap';
 import {MiniStatisticCard} from 'cards/miniStatisticCard';
 import {MiniNFTRankCard} from 'cards/miniNFTRankCard';
@@ -21,7 +22,6 @@ import {U64Value} from "@multiversx/sdk-core/out";
 import {ProxyNetworkProvider} from "@multiversx/sdk-network-providers/out";
 import {networkId, customConfig} from "config/customConfig";
 import stakeV2Abi from "abiFiles/xlauncher-staking-v2.abi.json";
-import Chart from "react-apexcharts";
 import { FaCoins } from "react-icons/fa";
 import { GiFactory } from "react-icons/gi";
 import { FaLayerGroup } from "react-icons/fa";
@@ -75,7 +75,9 @@ function Dashboard(props) {
 	}
 
 	//Get Token Details
-	const tokenPriceAPI = "https://maiartokens.com/token-value?fsym=XLH&tsym=USDC";
+	const currentTs = new Date();
+	const pastTs = currentTs - 60;
+	const tokenPriceAPI = `https://apiv2.e-compass.io/tv/history?symbol=XLH%2FUSDC_ONEDEX&resolution=60&from=${currentTs}&to=${pastTs}&countback=1`;
 	const [tokenPrice, setTokenPrice] = useState(0);
 	const getTokenPrice = async () => {
 		try {
@@ -83,6 +85,7 @@ function Dashboard(props) {
 				{
 					headers: {
 						'Accept': 'application/json',
+						'Access-Control-Allow-Origin': '*'
 					}
 				});
 

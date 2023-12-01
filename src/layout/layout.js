@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import { Outlet } from "react-router-dom";
 import { Sidenav } from "sidenav/sidenav";
 import { Navbar } from "navbar/navbar";
@@ -18,15 +18,8 @@ function Layout(props) {
       <Container className="main-container">
         <Row style={{ minHeight: "calc(100vh - 107px)", display: "flex", flexDirection: "column" }}>
           <Col>
-            <Navbar
-              debugLog={props.debugLog}
-              updateWalletAddress={props.updateWalletAddress}
-              address={props.address}
-              setTimeToConnect={props.setTimeToConnect}
-              timeToConnect={props.timeToConnect}
-              setAddress={props.setAddress}
-            />
-            <Outlet clientReportData={props.clientReportData} />
+            <Navbar setAddress={props.setAddress} />
+            <Outlet />
           </Col>
         </Row>
         <Footer/>

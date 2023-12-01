@@ -1,6 +1,6 @@
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fab } from "@fortawesome/free-brands-svg-icons";
-import { fas } from '@fortawesome/free-solid-svg-icons';
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {fab} from "@fortawesome/free-brands-svg-icons";
+import {fas} from '@fortawesome/free-solid-svg-icons';
 import {
   faCheckSquare,
   faCoffee,
@@ -13,8 +13,8 @@ import {
   faUserCircle,
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useState } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Dashboard from "pages/dashboard";
 import Staking from "pages/staking";
 import StakingV2 from "pages/stakingV2";
@@ -27,21 +27,22 @@ import EstarGames from "pages/projects/EstarGames";
 import VestaXFinance from "pages/projects/VestaXFinance";
 import XBid from "pages/projects/xBid";
 import Farm from "pages/farm";
-import { DappProvider } from "@multiversx/sdk-dapp/wrappers/DappProvider";
+import {DappProvider} from "@multiversx/sdk-dapp/wrappers/DappProvider";
 import {
   NotificationModal,
   SignTransactionsModals,
   TransactionsToastList,
 } from "@multiversx/sdk-dapp/UI";
-import { networkId } from "config/customConfig";
-import { networkConfig } from "config/networks";
+import {networkId} from "config/customConfig";
+import {networkConfig} from "config/networks";
 import Layout from "layout/layout";
 import Bloodshed_lottery from "pages/presale/bloodshed_lottery";
-import { NosferatuMint } from "pages/nosferatu/NosferatuMint";
-import { SnakeMint } from "pages/snakeSale/SnakeMint";
-import { VestaxBronzeMint } from "pages/snakeSale/VestaxBronzeMint";
-import  MidasChain from "pages/presale/midas_chain";
+import {NosferatuMint} from "pages/nosferatu/NosferatuMint";
+import {SnakeMint} from "pages/snakeSale/SnakeMint";
+import {VestaxBronzeMint} from "pages/snakeSale/VestaxBronzeMint";
+import MidasChain from "pages/presale/midas_chain";
 import CodingDivisionMint from "pages/presale/coding_division_mint";
+import {useGetAccountInfo} from "@multiversx/sdk-dapp/hooks/account";
 
 library.add(
   fab,
@@ -58,50 +59,13 @@ library.add(
   fas
 );
 
-const defaultClientReportData = {
-  totalAmount: "",
-  totalRewards: "",
-  farm1Amount: "",
-  farm1Rewards: "",
-  farm2Amount: "",
-  farm2Rewards: "",
-  farm3Amount: "",
-  farm3Rewards: "",
-};
-
 function App() {
-  const [walletState, setWalletState] = useState({
-    address: "",
-    clientReportData: defaultClientReportData,
-    timeToConnect: false,
-  });
+  const { address, account } = useGetAccountInfo();
+  const [nAddress, setAddress] = useState(address);
 
-  const updateWalletAddress = (newAddress) => {
-    console.log("newAddress", newAddress);
-    setWalletState((prevWalletState) => {
-      return { ...prevWalletState, address: newAddress };
-    });
-  };
-
-  const debugLog = (message) => {
-    console.log(message);
-  };
-
-  const setTimeToConnect = (timeToConnect) => {
-    setWalletState((prevWalletState) => {
-      return { ...prevWalletState, timeToConnect: timeToConnect };
-    });
-  };
-
-  const setAddress = (address) => {
-    if (walletState.address === address) {
-      return;
-    }
-
-    setWalletState((prevWalletState) => {
-      return { ...prevWalletState, address: address };
-    });
-  };
+  useEffect(() => {
+    setAddress(nAddress);
+  }, [])
 
   //Set the config network
   const customNetConfig = networkConfig[networkId];
@@ -111,39 +75,31 @@ function App() {
       path: "/",
       element: (
         <Layout
-          updateWalletAddress={updateWalletAddress}
-          debugLog={debugLog}
-          clientReportData={walletState.clientReportData}
-          setTimeToConnect={setTimeToConnect}
-          timeToConnect={walletState.timeToConnect}
+          address={address}
+          account={account}
           setAddress={setAddress}
         />
       ),
       children: [
-        { path: "/", element: <Dashboard/> },
-        { path: "/dashboard", element: <Dashboard /> },
-        {
-          path: "/staking",
-          element: <Staking walletState={walletState} />,
-        },
-        { path: "/projects", element: <Projects /> },
-        { path: "/team", element: <Team /> },
-        { path: "/admin", element: <Admin walletState={walletState} /> },
-        { path: "/lottery/bloodshed-reveal", element: <BloodshedReveal walletState={walletState}/> },
-        { path: "/lottery/nosferatu", element: <Bloodshed_lottery walletState={walletState}/> },
-        { path: "/projects/zero-2-infinity", element: <Zero2Infinity /> },
-        { path: "/projects/estar-games", element: <EstarGames /> },
-        { path: "/projects/vestax-finance", element: <VestaXFinance /> },
-        { path: "/projects/xbid", element: <XBid /> },
-        { path: "/staking2.0", element: <StakingV2 walletState={walletState} /> },
-        { path: "/view-farm/:farmId", element: <Farm walletState={walletState} /> },
-        { path: "/nosferatu-mint", element: <NosferatuMint /> },
-        { path: "/snake-mint", element: <SnakeMint /> },
-        { path: "/vestax-bronze-mint", element: <VestaxBronzeMint /> },
-        { path: "/midas-chain", element: <MidasChain walletState={walletState}/> },
-        { path: "/coding-division-mint", element: <CodingDivisionMint walletState={walletState}/> },
-
-        { path: "*", element: <Dashboard /> },
+        {path: "/", element: <Dashboard/>},
+        {path: "/dashboard", element: <Dashboard/>},
+        {path: "/staking", element: <Staking address={nAddress} account={account}/>},
+        {path: "/projects", element: <Projects/>},
+        {path: "/team", element: <Team/>},
+        {path: "/admin", element: <Admin address={nAddress} account={account}/>},
+        {path: "/lottery/bloodshed-reveal", element: <BloodshedReveal address={nAddress} account={account}/>},
+        {path: "/lottery/nosferatu", element: <Bloodshed_lottery address={nAddress} account={account}/>},
+        {path: "/projects/zero-2-infinity", element: <Zero2Infinity/>},
+        {path: "/projects/estar-games", element: <EstarGames/>},
+        {path: "/projects/vestax-finance", element: <VestaXFinance/>},
+        {path: "/projects/xbid", element: <XBid/>},
+        {path: "/staking2.0", element: <StakingV2 address={nAddress} account={account}/>},
+        {path: "/view-farm/:farmId", element: <Farm address={nAddress} account={account}/>},
+        {path: "/nosferatu-mint", element: <NosferatuMint address={nAddress} account={account}/>},
+        {path: "/snake-mint", element: <SnakeMint address={nAddress} account={account}/>},
+        {path: "/vestax-bronze-mint", element: <VestaxBronzeMint address={nAddress} account={account}/>},
+        {path: "/midas-chain", element: <MidasChain address={nAddress} account={account}/>},
+        {path: "/coding-division-mint", element: <CodingDivisionMint address={nAddress} account={account}/>},
       ],
     },
   ]);
@@ -152,13 +108,13 @@ function App() {
     <DappProvider
       environment={customNetConfig.id}
       customNetworkConfig={customNetConfig}
-      dappConfig={{ shouldUseWebViewProvider: true }}
+      dappConfig={{shouldUseWebViewProvider: true}}
       completedTransactionsDelay={200}
     >
-      <TransactionsToastList />
-      <NotificationModal />
-      <SignTransactionsModals />
-      <RouterProvider router={router} />
+      <TransactionsToastList/>
+      <NotificationModal/>
+      <SignTransactionsModals/>
+      <RouterProvider router={router}/>
     </DappProvider>
   );
 }

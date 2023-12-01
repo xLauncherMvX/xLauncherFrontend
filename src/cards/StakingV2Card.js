@@ -218,7 +218,7 @@ export default function StakingV2Card({
 		<div className={`farming-card-v2 ${customBorder} text-white`} id={"id" + title.toString()}>
 			<div className="float-end">
 				<Tooltip key="showInfo" title="View Details" arrow placement="bottom" componentsProps={componentsProps}>
-					<Button variant="text" className={`float-right ${tierText}`} onClick={() => openInSameTab(`/view-farm/${poolId}`)} style={{marginRight: '-10px'}}>
+					<Button variant="text" className={`float-right ${tierText}`} href={`/view-farm/${poolId}`} style={{marginRight: '-10px'}}>
 						<FontAwesomeIcon fontSize={"medium"} icon={faInfoCircle} />
 					</Button>
 				</Tooltip>

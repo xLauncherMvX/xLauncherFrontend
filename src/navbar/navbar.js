@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { useGetAccountInfo } from "@multiversx/sdk-dapp/hooks/account";
 import { logout } from "@multiversx/sdk-dapp/utils";
 import {
@@ -38,24 +38,18 @@ import {
 import { getAccountNFTS, getAccountTokens } from "utils/api";
 
 export function Navbar(props) {
-  //let address = props.address;
-  let timeToConnectVal = props.timeToConnect;
-  let setTimeToConnectVal = props.setTimeToConnect;
-  let setAddress = props.setAddress;
   //Used to detect mobile screen
   const { toggleSidebar, broken } = useProSidebar();
 
   //Set the config network
   const config = customConfig[networkId];
   const tokens = allTokens[networkId];
-
-  //Get the user address
-  //const debugAccountInfo = useGetAccountInfo();
   const { address, account } = useGetAccountInfo();
-  if (address) {
-    setAddress(address);
-  }
-
+  useEffect(() => {
+    if (address) {
+      props.setAddress(address);
+    }
+  }, [address, props.setAddress]);
   const isLoggedIn = Boolean(address);
 
   //Tokens + NFTS APIs
@@ -92,17 +86,17 @@ export function Navbar(props) {
 
   let accountBalance = 0.0;
   if (
-    account.balance &&
-    account.balance !== "..." &&
-    !isNaN(account.balance) &&
+    account?.balance &&
+    account?.balance !== "..." &&
+    !isNaN(account?.balance) &&
     isLoggedIn
   ) {
-    accountBalance = calc2(account.balance / multiplier);
+    accountBalance = calc2(account?.balance / multiplier);
   }
 
   //Show the connect area if user is not logged in
   const [timeToConnect, setTimeToConnect] = React.useState(false);
-  let connectSection = timeToConnectVal ? (
+  let connectSection = timeToConnect ? (
     <Container>
       <Row className="justify-content-start">
         <Col
@@ -120,7 +114,6 @@ export function Navbar(props) {
                   className="btn btn-light float-end"
                   style={{ width: "30px" }}
                   onClick={() => {
-                    setTimeToConnectVal(false);
                     setTimeToConnect(false);
                   }}
                 >
@@ -282,7 +275,7 @@ export function Navbar(props) {
                           style={{ marginTop: "-3px", marginRight: "5px" }}
                         />
                         <p className="font-size-sm d-inline" >
-                          XLH: {walletData.tokens.xlh ? intlNumberFormat(walletData.tokens.xlh) : '0.00'}
+                          XLH: {walletData.tokens?.xlh ? intlNumberFormat(walletData.tokens?.xlh) : '0.00'}
                         </p>
                       </Col>
                       <Col xs={{ offset: 1, span: 5 }} style={{whiteSpace: "nowrap"}}>
@@ -309,7 +302,7 @@ export function Navbar(props) {
                           style={{ marginRight: "5px" }}
                         />
                         <p className="font-size-sm d-inline" >
-                          VEGLD: {walletData.tokens.vegld ? intlNumberFormat(walletData.tokens.vegld) : '0.00'}
+                          VEGLD: {walletData.tokens?.vegld ? intlNumberFormat(walletData.tokens?.vegld) : '0.00'}
                         </p>
                       </Col>
                     </Row>
@@ -413,7 +406,10 @@ export function Navbar(props) {
                 <Button
                   variant="primary"
                   className="text-white btn-block"
-                  onClick={() => logout(`${window.location.origin}/`)}
+                  onClick={() => {
+                    sessionStorage.clear();
+                    logout(`/`, undefined, false);
+                  }}
                 >
                   <FontAwesomeIcon
                     icon={faPowerOff}
@@ -598,8 +594,7 @@ export function Navbar(props) {
               size="sm"
               className="btn btn-block"
               onClick={() => {
-                setTimeToConnectVal(true);
-                //setTimeToConnect((prevCheck) => !prevCheck);
+                setTimeToConnect(true);
               }}
             >
               <FontAwesomeIcon
@@ -654,8 +649,7 @@ export function Navbar(props) {
                 size="sm"
                 className="btn btn-block"
                 onClick={() => {
-                  setTimeToConnectVal(true);
-                  //setTimeToConnect((prevCheck) => !prevCheck);
+                  setTimeToConnect(true);
                 }}
               >
                 <FontAwesomeIcon
