@@ -21,9 +21,6 @@ import { faUndo, faRedo, faSave, faClose } from '@fortawesome/free-solid-svg-ico
 import Tooltip from "@mui/material/Tooltip/Tooltip";
 import Fade from "@mui/material/Fade/Fade";
 import { CSVLink } from 'react-csv';
-import Modal from "react-bootstrap/Modal";
-import QuestionImage from 'assets/images/starWars/question3.png';
-import {useProSidebar} from "react-pro-sidebar";
 
 const componentsProps={
 	tooltip: {
@@ -51,9 +48,8 @@ export default function Farm(props) {
 	const urlParts = window.location.pathname.split('/');
 	const farmId = urlParts[urlParts.length - 1];
 
-	let walletState = props.walletState;
-	const {address} = walletState;
-	const isLoggedIn = address.startsWith("erd1");
+	const address = props.address;
+	const isLoggedIn = Boolean(address);
 
 	//Set the config network
 	const config = customConfig[networkId];
@@ -388,10 +384,6 @@ export default function Farm(props) {
 	let poolName = farmDetails.pool_title ? formatString(farmDetails.pool_title) : 'farm';
 	let filename = poolName + '_wallets_list.csv';
 
-	//Star wars modal
-	const [show, setShow] = useState(false);
-	const handleClose = () => setShow(false);
-
 	return (
 		<div>
 			<p className="text-white font-bold mt-4 ms-2 mb-4" style={{fontSize: "40px"}}>
@@ -511,56 +503,12 @@ export default function Farm(props) {
 					</Col>
 					<Col lg={7}>
 						<div className="farming-card-v2 text-white" style={{minHeight: '309px'}}>
-							{farmId == 2 && (
-								<p className="text-red-400 h4 text-center" onClick={() => setShow(true)}>ARE YOU A REAL JEDI?</p>
-							)}
 							{poolInfo.name ? (
 								<div dangerouslySetInnerHTML={{__html: poolInfo.name}}/>
 							) : (
 								<p className="h3 text-center">Farm Offer</p>
 							)}
 						</div>
-
-						{/*Star wars event modal*/}
-						<Modal show={show} onHide={handleClose} centered size={"sm"}>
-							<Modal.Body>
-								<Row>
-									<Col xs={12}>
-										<Button
-											size="sm"
-											variant="danger"
-											className="float-end b-r-sm"
-											onClick={handleClose}
-											style={{zIndex: 999}}
-										>
-											<FontAwesomeIcon icon="fa-xmark" size="sm" />
-										</Button>
-										<p className="h5 text-center mb-2 text-capitalize">Congratulations, you found the third secret question</p>
-									</Col>
-								</Row>
-								<Row>
-									<Col xs={12}>
-										<div style={{ backgroundImage: `url(${QuestionImage})`, backgroundSize: 'cover', minHeight: '400px', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}>
-											<div className="p-4" style={{backgroundColor: 'rgba(0,0,0,0.6)', minHeight: '400px'}}>
-												<h3 className="text-center mt-4">
-													The Apprentice&apos;s Path
-												</h3>
-												<p className="mt-4 mb-4 text-justified">
-													In the Jedi Order, a learner&apos;s way,<br/>
-													Before becoming a knight, they have a say.<br/>
-													What is the title given to a young Force-sensitive,<br/>
-													On the path to mastery, training intensive?
-												</p>
-												<p>A. Sith</p>
-												<p>B. Padawan</p>
-												<p>C. Mandalorian</p>
-											</div>
-
-										</div>
-									</Col>
-								</Row>
-							</Modal.Body>
-						</Modal>
 					</Col>
 				</Row>
 				) : ('')

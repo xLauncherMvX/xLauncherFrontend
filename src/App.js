@@ -21,7 +21,6 @@ import StakingV2 from "pages/stakingV2";
 import Projects from "pages/projects";
 import Team from "pages/team";
 import Admin from "pages/admin";
-import BloodshedReveal from "pages/presale/bloodshed_reveal";
 import Zero2Infinity from "pages/projects/Zero2Infinity";
 import EstarGames from "pages/projects/EstarGames";
 import VestaXFinance from "pages/projects/VestaXFinance";
