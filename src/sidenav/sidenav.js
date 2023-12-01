@@ -131,60 +131,12 @@ export function Sidenav() {
 						</MenuItem>
 						<MenuItem
 							icon={<ShoppingCart/>}
-							component={<Link to="/coding-division-mint"/>}
-							active={pathname === "/coding-division-mint"}
-							onClick={() => toggleSidebar()}
-						>
-							Coding Division Mint
-						</MenuItem>
-						<MenuItem
-							icon={<ShoppingCart/>}
-							component={<Link to="/midas-chain"/>}
-							active={pathname === "/midas-chain"}
-							onClick={() => toggleSidebar()}
-						>
-							Midas Chain Lottery
-						</MenuItem>
-						<MenuItem
-							icon={<ShoppingCart/>}
-							component={<Link to="/nosferatu-mint"/>}
-							active={pathname === "/nosferatu-mint"}
-							onClick={() => toggleSidebar()}
-						>
-							Nosferatu Mint
-						</MenuItem>
-						<MenuItem
-							icon={<ShoppingCart/>}
 							component={<Link to="/snake-mint"/>}
 							active={pathname === "/snake-mint"}
 							onClick={() => toggleSidebar()}
 						>
-							Snake NFT Sale
+							Snake Mint
 						</MenuItem>
-						{/*<MenuItem*/}
-						{/*	icon={<FilterIcon/>}*/}
-						{/*	component={<Link to="/vestax-bronze-mint"/>}*/}
-						{/*	active={pathname === "/vestax-bronze-mint"}*/}
-						{/*	onClick={() => toggleSidebar()}*/}
-						{/*>*/}
-						{/*	VestaX Bronze Mint*/}
-						{/*</MenuItem>*/}
-						{/*<MenuItem*/}
-						{/*  label="Lottery with XLH"*/}
-						{/*  icon={<ShoppingCart />}*/}
-						{/*  component={<Link to="/lottery/xlh-bloodshed"/>}*/}
-						{/*  active={window.location.pathname === "/lottery/xlh-bloodshed"}*/}
-						{/*>*/}
-						{/*    Lottery with XLH*/}
-						{/*</MenuItem>*/}
-						{/*<MenuItem*/}
-						{/*	label="Presale"*/}
-						{/*	icon={<ShoppingCart />}*/}
-						{/*	component={<Link to="/snake-token-presale"/>}*/}
-						{/*	active={pathname === "/snake-token-presale"}*/}
-						{/*>*/}
-						{/*	Presale*/}
-						{/*</MenuItem>*/}
 					</Menu>
 
 					<div className='sidebar-label-divider'>

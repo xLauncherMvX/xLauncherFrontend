@@ -33,16 +33,11 @@ import {
   SignTransactionsModals,
   TransactionsToastList,
 } from "@multiversx/sdk-dapp/UI";
+import {useGetAccountInfo} from "@multiversx/sdk-dapp/hooks/account";
 import {networkId} from "config/customConfig";
 import {networkConfig} from "config/networks";
 import Layout from "layout/layout";
-import Bloodshed_lottery from "pages/presale/bloodshed_lottery";
-import {NosferatuMint} from "pages/nosferatu/NosferatuMint";
 import {SnakeMint} from "pages/snakeSale/SnakeMint";
-import {VestaxBronzeMint} from "pages/snakeSale/VestaxBronzeMint";
-import MidasChain from "pages/presale/midas_chain";
-import CodingDivisionMint from "pages/presale/coding_division_mint";
-import {useGetAccountInfo} from "@multiversx/sdk-dapp/hooks/account";
 
 library.add(
   fab,
@@ -87,19 +82,13 @@ function App() {
         {path: "/projects", element: <Projects/>},
         {path: "/team", element: <Team/>},
         {path: "/admin", element: <Admin address={nAddress} account={account}/>},
-        {path: "/lottery/bloodshed-reveal", element: <BloodshedReveal address={nAddress} account={account}/>},
-        {path: "/lottery/nosferatu", element: <Bloodshed_lottery address={nAddress} account={account}/>},
         {path: "/projects/zero-2-infinity", element: <Zero2Infinity/>},
         {path: "/projects/estar-games", element: <EstarGames/>},
         {path: "/projects/vestax-finance", element: <VestaXFinance/>},
         {path: "/projects/xbid", element: <XBid/>},
         {path: "/staking2.0", element: <StakingV2 address={nAddress} account={account}/>},
         {path: "/view-farm/:farmId", element: <Farm address={nAddress} account={account}/>},
-        {path: "/nosferatu-mint", element: <NosferatuMint address={nAddress} account={account}/>},
         {path: "/snake-mint", element: <SnakeMint address={nAddress} account={account}/>},
-        {path: "/vestax-bronze-mint", element: <VestaxBronzeMint address={nAddress} account={account}/>},
-        {path: "/midas-chain", element: <MidasChain address={nAddress} account={account}/>},
-        {path: "/coding-division-mint", element: <CodingDivisionMint address={nAddress} account={account}/>},
       ],
     },
   ]);
