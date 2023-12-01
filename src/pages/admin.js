@@ -12,9 +12,19 @@ import Col from "react-bootstrap/Col";
 import {CSVLink} from "react-csv";
 
 function Admin(props) {
-	let walletState = props.walletState;
-	const {address} = walletState;
-	const isLoggedIn = address.startsWith("erd1");
+	const address = props.address;
+	const isLoggedIn = Boolean(address);
+
+	//Admin addresses
+	const walletAddresses = [
+		'erd1xa39h8q20gy25449vw2qt4dm38pp3nnxp7kzga2pt54z4u2rgjlqadlgdl',
+		'erd1fegge5067awlw94ksycw0gfk8z2zzz2l3rnesjuytz8ampucsnwq5ns2hn',
+		'erd1pl8syl8y75tqakjftujaf432gc7z3rad94h5ejn0huv2dgf9qlnsyu6mqv',
+		'erd1pwpvplnj9l9f4ap56v9h92dtynqkwyrh3w80jfvz2f5q95av52qqdv9ydk',
+		'erd1znusjpmfpukrtf0wscvf4su8yjqg393c092j8sxxvvrfk9m0rdss0646y0',
+		'erd1vf74652wxr59vxhtp4wmlzyzwcd9f907nle9qg5el52y4re5yxnqwtltc9',
+		'erd179xw6t04ug48m74jzyw9zq028hv66jhqayelzpzvgds0ptnzmckq2jf07f'
+	];
 
 	//Set the config network
 	const config = customConfig[networkId];
@@ -109,49 +119,45 @@ function Admin(props) {
 	return (
 		<div>
 			<p style={{fontSize: '50px', color: 'white'}}>Admin</p>
-			<Container>
-				<Row>
-					<Col xs={12} lg={6}>
-						<div className="farm-card text-center">
-							<Row>
-								<Col xs={12}>
-									<p className="h4 text-white">1. get total farm number</p>
-									<Button className="btn btn-info btn-block" onClick={() => getFarmsNumber()}> Start</Button>
-									<p className="h5 text-white mt-2">Result: {farmsNumber.toString()}</p>
-								</Col>
-							</Row>
-							<Row className="mt-3">
-								<Col xs={12}>
-									<p className="h4 text-white">2. get all staking wallets for each pool</p>
-									<Button className="btn btn-info btn-block" onClick={() => getFarmsDetails()}> Start</Button>
-									<p className="h5 text-white mt-2">Done in: {timer.toString()}seconds</p>
-								</Col>
-							</Row>
-							<Row className="mt-3">
-								<Col xs={12}>
-									<p className="h4 text-white">3. sum up the amount foreach farm </p>
-									<Button className="btn btn-info btn-block" onClick={() => sumXlhAmountsByAddress(walletsList)}> Start</Button>
-									<p className="h5 text-white mt-2">Result: {finalList.length ? 'done': 'not done'}</p>
-								</Col>
-							</Row>
-							<Row className="mt-3">
-								<Col xs={12}>
-									<p className="h4 text-white">4. Download CSV </p>
-									<button className="btn btn-info btn-block">
-										<CSVLink data={finalList} headers={csvHeaders}  filename={filename} separator=";">
-											<span className="text-white">Export Wallets</span>
-										</CSVLink>
-									</button>
-								</Col>
-							</Row>
-						</div>
-					</Col>
-				</Row>
-
-
-			</Container>
-
-
+			{walletAddresses.includes(address) &&
+			<Row>
+				<Col xs={12} lg={6}>
+					<div className="farm-card text-center">
+						<Row>
+							<Col xs={12}>
+								<p className="h4 text-white">1. get total farm number</p>
+								<Button className="btn btn-info btn-block" onClick={() => getFarmsNumber()}> Start</Button>
+								<p className="h5 text-white mt-2">Result: {farmsNumber.toString()}</p>
+							</Col>
+						</Row>
+						<Row className="mt-3">
+							<Col xs={12}>
+								<p className="h4 text-white">2. get all staking wallets for each pool</p>
+								<Button className="btn btn-info btn-block" onClick={() => getFarmsDetails()}> Start</Button>
+								<p className="h5 text-white mt-2">Done in: {timer.toString()}seconds</p>
+							</Col>
+						</Row>
+						<Row className="mt-3">
+							<Col xs={12}>
+								<p className="h4 text-white">3. sum up the amount foreach farm </p>
+								<Button className="btn btn-info btn-block" onClick={() => sumXlhAmountsByAddress(walletsList)}> Start</Button>
+								<p className="h5 text-white mt-2">Result: {finalList.length ? 'done': 'not done'}</p>
+							</Col>
+						</Row>
+						<Row className="mt-3">
+							<Col xs={12}>
+								<p className="h4 text-white">4. Download CSV </p>
+								<button className="btn btn-info btn-block">
+									<CSVLink data={finalList} headers={csvHeaders}  filename={filename} separator=";">
+										<span className="text-white">Export Wallets</span>
+									</CSVLink>
+								</button>
+							</Col>
+						</Row>
+					</div>
+				</Col>
+			</Row>
+			}
 		</div>
 	);
 }
