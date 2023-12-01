@@ -77,23 +77,20 @@ function Dashboard(props) {
 	//Get Token Details
 	const currentTs = new Date();
 	const pastTs = currentTs - 60;
-	const tokenPriceAPI = `https://apiv2.e-compass.io/tv/history?symbol=XLH%2FUSDC_ONEDEX&resolution=60&from=${currentTs}&to=${pastTs}&countback=1`;
+	const tokenPriceAPI = `https://api.coin-stats.com/v2/coin_chart/xlauncher?type=1h`;
 	const [tokenPrice, setTokenPrice] = useState(0);
 	const getTokenPrice = async () => {
 		try {
 			const response = await fetch(tokenPriceAPI,
 				{
 					headers: {
-						'Accept': 'application/json',
-						'Access-Control-Allow-Origin': '*'
+						'Accept': 'application/json'
 					}
 				});
 
 			const json = await response.json();
 			if(json){
-				if(json.value){
-					setTokenPrice(json.value);
-				}
+				setTokenPrice(json.data[json.data.length-1][1]);
 			}
 		} catch (error) {
 			console.error(error);
