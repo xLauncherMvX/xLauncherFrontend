@@ -37,6 +37,7 @@ import {networkId} from "config/customConfig";
 import {networkConfig} from "config/networks";
 import Layout from "layout/layout";
 import {SnakeMint} from "pages/snakeSale/SnakeMint";
+import ChristmasContest from "pages/christmas_contest";
 
 library.add(
   fab,
@@ -88,6 +89,7 @@ function App() {
         {path: "/staking2.0", element: <StakingV2 address={nAddress} account={account}/>},
         {path: "/view-farm/:farmId", element: <Farm address={nAddress} account={account}/>},
         {path: "/snake-mint", element: <SnakeMint address={nAddress} account={account}/>},
+        {path: "/xmas-contest", element: <ChristmasContest/>},
       ],
     },
   ]);

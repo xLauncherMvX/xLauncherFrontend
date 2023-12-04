@@ -137,6 +137,14 @@ export function Sidenav() {
 						>
 							Snake Mint
 						</MenuItem>
+						<MenuItem
+							icon={<ShoppingCart/>}
+							component={<Link to="/xmas-contest"/>}
+							active={pathname === "/xmas-contest"}
+							onClick={() => toggleSidebar()}
+						>
+							Xmas Contest
+						</MenuItem>
 					</Menu>
 
 					<div className='sidebar-label-divider'>
