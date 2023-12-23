@@ -14,7 +14,7 @@
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.13",
     "@multiversx/sdk-core": "12.11.0",
-    "@multiversx/sdk-dapp": "2.23.0",
+    "@multiversx/sdk-dapp": "2.24.4",
     "@multiversx/sdk-network-providers": "2.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
