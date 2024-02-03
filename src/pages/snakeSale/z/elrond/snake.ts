@@ -111,7 +111,7 @@ export async function getSnakePriceMap(): Promise<PriceType[]> {
       {
         identifier: USDC_TOKEN_ID,
         ticker: 'USDC',
-        price: '2500000000',
+        price: '5000000000',
       },
     ]
   } catch (err) {
