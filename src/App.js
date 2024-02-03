@@ -14,7 +14,7 @@ import {
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import React, {useEffect, useState} from "react";
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import Dashboard from "pages/dashboard";
 import Staking from "pages/staking";
 import StakingV2 from "pages/stakingV2";
@@ -90,6 +90,7 @@ function App() {
         {path: "/view-farm/:farmId", element: <Farm address={nAddress} account={account}/>},
         {path: "/snake-mint", element: <SnakeMint address={nAddress} account={account}/>},
         {path: "/xmas-contest", element: <ChristmasContest/>},
+        { path: "/unlock", element: <Navigate to="/" /> }
       ],
     },
   ]);
@@ -98,7 +99,7 @@ function App() {
     <DappProvider
       environment={customNetConfig.id}
       customNetworkConfig={customNetConfig}
-      dappConfig={{shouldUseWebViewProvider: true}}
+      dappConfig={{shouldUseWebViewProvider: true, logoutRoute: '/'}}
       completedTransactionsDelay={200}
     >
       <TransactionsToastList/>
