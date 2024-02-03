@@ -9,6 +9,7 @@ import profile5 from "assets/images/parascox_mini.png";
 import profile6 from "assets/images/bloodshed_nfts.png";
 import profile7 from "assets/images/snake_token_mini.jpg";
 import profile8 from "assets/images/xbid_mini2.png";
+import profile9 from "assets/images/uniplay.jpg";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
@@ -25,6 +26,23 @@ function Projects() {
 		<div>
 			<p className="text-white font-bold mt-4 ms-2" style={{fontSize: '40px'}}>Projects</p>
 			<Row>
+				<Col xs={12} md={6} lg={4}>
+					<div className="project-card mt-4">
+						<DefaultProjectCard
+							image={profile9}
+							label="project #9"
+							title="UniPlay"
+							description="UniPlay is a leading gaming ecosystem, revolutionizing interactive entertainment with a sophisticated staking mechanism and a pioneering Play-to-Earn (P2E) model, to be launched on 
+							 Midas Chain."
+							totalRaised="Upcoming"
+							action={{
+								route: "https://www.uniplaycoin.io/",
+								color: "white",
+								label: "VIEW",
+							}}
+						/>
+					</div>
+				</Col>
 				<Col xs={12} md={6} lg={4}>
 					<div className="project-card mt-4">
 						<DefaultProjectCard
