@@ -6,7 +6,6 @@ import {
   WalletConnectLoginButton,
   LedgerLoginButton,
   WebWalletLoginButton,
-  XaliasLoginButton
 } from "@multiversx/sdk-dapp/UI";
 import { useProSidebar } from "react-pro-sidebar";
 import Container from "react-bootstrap/Container";
