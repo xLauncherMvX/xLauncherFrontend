@@ -4,12 +4,17 @@ import {contractQuery, getAccountTokens} from "utils/api";
 import {ProxyNetworkProvider} from "@multiversx/sdk-network-providers/out";
 import {networkId, customConfig} from "config/customConfig";
 import stakeV2Abi from "abiFiles/xlauncher-staking-v2.abi.json";
-import {U64Value} from "@multiversx/sdk-core/out";
+import stakeV1Abi from "abiFiles/xlauncher-staking.abi.json";
+import {AbiRegistry, Address, SmartContract, TokenTransfer, U64Value} from "@multiversx/sdk-core/out";
 import {calc2, formatString, multiplier} from "../utils/utilities";
 import Row from "react-bootstrap/Row";
 import Container from "@mui/material/Container";
 import Col from "react-bootstrap/Col";
 import {CSVLink} from "react-csv";
+import Input from "@mui/material/Input";
+import BigNumber from 'bignumber.js';
+import {refreshAccount} from "@multiversx/sdk-dapp/utils/account";
+import {sendTransactions} from "@multiversx/sdk-dapp/services";
 
 function Admin(props) {
 	const address = props.address;
@@ -30,6 +35,8 @@ function Admin(props) {
 	const config = customConfig[networkId];
 	const networkProvider = new ProxyNetworkProvider(config.provider);
 	const stakeScAddress = config.stakeV2Address;
+	const stakeV1ScAddress = config.stakeAddress;
+	const scToken = config.token;
 
 
 	//Get the total number of created farms
@@ -108,13 +115,55 @@ function Admin(props) {
 		setFinalList(resultArray);
 	};
 
-
-
 	const csvHeaders = [
 		{ label: 'Wallet address', key: 'client_address' },
 		{ label: 'Staked amount', key: 'xlh_amount' },
 	];
 	let filename = 'StakingV2_wallets_list.csv';
+
+	//Set the amount of xlh for funding legacy staking
+	const [xlhAmount, setXlhAmount] = React.useState(0);
+	const handleInputChangeU = (event) => {
+		setXlhAmount(parseFloat(event.target.value));
+	};
+
+	const fundV1Contract = async () => {
+		try {
+			let abiRegistry = AbiRegistry.create(stakeV1Abi);
+			let contract = new SmartContract({
+				address: new Address(stakeV1ScAddress),
+				abi: abiRegistry
+			});
+
+			const transaction = contract.methodsExplicit
+				.fundContract()
+				.withSingleESDTTransfer(
+					TokenTransfer.fungibleFromAmount(scToken, xlhAmount, 18)
+				)
+				.buildTransaction();
+
+			const trs = {
+				value: 0,
+				data: Buffer.from(transaction.getData().valueOf()),
+				receiver: stakeV1ScAddress,
+				gasLimit: '15000000'
+			};
+			await refreshAccount();
+
+			const { sessionId } = await sendTransactions({
+				transactions: trs,
+				transactionsDisplayInfo: {
+					processingMessage: 'Processing Fund Contract transaction',
+					errorMessage: 'An error has occurred during Fund Contract transaction',
+					successMessage: 'Fund Contract transaction successful'
+				},
+				redirectAfterSign: false
+			});
+
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 	return (
 		<div>
@@ -122,26 +171,28 @@ function Admin(props) {
 			{walletAddresses.includes(address) &&
 			<Row>
 				<Col xs={12} lg={6}>
-					<div className="farm-card text-center">
+					<div className="farm-card">
 						<Row>
 							<Col xs={12}>
+								<p className="h4 text-white mb-4 text-uppercase font-bold text-center">Legacy Staking Funding</p>
+
 								<p className="h4 text-white">1. get total farm number</p>
 								<Button className="btn btn-info btn-block" onClick={() => getFarmsNumber()}> Start</Button>
-								<p className="h5 text-white mt-2">Result: {farmsNumber.toString()}</p>
+								<p className="h5 text-white mt-2 text-center">Result: {farmsNumber.toString()}</p>
 							</Col>
 						</Row>
 						<Row className="mt-3">
 							<Col xs={12}>
 								<p className="h4 text-white">2. get all staking wallets for each pool</p>
 								<Button className="btn btn-info btn-block" onClick={() => getFarmsDetails()}> Start</Button>
-								<p className="h5 text-white mt-2">Done in: {timer.toString()}seconds</p>
+								<p className="h5 text-white mt-2 text-center">Done in: {timer.toString()}seconds</p>
 							</Col>
 						</Row>
 						<Row className="mt-3">
 							<Col xs={12}>
 								<p className="h4 text-white">3. sum up the amount foreach farm </p>
 								<Button className="btn btn-info btn-block" onClick={() => sumXlhAmountsByAddress(walletsList)}> Start</Button>
-								<p className="h5 text-white mt-2">Result: {finalList.length ? 'done': 'not done'}</p>
+								<p className="h5 text-white mt-2 text-center">Result: {finalList.length ? 'done': 'not done'}</p>
 							</Col>
 						</Row>
 						<Row className="mt-3">
@@ -154,6 +205,31 @@ function Admin(props) {
 								</button>
 							</Col>
 						</Row>
+					</div>
+				</Col>
+
+				<Col xs={12} lg={6}>
+					<div className="farm-card">
+						<p className="h4 text-white mb-4 text-uppercase font-bold text-center">Legacy Staking Funding</p>
+
+						<Input
+							value={xlhAmount}
+							size="small"
+							placeholder="XLH Amount"
+							onChange={handleInputChangeU}
+							onKeyPress={(event) => {
+								if (!/[0-9.]/.test(event.key)) {
+									event.preventDefault();
+								}
+							}}
+							disableUnderline
+							disabled={false}
+							className="text-white ps-3 pe-5 pt-1 b-r-md"
+							style={{border: '0.5px solid rgb(74, 85, 104)', width: '100%'}}
+						/>
+
+						<Button className="btn btn-info btn-block mt-3" onClick={() => fundV1Contract()}> Fund Contract</Button>
+
 					</div>
 				</Col>
 			</Row>
