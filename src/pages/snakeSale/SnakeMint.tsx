@@ -41,7 +41,7 @@ import {
 } from './z/utils'
 import './vesta_x.css'
 import { TokenTransfer } from '@multiversx/sdk-core/out'
-import imgSnake from 'pages/snakeSale/nft.png';
+import imgSnake from 'assets/images/snake_nft.png';
 import { PriceType } from './z/types'
 import SelectInput from '@mui/material/Select/SelectInput'
 import { setTokenLogin } from '@multiversx/sdk-dapp/reduxStore/slices'
