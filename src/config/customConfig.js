@@ -19,7 +19,8 @@ export const customConfig = {
         xBidTokenLabel: "XBID",
         slotteryAddress: "erd1qqqqqqqqqqqqqpgq34wkpepftpvdx2vz6zs0377pccv8d3vstusqsm7ra6",
         slotterySFT: "DHLOTTERY-f6fc85",
-        slotteryNonce: 1
+        slotteryNonce: 1,
+        uniplayAddress: "erd1qqqqqqqqqqqqqpgqqm74epkkg476y2s3nrxaf62vaqrupja7wmfsr5mvx9"
     },
 
     devnet: {
@@ -40,7 +41,8 @@ export const customConfig = {
         xBidTokenLabel: "XBID",
         slotteryAddress: "erd1qqqqqqqqqqqqqpgqxm0m2n6ndqele4jm4nzz04qgdnvw8p6etusq3jfaqn",
         slotterySFT: "SPG-bf6bc3",
-        slotteryNonce: 11
+        slotteryNonce: 11,
+        uniplayAddress: "erd1qqqqqqqqqqqqqpgqydwpdrplefjlwp3sp9xmn3vevdxdelfkwmfsw6e5xw"
     },
 
     testnet: {
@@ -61,7 +63,8 @@ export const customConfig = {
         xBidTokenLabel: "",
         slotteryAddress: "",
         slotterySFT: "",
-        slotteryFunction: ""
+        slotteryFunction: "",
+        uniplayAddress: ""
     }
 };
 
