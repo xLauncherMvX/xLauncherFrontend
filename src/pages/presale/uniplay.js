@@ -563,6 +563,13 @@ function UniPlay() {
 		}
 	};
 
+	//unlocked and locked tokens math
+	const percentageUnlocked = 5;
+	const percentageBlocked = 100 - percentageUnlocked;
+
+	const unlockedPercentage = (tokensAmount * percentageUnlocked) / 100;
+	const blockedPercentage = (tokensAmount * percentageBlocked) / 100;
+
 	useEffect(() => {
 		getUSDCPrice();
 		getUsdcinEgldPrice();
@@ -633,8 +640,11 @@ function UniPlay() {
 											style={{border: '0.5px solid rgb(74, 85, 104)', width: '40%', textAlign: 'center'}}
 										/>
 										<span className="h3 text-white mb-1 mt-2">
-											{scTokenLabel}
+											Tokens
 										</span>
+									</Box>
+									<Box display="flex" justifyContent="center" alignItems="center">										
+										<p className="mt-1 mb-1 small">(<span className="text-green-A200">{unlockedPercentage.toFixed(2)}</span> UPLAY, <span className="text-green-A200">{blockedPercentage.toFixed(2)}</span> VUPLAY)</p>
 									</Box>
 								</Col>
 								<Col xs={12}>
@@ -649,7 +659,7 @@ function UniPlay() {
 										justifyContent="center"
 										alignItems="center"
 									>
-										<p className="h4 text-white"><span className="text-green-A200">{intlNumberFormat(tokensPrice, "en-GB", 4, 4)}</span></p>
+										<p className="h4 text-white"><span className="text-green-A200">{intlNumberFormat(tokensPrice, "en-GB", 5, 5)}</span></p>
 										<select
 												className="form-select ms-2 text-white"
 												value={paymentToken}
@@ -688,9 +698,9 @@ function UniPlay() {
 									<Slider
 										value={tokensAmount}
 										onChange={e => handleSliderChange(e.target.value)}
-										step={1}
+										step={500}
 										min={0}
-										max={calc3(remainingTokensAmount)}
+										max={calc3(1000000)}
 										disabled={disabledButtons}
 										style={{marginTop: '-10px'}}
 									/>
