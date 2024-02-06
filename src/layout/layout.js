@@ -4,7 +4,7 @@ import { Sidenav } from "sidenav/sidenav";
 import { Navbar } from "navbar/navbar";
 import { Footer } from "footer/footer";
 import "assets/css/globals.css";
-import "assets/css/snow.css";
+//import "assets/css/snow.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -27,7 +27,7 @@ function Layout(props) {
         </Row>
         <Footer/>
       </Container>
-      <Snowfall
+      {/* <Snowfall
         snowflakeCount={100}
         speed={[0.5,1]}
         wind={[0, 1]}
@@ -37,7 +37,7 @@ function Layout(props) {
           width: '100vw',
           height: '100vh',
         }}
-      />
+      /> */}
     </div>
   );
 }
