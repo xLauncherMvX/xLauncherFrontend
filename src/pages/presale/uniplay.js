@@ -433,7 +433,7 @@ function UniPlay() {
 					.buildTransaction();
 			
 				buyTransaction = {
-					value: (tokensPrice + 0.002) * multiplier,
+					value: (tokensPrice + 0.1) * multiplier,
 					data: Buffer.from(transaction.getData().valueOf()),
 					receiver: scAddress,
 					gasLimit: 20_000_000
