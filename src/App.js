@@ -25,7 +25,6 @@ import Zero2Infinity from "pages/projects/Zero2Infinity";
 import EstarGames from "pages/projects/EstarGames";
 import VestaXFinance from "pages/projects/VestaXFinance";
 import XBid from "pages/projects/xBid";
-import Uniplay from "pages/presale/uniplay";
 import Farm from "pages/farm";
 import {DappProvider} from "@multiversx/sdk-dapp/wrappers/DappProvider";
 import {
@@ -90,7 +89,6 @@ function App() {
         {path: "/staking2.0", element: <StakingV2 address={nAddress} account={account}/>},
         {path: "/view-farm/:farmId", element: <Farm address={nAddress} account={account}/>},
         {path: "/snake-mint", element: <SnakeMint address={nAddress} account={account}/>},
-        {path: "/uniplay", element: <Uniplay address={nAddress} account={account}/>},
         {path: "/xmas-contest", element: <ChristmasContest/>},
         {path: "/unlock", element: <Navigate to="/dashboard" /> }
       ],

@@ -129,14 +129,14 @@ export function Sidenav() {
 						>
 							Stake XLH Origins
 						</MenuItem>
-						<MenuItem
-							icon={<ShoppingCart/>}
-							component={<Link to="/uniplay"/>}
-							active={pathname === "/uniplay"}
-							onClick={() => toggleSidebar()}
-						>
-							Uniplay Sale
-						</MenuItem>
+						{/*<MenuItem*/}
+						{/*	icon={<ShoppingCart/>}*/}
+						{/*	component={<Link to="/uniplay"/>}*/}
+						{/*	active={pathname === "/uniplay"}*/}
+						{/*	onClick={() => toggleSidebar()}*/}
+						{/*>*/}
+						{/*	Uniplay Sale*/}
+						{/*</MenuItem>*/}
 						<MenuItem
 							icon={<ShoppingCart/>}
 							component={<Link to="/snake-mint"/>}
