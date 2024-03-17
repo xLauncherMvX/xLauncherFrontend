@@ -137,14 +137,14 @@ export function Sidenav() {
 						{/*>*/}
 						{/*	Uniplay Sale*/}
 						{/*</MenuItem>*/}
-						<MenuItem
+						{/* <MenuItem
 							icon={<ShoppingCart/>}
 							component={<Link to="/snake-mint"/>}
 							active={pathname === "/snake-mint"}
 							onClick={() => toggleSidebar()}
 						>
 							Snake Mint
-						</MenuItem>
+						</MenuItem> */}
 						{/*<MenuItem*/}
 						{/*	icon={<ShoppingCart/>}*/}
 						{/*	component={<Link to="/xmas-contest"/>}*/}

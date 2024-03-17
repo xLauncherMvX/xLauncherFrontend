@@ -88,7 +88,6 @@ function App() {
         {path: "/projects/xbid", element: <XBid/>},
         {path: "/staking2.0", element: <StakingV2 address={nAddress} account={account}/>},
         {path: "/view-farm/:farmId", element: <Farm address={nAddress} account={account}/>},
-        {path: "/snake-mint", element: <SnakeMint address={nAddress} account={account}/>},
         {path: "/xmas-contest", element: <ChristmasContest/>},
         {path: "/unlock", element: <Navigate to="/dashboard" /> }
       ],
