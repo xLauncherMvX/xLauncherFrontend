@@ -34,7 +34,7 @@ function Projects() {
 							title="UniPlay"
 							description="UniPlay is a leading gaming ecosystem, revolutionizing interactive entertainment with a sophisticated staking mechanism and a pioneering Play-to-Earn (P2E) model, to be launched on 
 							 Midas Chain."
-							totalRaised="Upcoming"
+							totalRaised="15,350 USD"
 							action={{
 								route: "https://www.uniplaycoin.io/",
 								color: "white",
