@@ -2233,3 +2233,15 @@ h6 {
 .text-justified{
     text-align: justify;
 }
+
+.text-left{
+    text-align: left;
+}
+
+.text-underlined {
+    text-decoration: underline;
+}
+
+.customFont {
+    font-family: 'Fira Sans Condensed', sans-serif;
+}

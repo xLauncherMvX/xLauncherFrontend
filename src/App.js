@@ -26,6 +26,7 @@ import EstarGames from "pages/projects/EstarGames";
 import VestaXFinance from "pages/projects/VestaXFinance";
 import XBid from "pages/projects/xBid";
 import Farm from "pages/farm";
+import Capybara from "pages/presale/capybara";
 import {DappProvider} from "@multiversx/sdk-dapp/wrappers/DappProvider";
 import {
   NotificationModal,
@@ -86,9 +87,10 @@ function App() {
         {path: "/projects/estar-games", element: <EstarGames/>},
         {path: "/projects/vestax-finance", element: <VestaXFinance/>},
         {path: "/projects/xbid", element: <XBid/>},
+        {path: "/capybara-sale", element: <Capybara/>},
         {path: "/staking2.0", element: <StakingV2 address={nAddress} account={account}/>},
         {path: "/view-farm/:farmId", element: <Farm address={nAddress} account={account}/>},
-        {path: "/xmas-contest", element: <ChristmasContest/>},
+        // {path: "/xmas-contest", element: <ChristmasContest/>},
         {path: "/unlock", element: <Navigate to="/dashboard" /> }
       ],
     },

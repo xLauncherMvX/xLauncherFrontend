@@ -8,6 +8,7 @@ import {ShoppingCart} from 'assets/svg/ShoppingCart';
 import {Users} from 'assets/svg/Users';
 import {MicroBlog} from 'assets/svg/MicroBlog';
 import {FilePen} from "assets/svg/FilePen";
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import {SidenavHeader} from 'sidenav/components/sidenavHeader';
 import {SidenavFooter} from 'sidenav/components/sidenavFooter';
 import FilterIcon from '@mui/icons-material/Filter';
@@ -129,6 +130,16 @@ export function Sidenav() {
 						>
 							Stake XLH Origins
 						</MenuItem>
+
+						<MenuItem
+							icon={<AccountBalanceIcon/>}
+							component={<Link to="/capybara-sale"/>}
+							active={pathname === "/capybara-sale"}
+							onClick={() => toggleSidebar()}
+						>
+							$Capy Fundraising
+						</MenuItem>
+
 						{/*<MenuItem*/}
 						{/*	icon={<ShoppingCart/>}*/}
 						{/*	component={<Link to="/uniplay"/>}*/}
