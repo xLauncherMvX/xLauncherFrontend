@@ -30,6 +30,13 @@ function Capybara() {
   const tokensAPI = config.apiLink + scAddress;
   const totalCount = 1000;  
 
+  let ended = false;
+  const startTimestamp = 1711470600000;
+	const currentTimestamp = new Date().getTime();
+	if (currentTimestamp -  startTimestamp >= 0) {
+		ended = true;
+	}
+
   //Copy to Clipboard Utility
   const [isCopied, setIsCopied] = React.useState(false);
   function CopyToClipboard(text) {
@@ -85,7 +92,7 @@ function Capybara() {
 				</Row>
         <Row>
 					<Col xs={12} lg={{offset: 3, span: 6}} className="text-center">
-            <CustomCountdown startTitle="" completedTitle=""  titleStyles="h1" startTimestamp={1711470600000}/>
+            <CustomCountdown startTitle="" completedTitle="Ended"  titleStyles="h1" startTimestamp={1711470600000}/>
 					</Col>
 				</Row>
         
@@ -99,29 +106,31 @@ function Capybara() {
               <p className="text-justified">Token price: 600,000 CAPY/EGLD.</p>
               
               <h4 className="mt-5 text-lexaloffle-green">Initial Funds Wallet</h4>
-              <p className="mt-3 font-bold" style={{ maxWidth: '100%' }}>
-              
-                {!isCopied ? (
-                      <Button
-                        variant="link"
-                        onClick={() => CopyToClipboard(scAddress)}
-                        className="text-white"
-                        style={{textDecoration: 'none'}}
-                      >
-                        <span className="me-2" style={{ wordWrap: 'break-word', wordBreak: 'break-all'}}>
-                          erd1t2mnpzg0kstjx0a0gf5v4lv7nkyscl03fysexsd760dy807y3m8skn6su2
-                        </span>
-                        <FontAwesomeIcon icon={faCopy} />
-                      </Button>
-                    ) : (
-                      <Button variant="link" className="text-white">
-                        <span className="me-2" style={{ wordWrap: 'break-word', wordBreak: 'break-all' }}>
-                          erd1t2mnpzg0kstjx0a0gf5v4lv7nkyscl03fysexsd760dy807y3m8skn6su2
-                        </span>
-                        <FontAwesomeIcon icon="fa-check" />
-                      </Button>
-                )}                
-              </p>
+              {!ended && 
+                <p className="mt-3 font-bold" style={{ maxWidth: '100%' }}>              
+                  {!isCopied ? (
+                        <Button
+                          variant="link"
+                          onClick={() => CopyToClipboard(scAddress)}
+                          className="text-white"
+                          style={{textDecoration: 'none'}}
+                        >
+                          <span className="me-2" style={{ wordWrap: 'break-word', wordBreak: 'break-all'}}>
+                            erd1t2mnpzg0kstjx0a0gf5v4lv7nkyscl03fysexsd760dy807y3m8skn6su2
+                          </span>
+                          <FontAwesomeIcon icon={faCopy} />
+                        </Button>
+                      ) : (
+                        <Button variant="link" className="text-white">
+                          <span className="me-2" style={{ wordWrap: 'break-word', wordBreak: 'break-all' }}>
+                            erd1t2mnpzg0kstjx0a0gf5v4lv7nkyscl03fysexsd760dy807y3m8skn6su2
+                          </span>
+                          <FontAwesomeIcon icon="fa-check" />
+                        </Button>
+                  )}                
+                </p>
+              }
+              {ended && <p className="mt-3">Ended</p>}
 
               <h4 className="mt-5 text-lexaloffle-green">How it works</h4>
               <p className="text-left mt-4">&#9656; Subscription opens for 24 hours.</p>
@@ -133,7 +142,8 @@ function Capybara() {
               <h4 className="mt-5 text-lexaloffle-green">Token Supply and Distribution</h4>
               <p className="text-justified mt-4">Total supply: 1.2 billion CAPY tokens. </p>
               <p className="text-justified">&#9733; <span className="text-underlined">600 million CAPY (50% of total supply)</span>will be distributed proportionally to the first individuals who provide EGLD for initial LP addition. We aim to raise 1000 EGLD, for which we will distribute the sum of 600 million $CAPY according to the following formula:</p>
-              <p className="text-left ms-3">&#9656; 20% at Token Generation Event (TGE), with a 3-day cliff.</p>              
+              <p className="text-left ms-3">&#9656; 20% at Token Generation Event (TGE)</p>
+              <p className="text-left ms-3">&#9656; 3-day cliff</p>
               <p className="text-left ms-3">&#9656; 80% distributed over 15 days through CoinDrip.</p>
               <p className="text-justified">&#9733; <span className="text-underlined">The remaining 600 million $CAPY (50% of total supply)</span> will be added to liquidity alongside the initial 1000 EGLD collected. </p>
 
@@ -142,7 +152,7 @@ function Capybara() {
               <p className="text-justified mt-4">CAPY will be listed on the following DEXs:</p>
               <p className="text-left">&#9656; xExchange: 390 million CAPY /650 EGLD</p>
               <p className="text-left">&#9656; OneDex: 180 million CAPY /300 EGLD</p>
-              <p className="text-left">&#9656; VestaDEX: 130 million CAPY /45 vEGLD (equivalent to 50 EGLD)</p>
+              <p className="text-left">&#9656; VestaDEX: 30 million CAPY /45 vEGLD (equivalent to 50 EGLD)</p>
               <p className="text-justified">Participants will receive their CAPY tokens in their wallet within a maximum of 3 hours from the conclusion of the subscription period, and listing will occur within a maximum of 6 hours from the conclusion of the subscription period.</p>
 
               <p className="text-justified mt-5  font-bold text-danger">*All 1000 LP egld will be completely burned</p>          
