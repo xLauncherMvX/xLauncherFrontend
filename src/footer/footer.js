@@ -17,7 +17,7 @@ export function Footer() {
 				<FontAwesomeIcon icon={faHeart} style={{color: "red"}}/>&nbsp;
 				by the<span className="font-bold"> XLauncher Team</span>
 				<WebsiteIcon className="footer-links ms-1" fontSize="small" onClick={() => openInNewTab(config.website)} sx={{marginTop: '-2px'}}/>
-				<TwitterIcon className="footer-links ms-1" fontSize="small" onClick={() => openInNewTab("https://twitter.com/XLauncher_")} sx={{marginTop: '-2px'}}/>
+				<TwitterIcon className="footer-links ms-1" fontSize="small" onClick={() => openInNewTab("https://twitter.com/XLauncherHub")} sx={{marginTop: '-2px'}}/>
 				<TelegramIcon className="footer-links ms-1" fontSize="small" onClick={() => openInNewTab("https://t.me/XLauncherChat")} sx={{marginTop: '-2px'}}/>
 			</p>
 		</div>

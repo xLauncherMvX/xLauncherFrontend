@@ -39,7 +39,7 @@ export const SidenavHeader = () => {
 				<IconButton className="text-white" onClick={() => openInNewTab(config.website)}>
 					<WebsiteIcon className="footer-links" fontSize="small"/>
 				</IconButton>
-				<IconButton className="float-right text-white" onClick={() => openInNewTab("https://twitter.com/XLauncher_")}>
+				<IconButton className="float-right text-white" onClick={() => openInNewTab("https://twitter.com/XLauncherHub")}>
 					<TwitterIcon className="footer-links" fontSize="small"/>
 				</IconButton>
 				<IconButton className="float-right text-white" onClick={() => openInNewTab("https://t.me/XLauncherChat")}>
