@@ -66,9 +66,9 @@ function Capybara() {
 	};
 
   useEffect(() => {
-		getBalance();
+		//getBalance();
 		const interval = window.setInterval(() => {
-			getBalance();
+			//getBalance();
 		}, 2000);
 		return () => window.clearInterval(interval);
 		// eslint-disable-next-line
@@ -87,7 +87,7 @@ function Capybara() {
         </Row>
         <Row>
 					<Col xs={12} lg={{offset: 3, span: 6}} className="text-center">
-						<h3 className="text-lexaloffle-green font-bold">Raised: {balance} EGLD</h3>
+						<h3 className="text-lexaloffle-green font-bold">Raised: 14413.6611 EGLD</h3>
 					</Col>
 				</Row>
         <Row>
